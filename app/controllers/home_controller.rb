@@ -1,10 +1,10 @@
 class HomeController < ApplicationController
   def index
     @albums = Album.all
-    @featured_albums = Album.last(4)
+    @featured_blogs = BlogPost.all
 
     respond_to do |format|
-      format.html #{ render :layout => 'home' }
+      format.html { render :layout => 'home' }
       # format.json { render json: @album }
     end
   end

@@ -1,10 +1,21 @@
 = simple_form_for(@blog_post) do |f|
-  = f.error_notification
-
-  .form-inputs
-    = f.input :title
-    = f.input :post, as: :ckeditor, input_html: { :ckeditor => {:toolbar => 'Full'} }
-    = f.file_field :blog_cover
-
-  .form-actions
-    = f.button :submit
+  - if @blog_post.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@blog_post.errors.count, "error")} prohibited this blog from being saved:"
+      %ul
+        - @blog_post.errors.full_messages.each do |msg|
+          %li= msg
+  .row.collapse
+    .small-12
+      = f.label :title
+      = f.text_field :title
+  .row.collapse
+    .small-12
+      = f.association :album, include_blank: 'Select an Album'
+  .row.collapse
+    .small-12
+      = f.input :post, as: :ckeditor, label: false, input_html: { :ckeditor => {:toolbar => 'Full'} }
+  %br
+  .row
+    .small-12.small-offset-10.columns
+      = f.submit 'Save', class: 'button'

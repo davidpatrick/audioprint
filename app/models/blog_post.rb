@@ -1,9 +1,8 @@
 class BlogPost < ActiveRecord::Base
-  attr_accessible :external_links, :post, :title
+  attr_accessible :external_links, :post, :title, :album_id
   acts_as_url :title, url_attribute: :slug
   validates_presence_of :post, :title
-  validates_attachment :blog_cover, presence: true, content_type: { content_type: "image/jpg" }
-  has_attached_file :blog_cover, PAPERCLIP_BLOG_OPTS
+  belongs_to :album
 
   def to_param
     "#{created_at.year}/#{created_at.month}/#{slug}"

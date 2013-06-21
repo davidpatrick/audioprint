@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621032748) do
+ActiveRecord::Schema.define(:version => 20130621071037) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20130621032748) do
     t.string   "blog_cover_content_type"
     t.integer  "blog_cover_file_size"
     t.datetime "blog_cover_updated_at"
+    t.integer  "album_id"
   end
 
   create_table "categories", :force => true do |t|
