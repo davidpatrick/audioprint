@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe "produces/show" do
+describe "products/show" do
   before(:each) do
-    @produce = assign(:produce, stub_model(Produce,
+    @product = assign(:product, stub_model(Product,
       :name => "Name",
       :price => "9.99"
     ))

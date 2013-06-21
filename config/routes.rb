@@ -1,6 +1,5 @@
 Audioprint::Application.routes.draw do
-  resources :produces
-
+  resources :products
 
   resources :blog_posts, path: :blog
 

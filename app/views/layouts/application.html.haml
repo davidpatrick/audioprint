@@ -22,8 +22,14 @@
   = csrf_meta_tag
 
 %body
-
-  = yield
+  = render 'layouts/navigation'
+  .row
+    .small-8.columns
+      = yield
+    .small-4.columns
+      %h2.subheader
+        About Us
+      jasd;lfjka;lsdjflajsdfj; asdkfajasd;lfjka;lsdjflajsdfj ;asdkfajasd;l fjka;lsdjflajsdfj;asdkfajasd;lfjka;l sdjflajsdfj ;asdkfajasd;lfjka; lsdjflajsdfj;asdkfajasd;lf jka;lsdjflajsdfj; asdkfajasd;lfjka;ls djflajsdfj;asdkfaj asd;lfjka;lsdjflajsdf j;asdkfajasd;lfj ka;lsdjflajs dfj;asdkfa
 
   = javascript_include_tag "application"
 
