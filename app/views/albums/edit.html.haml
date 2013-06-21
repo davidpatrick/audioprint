@@ -1,0 +1,66 @@
+%div.row
+  %div.visible-phone
+    =link_to '<< Back to Albums', albums_path
+  %div.span6.hidden-phone
+    %h1 Editing album
+  %div.span.visible-phone
+    %h2 Editing album
+  %div.span3.offset1.hidden-phone
+    =link_to '<< Back to Albums', albums_path
+
+%div.row
+  = simple_form_for(@album, :html => {:multipart => true}) do |f|
+    = f.error_notification
+    %div.span4{style: "margin-top:20px;"}
+      .form-inputs
+        = f.input :title
+        = f.input :artist
+        = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
+        = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
+        = f.input :catalog_id
+        = f.input :price
+        = f.input :quantity
+        = f.input :album_type, collection: [OpenStruct.new(id: 0, name: 'Digital'), OpenStruct.new(id: 1, name: 'Physical'), OpenStruct.new(id: 2, name: 'Digital & Physical')], include_blank: "Select Medium Type", label: 'Medium Type', label_method: :name, value_method: :id
+        Cover Art:
+        = f.file_field :cover_art, style: "height: 20px;  line-height: 0px"
+    %div.span4{style: "align:right;margin-top:10px;"}
+      = link_to @album do
+        = image_tag @album.cover_art.url(:medium), style: "margin-left: auto; margin-right: auto; width: 100%; max-width: 400px;"
+      .form-actions{style: "margin: 5%;"}
+        = f.button :submit, class: 'btn-inverse', :style => "margin-left: auto; margin-right: auto; width: 100%;"
+
+%div.row
+  %div.span9
+    %table.table.table-hover
+      %h4 Track list
+      %thead
+        %tr
+          %th.hidden-phone Track
+          %th Title
+          %th.hidden-phone Length
+          %th Downloads
+          %th{style: "width:5%"}
+      %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
+        -@album.track_list.each_with_index do |song, index|
+          =render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
+
+    -unless @album.album_type == 1
+      %div#bootstrapped-fine-uploader.span8
+    -else
+      %a.btn.btn-inverse.btn-block{href: "/songs/new_from_modal/?album=#{@album.id}", 'data-target' => '#manually-create-songs', role: 'button', 'data-toggle' => 'modal', 'data-backdrop' => 'static'} Add Song Manually
+      %div#manually-create-songs.modal.hide.fade
+        %div.modal-header
+          %button.close{type:'button', "data-dismiss" => "modal", "aria-hidden" => 'true'}
+            &times;
+          %h3
+            Create New Song
+        %div.modal-body
+          %p
+            One Fine body
+        %div.modal-footer
+          %button.btn{"data-dismiss" => "modal", "aria-hidden" => 'true'}
+            Cancel
+          %a#save-song.btn.btn-inverse{href: '#'}
+            Save Song
+
+

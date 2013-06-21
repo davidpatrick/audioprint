@@ -1,0 +1,19 @@
+= simple_form_for(@album, :html => {:multipart => true}) do |f|
+  -if @album.errors.messages[:cover_art]
+    .alert.alert-error Upload the Cover Art to finish
+  -else
+    = f.error_notification
+  .form-inputs
+    = f.input :title
+    = f.input :artist
+    = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
+    = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
+    = f.input :catalog_id
+    = f.input :price
+    = f.input :quantity
+    = f.input :album_type, collection: [OpenStruct.new(id: 0, name: 'Digital'), OpenStruct.new(id: 1, name: 'Physical'), OpenStruct.new(id: 2, name: 'Digital & Physical')], include_blank: "Select Medium Type", label: 'Medium Type', label_method: :name, value_method: :id
+    Cover Art:
+    = f.file_field :cover_art, style: "height: 20px;  line-height: 0px"
+
+  .form-actions{style: "max-width:125px;"}
+    = f.button :submit, style: "margin-left:auto;"

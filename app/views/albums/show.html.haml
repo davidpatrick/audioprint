@@ -1,0 +1,31 @@
+.row.span8{style: "text-align:center;"}
+  %h1{style:"line-height:20px"}=@album.title
+  %h3{style:"line-height:15px"}=@album.artist
+  %h4{style:"line-height:8px"}=@album.year
+
+.row.span8{style: "text-align:center;"}
+  = image_tag @album.cover_art.url(:large)
+
+.row
+  .span8
+    %table.table.table-hover
+      %h4 Track list
+      %thead
+        %tr
+          %th.hidden-phone Track
+          %th Title
+          %th.hidden-phone Length
+          %th Downloads
+          %th{style: "width:5%"}
+      %tbody
+        -@album.track_list.each_with_index do |song, index|
+          =render :partial => 'albums/partials/album_track', :locals => {song: song}
+
+-if can? :manage, @album
+  = link_to 'Edit', edit_album_path(@album)
+  \|
+  = link_to 'Delete', @album, method: :delete, data: { confirm: 'Are you sure you want to delete this album and all of it\'s songs?' }
+  \|
+  = link_to 'Back', request.env["HTTP_REFERER"] || albums_path
+-else
+  = link_to '<< Back', request.env["HTTP_REFERER"]|| albums_path

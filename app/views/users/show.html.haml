@@ -1,0 +1,36 @@
+.user-profile.hidden-desktop{style: "text-align: center;"} 
+  %p
+    = image_tag avatar_url(@user)
+  %h2
+    = @user.name
+.main-content.span9
+  %h2
+    Albums
+    %small.hidden-phone{style: "font-size: 16px;"}
+      (start with selecting an album)
+    %small.visible-phone{style: "font-size: 12px;"}
+      (start with selecting an album)
+  %ul.albums.thumbnails
+    =render '/albums/partials/album_list'
+.user-column.span3{style: "width: 100%;"}
+  .user-profile.visible-desktop
+    .thumbnail{style: "text-align: center;"}   
+      %p
+        = image_tag avatar_url(@user)
+      %h5
+        = @user.name
+  .song-list
+    %h3
+      Top Songs
+    %table.table.table-condensed.table-bordered.table-hover
+      %thead
+        %tr
+          %th{style: "text-align: left;"} Title
+          %th Downloads
+      %tbody
+        -@songs.each do |song|
+          %tr
+            %td
+              = link_to truncate(song.title, length: 20), song
+            %td{style: "text-align: center;"}
+              = song.downloads

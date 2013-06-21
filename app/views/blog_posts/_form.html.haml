@@ -1,0 +1,10 @@
+= simple_form_for(@blog_post) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title
+    = f.input :post, as: :ckeditor, input_html: { :ckeditor => {:toolbar => 'Full'} }
+    = f.file_field :blog_cover
+
+  .form-actions
+    = f.button :submit

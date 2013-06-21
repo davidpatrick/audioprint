@@ -1,0 +1,11 @@
+= simple_form_for(@song, :html => {:multipart => true}) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title
+    = f.input :artist
+    = f.input :length, label: 'Length (in seconds)'
+    / = f.file_field :mp3
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,25 @@
+%h2
+  User Info
+= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-vertical' }) do |f|
+  = f.error_notification
+  = display_base_errors resource
+  = f.input :name, :autofocus => true
+  = f.input :email, :required => true
+  -if @user.has_role? :contributor
+    = f.input :profile_type_id, collection: ProfileType.all, include_blank: "Select Type of Contributor", label: 'Type of Contributor', label_method: :name, value_method: :id
+  = f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false
+  = f.input :password_confirmation, :required => false
+  = f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true
+  = f.label 'Upload an Avatar'
+  = f.file_field :avatar, :label => 'Avatar', style: "height: 20px;line-height:0px;display:block;"
+  %br
+  = f.button :submit, 'Update', :class => 'btn-primary'
+  -unless can? :create, Album
+    -if current_user.account_request && current_user.account_request == 3
+      = link_to 'Contributor Has Been Requested', become_contributor_path, :class => 'btn-success btn disabled'
+    -else
+      = link_to 'Request Contributor Account', become_contributor_path, :class => 'btn-success btn'
+
+%h3 Cancel my account
+%p
+  Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete}.

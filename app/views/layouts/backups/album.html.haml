@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    =javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
+    =javascript_tag "var ALBUM_ID = '';"
+    %link{href: 'http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic', rel:'stylesheet', type:'text/css'}
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+      %title= content_for?(:title) ? yield(:title) : "Audioprint()"
+      %meta{:content => content_for?(:description) ? yield(:description) : "Audioprint()", :name => "description"}
+        = stylesheet_link_tag "application", :media => "all"
+        = javascript_include_tag "application"
+        = csrf_meta_tags
+        = yield(:head)
+  %body.pull_top{:class => "#{controller_name} #{action_name}"}
+    .navbar.navbar-fixed-top.navbar-inverse.transparent
+      .navbar-inner
+        .container
+          = render 'layouts/navigation'
+    = render 'layouts/messages'
+    = yield
+    %footer

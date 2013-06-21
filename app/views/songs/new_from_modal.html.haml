@@ -1,0 +1,25 @@
+= simple_form_for(@song, :html => {:multipart => true}, remote: true) do |f|
+  %ul.form-errors.alert.alert-error
+
+  .form-inputs
+    = f.input :title
+    = f.input :artist
+    = f.input :length, label: 'Length (in seconds)'
+  .form-hidden
+    = f.input :album_id, as: :hidden, input_html: {value: params[:album].to_i}
+
+:coffeescript
+  $(document).ready ->
+    $('ul.form-errors').hide()
+  $(document).on "click", "a#save-song", (event) ->
+    event.preventDefault()
+    form = $('form#new_song')
+    form_data = form.serialize()
+    $.ajax form.attr('action'),
+      data: form_data
+      dataType: 'script'
+      type: "post"
+      error: (evt, xhr, status, error) ->
+        alert('There was an error. Try again later.')
+        console.log(xhr)
+        console.log(error)

@@ -1,0 +1,16 @@
+= form_for @produce do |f|
+  - if @produce.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@produce.errors.count, "error")} prohibited this produce from being saved:"
+      %ul
+        - @produce.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :price
+    = f.text_field :price
+  .actions
+    = f.submit 'Save'

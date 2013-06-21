@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @song.title
+%p
+  %b Artist:
+  = @song.artist
+%p
+  %b Length:
+  = Time.at(@song.length).utc.strftime("%M:%S") if @song.length
+%p
+  %b Downloads:
+  = @song.downloads
+%p
+  %b Album:
+  = @song.album.title
+
+= link_to 'Edit', edit_song_path(@song)
+\|
+= link_to 'Back', request.env["HTTP_REFERER"] || @song.album

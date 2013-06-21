@@ -1,0 +1,15 @@
+<% if @song.errors.any? %>
+  $("ul.form-errors").html('')
+  <% @song.errors.full_messages.each do |error| %>
+    $("ul.form-errors").append('<li><%= escape_javascript( error ) %></li>');
+  <% end %>
+  $("ul.form-errors").fadeIn()
+<% else %>
+  $("ul.form-errors").hide()
+  $('form#new_song .form-inputs input').val('')
+  $('#manually-create-songs').modal('hide')
+
+  var new_song = "<%= escape_javascript( render(:partial => 'albums/partials/album_track', :locals => {song: song}) ) %>"
+  $("tbody#tracks").append(new_song)
+  $('.qq-upload-success').fadeOut()
+<% end %>
