@@ -21,7 +21,7 @@
         .row
           .small-12.columns
             %label{style: "text-decoration:underline;"} Upload Cover Art
-            = f.file_field :cover_art, style: "height: 20px;  line-height: 0px"
+            = f.file_field :cover_art
       %fieldset
         %legend Product Info
         .row
@@ -35,24 +35,23 @@
       .form-actions{style: "margin: 5%;"}
         = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
 
-  %div.span9
-    %table.table.table-hover
-      %h4 Track list
-      %thead
-        %tr
-          %th.hidden-phone Track
-          %th Title
-          %th.hidden-phone Length
-          %th Downloads
-          %th{style: "width:5%"}
-      %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
-        -@album.track_list.each_with_index do |song, index|
-          =render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
+    %fieldset
+      %legend Track Listing
+      %table
+        %thead
+          %tr
+            %th.hidden-phone Track
+            %th Title
+            %th.hidden-phone Length
+            %th Downloads
+            %th{style: "width:5%"}
+        %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
+          -@album.track_list.each_with_index do |song, index|
+            =render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
 
-    -unless @album.album_type == 1
-      %div#bootstrapped-fine-uploader.span8
-    -else
-      %a.btn.btn-inverse.btn-block{href: "/songs/new_from_modal/?album=#{@album.id}", 'data-target' => '#manually-create-songs', role: 'button', 'data-toggle' => 'modal', 'data-backdrop' => 'static'} Add Song Manually
+
+      %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
+      %a.button.small-12{href: "/songs/new_from_modal/?album=#{@album.id}", 'data-target' => '#manually-create-songs', role: 'button', 'data-toggle' => 'modal', 'data-backdrop' => 'static'} Add Song Manually
       %div#manually-create-songs.modal.hide.fade
         %div.modal-header
           %button.close{type:'button', "data-dismiss" => "modal", "aria-hidden" => 'true'}
