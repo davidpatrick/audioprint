@@ -34,18 +34,18 @@
                 = f.input :price
               .large-4.columns
                 = f.input :quantity
+        .large-6.columns
+          .form-actions
+            = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
 
-      .form-actions
-        = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
-
-    %fieldset{style: "margin: 0px;"}
+    %fieldset{style: "margin:0px;padding:10px;"}
       %legend Track Listing
       %table
         %thead
           %tr
-            %th.hidden-phone Track
+            %th.hide-for-small Track
             %th Title
-            %th.hidden-phone Length
+            %th.hide-for-small Length
             %th Downloads
             %th{style: "width:5%"}
         %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
@@ -53,21 +53,15 @@
             =render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
 
 
-      %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
-      %a.button.small-12{href: "/songs/new_from_modal/?album=#{@album.id}", 'data-target' => '#manually-create-songs', role: 'button', 'data-toggle' => 'modal', 'data-backdrop' => 'static'} Add Song Manually
-      %div#manually-create-songs.modal.hide.fade
-        %div.modal-header
-          %button.close{type:'button', "data-dismiss" => "modal", "aria-hidden" => 'true'}
-            &times;
-          %h3
-            Create New Song
-        %div.modal-body
-          %p
-            One Fine body
-        %div.modal-footer
-          %button.btn{"data-dismiss" => "modal", "aria-hidden" => 'true'}
-            Cancel
-          %a#save-song.btn.btn-inverse{href: '#'}
-            Save Song
+      .large-6.columns
+        %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
+      .large-6.columns
+        %a.button.small-12{href: "/songs/new_from_modal/?album=#{@album.id}", "data-reveal-id" => "manually-create-song", "data-reveal-ajax" => "true"} Add Song Manually
+.reveal-modal#manually-create-song
+  %h3
+    Create New Song
+  %a#save-song.btn.btn-inverse{href: '#'}
+    Save Song
+  %a.close-reveal-modal &#215;
 
 

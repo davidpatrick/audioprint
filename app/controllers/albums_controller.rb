@@ -81,6 +81,14 @@ class AlbumsController < ApplicationController
       params[:song].each_with_index do |id, index|
         album.track_list.update_all({track: index+1}, {id: id})
       end
+
+      respond_to do |format|
+        format.json { head :ok }
+      end
+    else
+      respond_to do |format|
+        format.json { render :status => :unprocessable_entity }
+      end
     end
   end
 

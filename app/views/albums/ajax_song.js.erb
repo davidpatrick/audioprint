@@ -5,11 +5,13 @@
   <% end %>
   $("ul.form-errors").fadeIn()
 <% else %>
-  $("ul.form-errors").hide()
-  $('form#new_song .form-inputs input').val('')
-  $('#manually-create-songs').modal('hide')
+  $('form#new_song .alert.alert-box').fadeOut();
+  $("ul.form-errors").html('')
+  $('form#new_song').prepend('<div class="alert-box success" data-alert style="display:none;">Successfully Added Song<a class="close" href="#">x</div>');
+  $('form#new_song .success.alert-box').fadeIn();
+  $('form#new_song .form-inputs input').val('');
 
   var new_song = "<%= escape_javascript( render(:partial => 'albums/partials/album_track', :locals => {song: song}) ) %>"
-  $("tbody#tracks").append(new_song)
-  $('.qq-upload-success').fadeOut()
+  $("tbody#tracks").append(new_song);
+  $('.qq-upload-success').fadeOut();
 <% end %>

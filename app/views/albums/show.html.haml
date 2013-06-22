@@ -9,7 +9,7 @@
 
 .row
   .small-12
-    %table.table.table-hover
+    %table
       %h4 Track list
       %thead
         %tr
@@ -19,8 +19,8 @@
           %th Downloads
           %th{style: "width:5%"}
       %tbody
-        -@album.track_list.each_with_index do |song, index|
-          =render :partial => 'albums/partials/album_track', :locals => {song: song}
+        - @album.track_list.each_with_index do |song, index|
+          = render partial: 'albums/partials/album_track', locals: {song: song}
 
 -if can? :manage, @album
   = link_to 'Edit', edit_album_path(@album)

@@ -1,7 +1,7 @@
 class Album < ActiveRecord::Base
   resourcify
   validates_presence_of :cover_art, :title, :artist, :release_date, :catalog_id
-  attr_accessible :artist, :cover_art, :remote_cover_art_url, :title, :release_date, :category_id, :album_type, :quantity, :price, :catalog_id
+  attr_accessible :artist, :cover_art, :remote_cover_art_url, :title, :release_date, :category_id, :quantity, :price, :catalog_id
   has_many :songs, :dependent => :destroy
   belongs_to :user
   belongs_to :category
@@ -20,16 +20,5 @@ class Album < ActiveRecord::Base
 
   def track_list
     self.songs.order('track')
-  end
-
-  def medium
-    case self.album_type
-    when 0
-      'Digital'
-    when 1
-      'Physical'
-    when 2
-      'Digital & Physical'
-    end
   end
 end

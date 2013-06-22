@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130621071037) do
+ActiveRecord::Schema.define(:version => 20130622202213) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(:version => 20130621071037) do
     t.integer  "user_id"
     t.date     "release_date"
     t.integer  "category_id"
-    t.integer  "album_type"
     t.integer  "catalog_id"
     t.integer  "quantity"
     t.decimal  "price",                  :precision => 7, :scale => 2

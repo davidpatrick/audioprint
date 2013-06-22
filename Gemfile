@@ -29,6 +29,7 @@ group :development do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem "haml"
 gem "devise", ">= 2.2.2"
 gem "cancan", ">= 1.6.8"

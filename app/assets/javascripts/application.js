@@ -27,6 +27,8 @@
 //= require foundation/foundation.interchange
 //= require foundation/foundation.placeholder
 //= require jquery.toolbar
+//= require jquery.ui.sortable
+//= require jquery.ui.effect
 //= require fineuploader.jquery
 //= require ckeditor/init
 //= require foundation-datepicker
