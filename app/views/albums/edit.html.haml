@@ -6,36 +6,39 @@
   .small-12
     = simple_form_for(@album, :html => {:multipart => true}) do |f|
       = f.error_notification
-      %fieldset
-        %legend Album Info
-        .row
-          .large-6.columns
-            = f.input :title
-          .large-6.columns
-            = f.input :artist
-        .row
-          .large-6.columns
-            = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
-          .large-6.columns
-            = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
-        .row
-          .small-12.columns
-            %label{style: "text-decoration:underline;"} Upload Cover Art
-            = f.file_field :cover_art
-      %fieldset
-        %legend Product Info
-        .row
-          .large-4.columns
-            = f.input :catalog_id
-          .large-4.columns
-            = f.input :price
-          .large-4.columns
-            = f.input :quantity
+      .row
+        .large-6.columns
+          %fieldset
+            %legend Album Info
+            .row
+              .large-6.columns
+                = f.input :title
+              .large-6.columns
+                = f.input :artist
+            .row
+              .large-6.columns
+                = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
+              .large-6.columns
+                = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
+            .row
+              .small-12.columns
+                %label{style: "text-decoration:underline;"} Upload Cover Art
+                = f.file_field :cover_art
+        .large-6.columns
+          %fieldset
+            %legend Product Info
+            .row
+              .large-4.columns
+                = f.input :catalog_id
+              .large-4.columns
+                = f.input :price
+              .large-4.columns
+                = f.input :quantity
 
-      .form-actions{style: "margin: 5%;"}
+      .form-actions
         = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
 
-    %fieldset
+    %fieldset{style: "margin: 0px;"}
       %legend Track Listing
       %table
         %thead

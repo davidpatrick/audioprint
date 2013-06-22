@@ -25,7 +25,7 @@
         %i.icon-cogs
       %div{id: "user-toolbar-#{song.id}", style: "visibility:hidden; color:black; width:0px; height:0px;"}
         = link_to song, class: 'edit-song', style: "text-decoration:none;" do
-          %i.icon-eye-open{style: "color:#000;padding:10px;"}      
+          %i.icon-eye-open{style: "color:#000;padding:10px;"}
         = link_to edit_song_path(song), class: 'edit-song', style: "text-decoration:none;" do
           %i.icon-pencil{style: "color:#000;padding:10px;"}
         = link_to song, class: 'delete-song', id: "#{song.id}", style: "text-decoration:none;" do
@@ -34,7 +34,7 @@
 -if edit_album
   :javascript
     $("#vertical-toolbar-#{song.id}").toolbar({
-      content: '#user-toolbar-#{song.id}', 
+      content: '#user-toolbar-#{song.id}',
       position: 'right',
       hideOnClick: true
     });

@@ -7,8 +7,8 @@ jQuery ->
       uploadButton: '<i class="icon-upload icon-white"></i> Upload a new song'
     template: '<div class="qq-uploader span12">' +
                 '<pre class="qq-upload-drop-area span12"><span>{dragZoneText}</span></pre>' +
-                '<div class="qq-upload-button btn btn-success" id="qq-upload" style="width: 100%;">{uploadButtonText}</div>' +
-                '<span class="qq-drop-processing"><span>{dropProcessingText}</span><span class="qq-drop-processing-spinner"></span></span>' +
+                '<div class="qq-upload-button button" id="qq-upload" style="width: 100%;">{uploadButtonText}</div>' +
+                '<span class="qq-drop-processing" style="display:none;"><span>{dropProcessingText}</span><span class="qq-drop-processing-spinner"></span></span>' +
                 '<ul class="qq-upload-list" style="margin-top: 10px; text-align: center;"></ul>' +
               '</div>'
     classes:

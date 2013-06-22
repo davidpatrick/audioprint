@@ -55,7 +55,7 @@ class AlbumsController < ApplicationController
 
     respond_to do |format|
       if @album.update_attributes(params[:album])
-        format.html { redirect_to edit_album_path(@album), notice: 'Album was successfully updated.' }
+        format.html { redirect_to @album, notice: 'Album was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

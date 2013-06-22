@@ -10,9 +10,7 @@ jQuery ->
   #       $(this).data('update-url') + '?album_id=' + $(this).data('album-id'),
   #       $(this).sortable('serialize')
   #     )
-  $('.date_picker').datepicker({format: 'yyyy/mm/dd'})
-  $('.date_picker').on 'changeDate', ->
-    $('.date_picker').datepicker('hide')
+  $('.date_picker').fdatepicker({format: 'yyyy/mm/dd'})
   $(document).on('click', '.edit-song', directToUrl)
   $(document).on('click', '.delete-song',  deleteSong)
 

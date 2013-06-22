@@ -80,6 +80,8 @@ GEM
     fine-uploader-rails (3.2)
       actionpack (>= 3.1)
       railties (>= 3.1)
+    font-awesome-rails (3.2.1.0)
+      railties (>= 3.2, < 5.0)
     haml (4.0.3)
       tilt
     haml-rails (0.4)
@@ -213,6 +215,7 @@ DEPENDENCIES
   devise (>= 2.2.2)
   factory_girl_rails (>= 4.1.0)
   fine-uploader-rails (~> 3.2)
+  font-awesome-rails
   haml
   haml-rails
   hpricot (>= 0.8.6)

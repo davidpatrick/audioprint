@@ -29,7 +29,7 @@
 //= require jquery.toolbar
 //= require fineuploader.jquery
 //= require ckeditor/init
-//= require bootstrap-datepicker
+//= require foundation-datepicker
 //= require_tree "./app"
 
 $(function(){ $(document).foundation(); });

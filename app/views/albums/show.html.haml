@@ -1,13 +1,14 @@
-.row.span8{style: "text-align:center;"}
-  %h1{style:"line-height:20px"}=@album.title
-  %h3{style:"line-height:15px"}=@album.artist
-  %h4{style:"line-height:8px"}=@album.year
+.row
+  .text-centered
+    %h1{style:"line-height:20px"}=@album.title
+    %h3{style:"line-height:15px"}=@album.artist
+    %h4{style:"line-height:8px"}=@album.year
 
-.row.span8{style: "text-align:center;"}
-  = image_tag @album.cover_art.url(:large)
+  .text-centered
+    = image_tag @album.cover_art.url(:large)
 
 .row
-  .span8
+  .small-12
     %table.table.table-hover
       %h4 Track list
       %thead
