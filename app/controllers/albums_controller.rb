@@ -15,14 +15,14 @@ class AlbumsController < ApplicationController
     @album = Album.find(params[:id])
 
     respond_to do |format|
-      format.html { render :layout => 'product' }
+      format.html { render :layout => 'product_show' }
       format.json { render json: @album }
     end
   end
 
   def edit
     @album = Album.find(params[:id])
-    render :layout => 'product'
+    render :layout => 'product_form'
   end
 
   def new

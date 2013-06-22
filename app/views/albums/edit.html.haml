@@ -1,35 +1,40 @@
-%div.row
-  %div.visible-phone
-    =link_to '<< Back to Albums', albums_path
-  %div.span6.hidden-phone
-    %h1 Editing album
-  %div.span.visible-phone
-    %h2 Editing album
-  %div.span3.offset1.hidden-phone
-    =link_to '<< Back to Albums', albums_path
+.row
+  .small-8.columns.small-centered
+    %h3.text-centered="#{@album.artist} - #{@album.title}"
+    = image_tag @album.cover_art.url(:medium), style: "margin-left: auto; margin-right: auto; width: 100%; max-width: 400px;"
+.row.content
+  .small-12
+    = simple_form_for(@album, :html => {:multipart => true}) do |f|
+      = f.error_notification
+      %fieldset
+        %legend Album Info
+        .row
+          .large-6.columns
+            = f.input :title
+          .large-6.columns
+            = f.input :artist
+        .row
+          .large-6.columns
+            = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
+          .large-6.columns
+            = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
+        .row
+          .small-12.columns
+            %label{style: "text-decoration:underline;"} Upload Cover Art
+            = f.file_field :cover_art, style: "height: 20px;  line-height: 0px"
+      %fieldset
+        %legend Product Info
+        .row
+          .large-4.columns
+            = f.input :catalog_id
+          .large-4.columns
+            = f.input :price
+          .large-4.columns
+            = f.input :quantity
 
-%div.row
-  = simple_form_for(@album, :html => {:multipart => true}) do |f|
-    = f.error_notification
-    %div.span4{style: "margin-top:20px;"}
-      .form-inputs
-        = f.input :title
-        = f.input :artist
-        = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
-        = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
-        = f.input :catalog_id
-        = f.input :price
-        = f.input :quantity
-        = f.input :album_type, collection: [OpenStruct.new(id: 0, name: 'Digital'), OpenStruct.new(id: 1, name: 'Physical'), OpenStruct.new(id: 2, name: 'Digital & Physical')], include_blank: "Select Medium Type", label: 'Medium Type', label_method: :name, value_method: :id
-        Cover Art:
-        = f.file_field :cover_art, style: "height: 20px;  line-height: 0px"
-    %div.span4{style: "align:right;margin-top:10px;"}
-      = link_to @album do
-        = image_tag @album.cover_art.url(:medium), style: "margin-left: auto; margin-right: auto; width: 100%; max-width: 400px;"
       .form-actions{style: "margin: 5%;"}
-        = f.button :submit, class: 'btn-inverse', :style => "margin-left: auto; margin-right: auto; width: 100%;"
+        = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
 
-%div.row
   %div.span9
     %table.table.table-hover
       %h4 Track list

@@ -33,7 +33,7 @@ Audioprint::Application.configure do
     password: 'ch33s3danish'
   }
   PAPERCLIP_BLOG_OPTS = {
-    :styles => { :large => "784x496>", :medium => "517x327>", :small => "258x163>" },
+    :styles => { :large => "1000x400>", :medium => "800x300>", :small => "500x200>" },
     :url => "/assets/blogs/:id/:style/:basename.:extension",
     :path => ":rails_root/public/assets/blogs/:id/:style/:basename.:extension"
   }

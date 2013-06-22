@@ -1,4 +1,4 @@
-= simple_form_for(@blog_post) do |f|
+= simple_form_for @blog_post do |f|
   - if @blog_post.errors.any?
     #error_explanation
       %h2= "#{pluralize(@blog_post.errors.count, "error")} prohibited this blog from being saved:"
@@ -12,6 +12,7 @@
   .row.collapse
     .small-12
       = f.association :album, include_blank: 'Select an Album'
+      = f.file_field :blog_cover
   .row.collapse
     .small-12
       = f.input :post, as: :ckeditor, label: false, input_html: { :ckeditor => {:toolbar => 'Full'} }
