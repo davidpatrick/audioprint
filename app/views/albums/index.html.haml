@@ -18,7 +18,7 @@
             %ul.right
               %li.divider
               %li.has-dropdown
-                %a{:href => "#"} Main Item 1
+                %a{:href => "#"} Categories
                 %ul.dropdown
                   %li
                     %label Section Name
@@ -54,11 +54,8 @@
                   %li
                     %a{:href => "#"} See all →
               %li.divider
-              %li
-                %a{:href => "#"} Main Item 2
-              %li.divider
               %li.has-dropdown
-                %a{:href => "#"} Main Item 3
+                %a{:href => "#"} Filter By
                 %ul.dropdown
                   %li
                     %a{:href => "#"} Dropdown Option
@@ -69,6 +66,15 @@
                   %li.divider
                   %li
                     %a{:href => "#"} See all →
+              %li.divider
+              %li.has-form
+                %form
+                  .row.collapse
+                    .small-8.columns
+                      %input{:type => "text"}/
+                    .small-4.columns
+                      %a.button{:href => "#"}
+                        %i.icon-search
         / End Top Bar
     / End Navigation
     .row
