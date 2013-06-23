@@ -5,6 +5,8 @@
     = f.input :title
     = f.input :artist
     = f.input :length, label: 'Length (in seconds)'
+    %label Upload Song
+    = f.file_field :mp3, label: 'Upload Song'
   .form-hidden
     = f.input :album_id, as: :hidden, input_html: {value: params[:album].to_i} if params[:album]
 

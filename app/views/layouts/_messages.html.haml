@@ -1,0 +1,5 @@
+- flash.each do |name, msg|
+  - if msg.is_a?(String)
+    .alert-box{:class => "#{name == :notice ? "success" : "error"}", "data-alert" => ""}
+      %a.close{href: '#'} x
+      = content_tag :div, msg, :id => "flash_#{name}"

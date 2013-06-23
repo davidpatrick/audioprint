@@ -92,7 +92,7 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     respond_to do |format|
       if @song.update_attributes(params[:song])
-        format.html { redirect_to @song, notice: 'Song was successfully updated.' }
+        format.html { redirect_to edit_album_path(@song.album), notice: 'Song was successfully updated.' }
         format.json { head :no_content }
         format.js { render :template => 'songs/update_song', :locals => { :song => @song } }
       else

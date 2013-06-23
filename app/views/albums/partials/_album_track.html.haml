@@ -1,25 +1,21 @@
-- download_album ||= nil
-- download_album = true if params[:action] == 'show' && current_user.has_role?(:admin)
-- edit_album ||= nil
-- edit_album = true if !download_album && (params[:action] == "ajax_uploaded_song" || 'edit' || 'create')
+- show_view = true if params[:action] == 'show' && current_user.has_role?(:admin)
 
-%td.hide-for-small
-  = song.track
-%td
-  = link_to song.title, song
-%td.hide-for-small
-  - song.length ||= 0
-  = Time.at(song.length).utc.strftime("%M:%S")
-%td{style: "text-align: center; width: 5%;"}
-  = song.downloads
+-if show_view
+  %td.hide-for-small= song.track
+  %td= link_to song.title, song
+  %td.hide-for-small= Time.at(song.length).utc.strftime("%M:%S") if song.length
+  %td.text-centered
+    - if song.mp3.present?
+      %a.download-button.full-width{href: '#'}
+        Add
+        %i.icon-shopping-cart
 
--if download_album
-  %td
-    = link_to '#' do #download_song_path(song, {format: 'mp3'})
-      %div{id: "vertical-toolbar-#{song.id}",style: "padding: 1px 8px 1px 8px;"}
-        %i.icon-cloud-download
--if edit_album
-  %td
+-else #edit_view
+  %td.hide-for-small= song.track
+  %td= link_to song.title, song
+  %td.hide-for-small= Time.at(song.length).utc.strftime("%M:%S") if song.length
+  %td.text-centered= "#{song.mp3.present? ? "Yes" : "No"}"
+  %td.text-centered
     %a{href: '#', 'data-dropdown' => "settings-#{song.id}"}
       %i.icon-cogs
     %ul.f-dropdown{id: "settings-#{song.id}", 'data-dropdown-content' => ''}
@@ -28,6 +24,6 @@
           %i.icon-pencil
           Edit Song
       %li
-        = link_to song, class: 'delete-song', id: "#{song.id}" do
+        %a{href: song, class: 'delete-song', id: "#{song.id}"}
           %i.icon-trash
           Delete Song

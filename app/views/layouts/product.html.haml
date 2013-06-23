@@ -19,12 +19,18 @@
   = stylesheet_link_tag "application"
   = javascript_include_tag "vendor/custom.modernizr"
   = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
+  = javascript_include_tag "application"
   = csrf_meta_tag
   = yield(:head)
 
 %body{:class => "#{controller_name} #{action_name}"}
   = render 'layouts/navigation'
-  / = render 'layouts/messages'
+  .row
+    .small-10.small-centered.columns
+      = render 'layouts/messages'
   .row
     .content.small-10.small-centered.columns
       = yield
+
+:plain
+  </html>

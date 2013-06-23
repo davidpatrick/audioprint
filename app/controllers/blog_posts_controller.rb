@@ -17,7 +17,7 @@ class BlogPostsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render :layout => 'product_show' }
+      format.html { render :layout => 'product' }
       format.json { render json: @blog_post }
     end
   end
@@ -26,14 +26,14 @@ class BlogPostsController < ApplicationController
     @blog_post = BlogPost.new
 
     respond_to do |format|
-      format.html { render :layout => 'product_form' }
+      format.html { render :layout => 'product' }
       format.json { render json: @blog_post }
     end
   end
 
   def edit
     @blog_post = BlogPost.find_by_slug(params[:slug])
-    render :layout => 'product_form'
+    render :layout => 'product'
   end
 
   def create
