@@ -1,0 +1,15 @@
+<% if @song.errors.any? %>
+  $("ul.form-errors").html('')
+  <% @song.errors.full_messages.each do |error| %>
+    $("ul.form-errors").append('<li><%= escape_javascript( error ) %></li>');
+  <% end %>
+  $("ul.form-errors").fadeIn()
+<% else %>
+  $('form.edit_song .alert.alert-box').fadeOut();
+  $("ul.form-errors").html('')
+  $('form.edit_song').prepend('<div class="alert-box success" data-alert style="display:none;">Successfully Updated Song<a class="close" href="#">x</div>');
+  $('form.edit_song .success.alert-box').fadeIn();
+
+  var updated_song = "<%= escape_javascript( render(:partial => 'albums/partials/album_track', :locals => {song: song}) ) %>"
+  $("tbody#tracks tr#song-<%=@song.id%>").html(updated_song);
+<% end %>

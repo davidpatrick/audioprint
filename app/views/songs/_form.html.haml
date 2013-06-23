@@ -1,11 +1,11 @@
-= simple_form_for(@song, :html => {:multipart => true}) do |f|
-  = f.error_notification
+= simple_form_for(@song, :html => {:multipart => true}, remote: true) do |f|
+  %ul.form-errors.alert-box.alert.hidden
 
   .form-inputs
     = f.input :title
     = f.input :artist
     = f.input :length, label: 'Length (in seconds)'
-    / = f.file_field :mp3
+  .form-hidden
+    = f.input :album_id, as: :hidden, input_html: {value: params[:album].to_i} if params[:album]
 
-  .form-actions
-    = f.button :submit
+  = f.button :submit, class: 'button'

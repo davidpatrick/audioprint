@@ -3,33 +3,31 @@
 - edit_album ||= nil
 - edit_album = true if !download_album && (params[:action] == "ajax_uploaded_song" || 'edit' || 'create')
 
+%td.hide-for-small
+  = song.track
+%td
+  = link_to song.title, song
+%td.hide-for-small
+  - song.length ||= 0
+  = Time.at(song.length).utc.strftime("%M:%S")
+%td{style: "text-align: center; width: 5%;"}
+  = song.downloads
 
-%tr{id: "song-#{song.id}"}
-  %td.hide-for-small
-    = song.track
+-if download_album
   %td
-    = link_to song.title, song
-  %td.hide-for-small
-    - song.length ||= 0
-    = Time.at(song.length).utc.strftime("%M:%S")
-  %td{style: "text-align: center; width: 5%;"}
-    = song.downloads
-
-  -if download_album
-    %td
-      = link_to '#' do #download_song_path(song, {format: 'mp3'})
-        %div{id: "vertical-toolbar-#{song.id}",style: "padding: 1px 8px 1px 8px;"}
-          %i.icon-cloud-download
-  -if edit_album
-    %td
-      %a{href: '#', 'data-dropdown' => "settings-#{song.id}"}
-        %i.icon-cogs
-      %ul.f-dropdown{id: "settings-#{song.id}", 'data-dropdown-content' => ''}
-        %li
-          = link_to edit_song_path(song) do
-            %i.icon-pencil
-            Edit Song
-        %li
-          = link_to song, class: 'delete-song', id: "#{song.id}" do
-            %i.icon-trash
-            Delete Song
+    = link_to '#' do #download_song_path(song, {format: 'mp3'})
+      %div{id: "vertical-toolbar-#{song.id}",style: "padding: 1px 8px 1px 8px;"}
+        %i.icon-cloud-download
+-if edit_album
+  %td
+    %a{href: '#', 'data-dropdown' => "settings-#{song.id}"}
+      %i.icon-cogs
+    %ul.f-dropdown{id: "settings-#{song.id}", 'data-dropdown-content' => ''}
+      %li
+        %a.edit-song{href: edit_song_path(song)}
+          %i.icon-pencil
+          Edit Song
+      %li
+        = link_to song, class: 'delete-song', id: "#{song.id}" do
+          %i.icon-trash
+          Delete Song

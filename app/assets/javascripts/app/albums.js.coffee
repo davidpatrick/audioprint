@@ -1,5 +1,7 @@
 jQuery ->
   $('body').on('click', 'a.delete-song',  deleteSong)
+  $('body').on('click', 'a.edit-song', editSong)
+
 
 deleteSong = ->
   if confirm('Are you sure you want to delete this song?')
@@ -12,4 +14,13 @@ deleteSong = ->
         $('.tool-container:visible').hide()
       error: (result) ->
         alert('There was a problem deleting this song')
+  return false
+
+editSong = ->
+  url_request = "http://localhost:3000/" + $(this).attr('href')
+  $("#song-modal").foundation "reveal", "open",
+    url: url_request
+    success: (data) ->
+    error: ->
+
   return false

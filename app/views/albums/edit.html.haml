@@ -1,7 +1,7 @@
 .row
   .small-8.columns.small-centered
     %h3.text-centered="#{@album.artist} - #{@album.title}"
-    = image_tag @album.cover_art.url(:medium), style: "margin-left: auto; margin-right: auto; width: 100%; max-width: 400px;"
+    = image_tag @album.cover_art.url(:medium), style: "margin-left: auto; margin-right: auto; width: 100%;"
 .row.content
   .small-12
     = simple_form_for(@album, :html => {:multipart => true}) do |f|
@@ -50,18 +50,22 @@
             %th{style: "width:5%"}
         %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
           -@album.track_list.each_with_index do |song, index|
-            =render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
+            %tr{id: "song-#{song.id}"}
+              = render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
 
 
       .large-6.columns
         %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
       .large-6.columns
-        %a.button.small-12{href: "/songs/new_from_modal/?album=#{@album.id}", "data-reveal-id" => "manually-create-song", "data-reveal-ajax" => "true"} Add Song Manually
-.reveal-modal#manually-create-song
+        %a.button.small-12{href: "/songs/new/?album=#{@album.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true"} Add Song Manually
+
+.reveal-modal#song-modal
   %h3
     Create New Song
   %a#save-song.btn.btn-inverse{href: '#'}
     Save Song
   %a.close-reveal-modal &#215;
+
+
 
 

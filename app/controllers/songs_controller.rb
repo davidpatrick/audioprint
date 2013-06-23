@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
   load_and_authorize_resource
-  
+
   # SEND_FILE_METHOD = :default
   # GET /songs
   # GET /songs.json
@@ -29,19 +29,15 @@ class SongsController < ApplicationController
     end
   end
 
-  # GET /songs/new
-  # GET /songs/new.json
   def new
-    @song = Song.new
-    @albums = current_user.albums(:order => :artist).collect{|album| [ album.to_s, album.id ] }
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @song }
+    if !params[:album] || request.referer.nil?
+      redirect_to root_path
+      return
+    elsif URI(request.referer).path != "/albums/#{params[:album]}/edit"
+      redirect_to root_path
+      return
     end
-  end
 
-  def new_from_modal
     @song = Song.new
 
     respond_to do |format|
@@ -49,13 +45,24 @@ class SongsController < ApplicationController
       format.json { render json: @song }
     end
   end
-  # GET /songs/1/edit
+
   def edit
+    if request.referer.nil?
+      redirect_to root_path
+      return
+    elsif URI(request.referer).path != "/albums/#{@song.album.id}/edit"
+      redirect_to root_path
+      return
+    end
+
     @song = Song.find(params[:id])
+
+    respond_to do |format|
+      format.html { render :layout => false }
+      format.json { render json: @song }
+    end
   end
 
-  # POST /songs
-  # POST /songs.json
   def create
     @song = Song.new(params[:song])
 
@@ -66,7 +73,6 @@ class SongsController < ApplicationController
         @song.track ||= @song.album.track_list.last.track + 1
       end
     end
-
 
     respond_to do |format|
       if @song.save
@@ -88,9 +94,11 @@ class SongsController < ApplicationController
       if @song.update_attributes(params[:song])
         format.html { redirect_to @song, notice: 'Song was successfully updated.' }
         format.json { head :no_content }
+        format.js { render :template => 'songs/update_song', :locals => { :song => @song } }
       else
         format.html { render action: "edit" }
         format.json { render json: @song.errors, status: :unprocessable_entity }
+        format.js { render :template => 'songs/update_song', :locals => { :song => @song } }
       end
     end
   end

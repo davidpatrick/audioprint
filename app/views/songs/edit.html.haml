@@ -1,7 +1,5 @@
-%h1 Editing song
+%h3.subheader Editing #{@song.title}
 
 = render 'form'
 
-= link_to 'Show Song', @song
-\|
-= link_to 'Show Album', @song.album
+%a.close-reveal-modal &#215;

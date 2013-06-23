@@ -26,9 +26,7 @@ Audioprint::Application.routes.draw do
     post :add_songs, :on => :member
   end
 
-  resources :songs do
-    get :new_from_modal, :on => :collection
-  end
+  resources :songs
 
   match 'songs/:id/download', :to => 'songs#download', :as => 'download_song'
 
