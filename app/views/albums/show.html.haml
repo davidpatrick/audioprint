@@ -13,7 +13,7 @@
       %li.description
         Catalog ID #AP#{@album.catalog_id}
       %li.bullet-item
-        In Stock: #{@album.quantity}
+        =print_stock(@album.quantity)
       %li.cta-button
         %a.button{href: '#'}
           Add to Cart
