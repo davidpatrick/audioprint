@@ -8,24 +8,35 @@
         %span Menu
 
   %section.top-bar-section
+    %ul.left
+      %li.divider
+      %li{class: "#{params[:controller] == 'albums' ? 'active' : ''}"}
+        = link_to 'Albums', albums_path
+      %li.divider
+      %li{class: "#{params[:controller] == 'blog_posts' ? 'active' : ''}"}
+        = link_to 'Blog', blog_posts_path
+      %li.divider
+      - if current_user && current_user.has_role?(:admin)
+        %li.has-dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            Create
+            %b.caret
+          %ul.dropdown
+            %li
+              = link_to 'Album', new_album_path
+            %li
+              = link_to 'Blog', new_blog_post_path
+            %li
+              = link_to 'User', new_album_path
+        %li.divider
     %ul.right
+      %li.divider
+      %li
+        = link_to view_cart_orders_path do
+          View Cart
+          %i.icon-shopping-cart
+      %li.divider
       - if user_signed_in?
-        %li{class: "#{params[:controller] == 'albums' ? 'active' : ''}"}
-          = link_to 'Albums', albums_path
-        %li{class: "#{params[:controller] == 'blog_posts' ? 'active' : ''}"}
-          = link_to 'Blog', blog_posts_path
-        - if current_user.has_role? :admin
-          %li.has-dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-              Create
-              %b.caret
-            %ul.dropdown
-              %li
-                = link_to 'Album', new_album_path
-              %li
-                = link_to 'Blog', new_blog_post_path
-              %li
-                = link_to 'User', new_album_path
         %li.has-dropdown.userdrop
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
             = current_user.name
@@ -51,12 +62,12 @@
                 Sign Out
       -else
         %li{style: "margin-top: 10px; font-size: 15px;"}
-          \|
+        %li.divider
         %li
           = link_to 'Sign Up', new_user_registration_path
         %li{style: "margin-top: 10px; font-size: 15px;"}
-          \|
+        %li.divider
         %li
           = link_to 'Login', new_user_session_path
         %li{style: "margin-top: 10px; font-size: 15px;"}
-          \|
+        %li.divider

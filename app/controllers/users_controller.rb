@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
-  before_save :load_order
 
   def index
     authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
@@ -9,7 +8,7 @@ class UsersController < ApplicationController
 
   def show
     if current_user && current_user.id.to_s == params[:id]
-      authorize! :read, @user, :message => 'You need to be an administrator to do that.'
+      authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
     else
       authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
     end

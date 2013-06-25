@@ -7,10 +7,10 @@ Audioprint::Application.routes.draw do
   match "/blog/:year/:month/:slug/edit", :to => "blog_posts#edit", :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
   match "/blog/:year/:month/:slug", :to => "blog_posts#update", :via => :put, :as => :update, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
 
-  authenticated :user do
-    root :to => 'home#index'
-  end
-  root :to => "home#landing"
+  # authenticated :user do
+  #   root :to => 'home#index'
+  # end
+  root :to => "home#index"
 
   devise_for :users
   resources :users
@@ -27,7 +27,12 @@ Audioprint::Application.routes.draw do
   resources :songs
   match 'songs/:id/download', :to => 'songs#download', :as => 'download_song'
 
-  resources :orders
+  resources :orders do
+    collection do
+      get :view_cart
+    end
+  end
+
   resources :order_items
   match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album'
   match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song'

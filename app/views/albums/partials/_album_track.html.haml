@@ -1,18 +1,6 @@
-- show_view = true if params[:action] == 'show' && current_user.has_role?(:admin)
+- edit_view = true if params[:action] == 'edit'
 
--if show_view
-  %td.hide-for-small= song.track
-  %td= link_to song.title, song
-  %td.hide-for-small= Time.at(song.length).utc.strftime("%M:%S") if song.length
-  %td.text-centered
-    - if song.mp3.present?
-      %a.download-button.full-width{href: '#'}
-        Add
-        %i.icon-shopping-cart
-    - else
-      No Digital Version
-
--else #edit_view
+-if edit_view
   %td.hide-for-small= song.track
   %td= link_to song.title, song
   %td.hide-for-small= Time.at(song.length).utc.strftime("%M:%S") if song.length
@@ -29,3 +17,14 @@
         %a{href: song, class: 'delete-song', id: "#{song.id}"}
           %i.icon-trash
           Delete Song
+-else #show_view
+  %td.hide-for-small= song.track
+  %td= link_to song.title, song
+  %td.hide-for-small= Time.at(song.length).utc.strftime("%M:%S") if song.length
+  %td.text-centered
+    - if song.mp3.present?
+      %a.download-button.full-width{href: '#'}
+        Add
+        %i.icon-shopping-cart
+    - else
+      No Digital Version

@@ -16,9 +16,15 @@ class Ability
     # end
 
     if user.persisted?
-      can :read, :all
+      # can :manage, Order, user_id: user.id
+      # can :manage, OrderItem, order: {user_id: user.id}
     else
-      cannot :read, :all
+      # can :create, Order
+      # can :create, OrderItem
+      can :read, Album
+      can :read, Song
+      can :read, BlogPost
+      # can :read, Order
     end
 
 

@@ -1261,8 +1261,7 @@ $topbar-breakpoint: emCalc(600px); // Change to 9999px for always mobile layout
 // $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles
-
-// $topbar-divider-border-bottom: solid 1px lighten($topbar-bg, 10%);
+$topbar-divider-border-bottom: solid 1px lighten($topbar-bg, 15%);
 // $topbar-divider-border-top: solid 1px darken($topbar-bg, 10%);
 
 // Sticky Class
