@@ -16,9 +16,9 @@ class Ability
     # end
 
     if user.persisted?
-        can :read, :all
+      can :read, :all
     else
-        cannot :read, :all
+      cannot :read, :all
     end
 
 

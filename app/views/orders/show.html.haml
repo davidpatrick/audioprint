@@ -4,7 +4,7 @@
 %table
   %tr
     %th Customer
-    %td= @order.user_id
+    %td=  @order.user ? @order.user.name : "Not Logged In"
   %tr
     %th Status:
     %td= @order.status
@@ -15,6 +15,7 @@
     %th Items
     %th Title
     %th Quantity
+    %th Stock
     %th Unit Price
     %th Subtotal
     %th
@@ -22,15 +23,17 @@
     %tr{id: "item-#{item.id}"}
       %td= image_tag item.product.cover_art(:thumb)
       %td= link_to item.product.title, item.product
-      %td
-        %span.quantity= item.quantity
+      %td.quantity
+        %span= item.quantity
         = link_to '+', order_item_path(item), class: 'button tiny success add-quantity'
         = link_to '-', order_item_path(item), class: 'button tiny alert subtract-quantity'
+      %td.stock= print_stock(item.product.quantity, item.quantity)
       %td= number_to_currency(item.product.price)
       %td.subtotal= number_to_currency(item.subtotal)
       %td
         = link_to item, class: 'delete-item button alert tiny' do
           %i.icon-remove
+
   %tr
     %td
     %td

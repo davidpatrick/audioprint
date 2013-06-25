@@ -11,9 +11,10 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :avatar, :profile_type_id, :account_request
   has_many :albums
   has_many :songs, :through => :albums
+  has_many :orders
   has_attached_file :avatar, PAPERCLIP_AVATAR_OPTS
   after_create :send_account_request
-  
+
   def album_ids
     self.albums.collect(&:id)
   end
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
         'Contributor'
       when 2
         'Vendor'
-      when 1        
+      when 1
         'Basic'
     end
     UserMailer.request_account(self, account_type).deliver
