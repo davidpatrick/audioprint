@@ -19,21 +19,21 @@
     %th Subtotal
     %th
   - @order.order_items.each do |item|
-    %tr
+    %tr{id: "item-#{item.id}"}
       %td= image_tag item.product.cover_art(:thumb)
       %td= link_to item.product.title, item.product
       %td
-        = item.quantity
-        +
-        -
+        %span.quantity= item.quantity
+        = link_to '+', order_item_path(item), class: 'button tiny success add-quantity'
+        = link_to '-', order_item_path(item), class: 'button tiny alert subtract-quantity'
       %td= number_to_currency(item.product.price)
-      %td= number_to_currency(item.subtotal)
+      %td.subtotal= number_to_currency(item.subtotal)
       %td
-        = link_to item, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'button alert tiny' do
+        = link_to item, class: 'delete-item button alert tiny' do
           %i.icon-remove
   %tr
     %td
     %td
     %td
     %th Order Total
-    %td= number_to_currency(@order.total)
+    %td#order-total= number_to_currency(@order.total)

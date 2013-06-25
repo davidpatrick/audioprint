@@ -31,15 +31,19 @@ class OrderItemsController < ApplicationController
     end
   end
 
-  # PUT /order_items/1
-  # PUT /order_items/1.json
   def update
     @order_item = OrderItem.find(params[:id])
 
+    if params[:add_quantity]
+      @order_item.quantity += 1
+    elsif params[:subtract_quantity]
+      @order_item.quantity -= 1
+    end
+
     respond_to do |format|
-      if @order_item.update_attributes(params[:order_item])
+      if @order_item.save
         format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: {id: @order_item.id, quantity: @order_item.quantity , subtotal: ActionController::Base.helpers.number_to_currency(@order_item.subtotal), total: ActionController::Base.helpers.number_to_currency(@order_item.order.total)}, status: 200 }
       else
         format.html { render action: "edit" }
         format.json { render json: @order_item.errors, status: :unprocessable_entity }
@@ -54,8 +58,13 @@ class OrderItemsController < ApplicationController
     @order_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to @order_item.order }
-      format.json { head :no_content }
+      if @order_item.destroyed?
+        format.html { redirect_to @order_item.order }
+        format.json { render json: { id: @order_item.id }, status: 200 }
+      else
+        format.html { redirect_to @order_item.order }
+        format.json { render json: @order_item.errors, status: :unprocessable_entity }
+      end
     end
   end
 end
