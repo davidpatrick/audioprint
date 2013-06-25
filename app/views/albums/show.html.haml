@@ -15,7 +15,7 @@
       %li.bullet-item
         =print_stock(@album.quantity)
       %li.cta-button
-        %a.button{href: '#'}
+        %a.button{href: add_album_to_cart_path(@album)}
           Add to Cart
           %i.icon-shopping-cart
 .row

@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%h1 Your Order
+%table
+  %tr
+    %th Customer
+    %td= @order.user_id
+  %tr
+    %th Status:
+    %td= @order.status
+  %tr
+    %th Items:
+    %td= @order.order_items.count
+  %tr
+    %th Items
+    %th Title
+    %th Quantity
+    %th Unit Price
+    %th Subtotal
+    %th
+  - @order.order_items.each do |item|
+    %tr
+      %td= image_tag item.product.cover_art(:thumb)
+      %td= link_to item.product.title, item.product
+      %td
+        = item.quantity
+        +
+        -
+      %td= number_to_currency(item.product.price)
+      %td= number_to_currency(item.subtotal)
+      %td
+        = link_to item, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'button alert tiny' do
+          %i.icon-remove
+  %tr
+    %td
+    %td
+    %td
+    %th Order Total
+    %td= number_to_currency(@order.total)

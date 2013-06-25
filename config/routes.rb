@@ -1,6 +1,4 @@
 Audioprint::Application.routes.draw do
-  resources :products
-
   resources :blog_posts, path: :blog
 
   match "/blog/:year", :to => "blog_posts#index", :constraints => { :year => /\d{4}/ }
@@ -27,9 +25,11 @@ Audioprint::Application.routes.draw do
   end
 
   resources :songs
-
   match 'songs/:id/download', :to => 'songs#download', :as => 'download_song'
 
-
+  resources :orders
+  resources :order_items
+  match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album'
+  match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song'
   mount Ckeditor::Engine => "/ckeditor"
 end
