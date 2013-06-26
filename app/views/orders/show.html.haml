@@ -62,7 +62,7 @@
 
   .reveal-modal#address-modal
 
-- elsif @order.status == "Confirmed"
+- elsif @order.status == "Confirmed" || @order.status == "Processed"
   %h1 Order ##{@order.id}
   %table.full-width
     %tr

@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
     redirect_to '/', :alert => exception.message
   end
 
+  def authorize_admin
+    authenticate_user!
+    raise CanCan::AccessDenied unless current_user.has_role? :admin
+  end
+
   def print_stock(stock, requested = nil)
     if requested && requested > stock
       'Insufficient Stock'

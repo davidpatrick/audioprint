@@ -10,6 +10,20 @@ class OrdersController < ApplicationController
     end
   end
 
+  def process_order
+    authorize_admin
+    redirect_to root_path unless current_user.has_role? :admin
+
+    @order = Order.find(params[:id])
+    @order.status = Order.status_types.third
+
+    if @order.save
+      redirect_to orders_path, notice: 'This order has been processed.'
+    else
+      redirect_to orders_path, alert: 'There was an error processing this order.'
+    end
+  end
+
   def purchase
     authenticate_user!
     @order = Order.find(params[:id])
@@ -48,7 +62,11 @@ class OrdersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      if current_user.has_role? :admin
+        format.html { render :template => "orders/manage" }
+      else
+        format.html
+      end
       format.json { render json: @orders }
     end
   end
