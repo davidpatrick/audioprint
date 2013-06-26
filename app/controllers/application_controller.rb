@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def load_order
     begin
       @order = Order.find(session[:order_id])
-      raise ActiveRecord::RecordNotFound unless @order && @order.status == "unsubmitted"
+      raise ActiveRecord::RecordNotFound unless @order && @order.status == "Unsubmitted"
 
       if current_user && !@order.user
         @order.user = current_user
@@ -29,9 +29,9 @@ class ApplicationController < ActionController::Base
 
     rescue ActiveRecord::RecordNotFound
       if current_user
-        @order = current_user.orders.find_or_create_by_status("unsubmitted")
+        @order = current_user.orders.find_or_create_by_status("Unsubmitted")
       else
-        @order = Order.create(status: "unsubmitted")
+        @order = Order.create(status: "Unsubmitted")
       end
       session[:order_id] = @order.id
     end

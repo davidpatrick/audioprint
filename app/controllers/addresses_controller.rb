@@ -1,9 +1,11 @@
 class AddressesController < ApplicationController
+  load_and_authorize_resource
   before_filter :load_order
 
   # GET /addresses
   # GET /addresses.json
   def index
+    authorize! :read, Address
     @addresses = Address.all
 
     respond_to do |format|
@@ -80,7 +82,7 @@ class AddressesController < ApplicationController
     @address.destroy
 
     respond_to do |format|
-      format.html { redirect_to addresses_url }
+      format.html { redirect_to edit_user_registration_path }
       format.json { head :no_content }
     end
   end

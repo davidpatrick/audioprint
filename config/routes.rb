@@ -33,7 +33,6 @@ Audioprint::Application.routes.draw do
   resources :orders do
     member do
       put :purchase
-      get :confirmation
     end
     collection do
       get :view_cart

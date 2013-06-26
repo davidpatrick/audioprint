@@ -3,30 +3,30 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
+    can :read, [Album, Song, BlogPost]
+    cannot :read, [Order, Address]
 
     if user.has_role? :admin
       can :manage, :all
       can :create, :all
+      can :read, :all
     end
-
-    # if user.has_role? :contributor
-    #     can :create, [Album, Song]
-    #     can :manage, Album, :user_id => user.id
-    #     can :manage, Song, :album => { :user_id => user.id}
-    # end
 
     if user.persisted?
-      # can :manage, Order, user_id: user.id
-      # can :manage, OrderItem, order: {user_id: user.id}
+      can :create, Address
+      can :destroy, Address, user_id: user.id
+      can :manage, Order, user_id: user.id
+      can :manage, OrderItem, order: {user_id: user.id}
     else
-      # can :create, Order
-      # can :create, OrderItem
-      can :read, Album
-      can :read, Song
-      can :read, BlogPost
-      # can :read, Order
+      can :create, Order
+      can :create, OrderItem
     end
 
+    if user.has_role? :contributor
+      can :create, [Album, Song]
+      can :manage, Album, :user_id => user.id
+      can :manage, Song, :album => { :user_id => user.id}
+    end
 
 
     # Define abilities for the passed in user here. For example:

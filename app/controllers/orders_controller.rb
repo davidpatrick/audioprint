@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  # load_and_authorize_resource
+  load_and_authorize_resource
 
   def view_cart
     load_order
@@ -15,11 +15,19 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     sign_out current_user unless can? :manage, @order
 
+    @order.errors.add(:address, "Whoops! You forgot to set an address!") unless params[:order][:address_id].present?
+    @order.errors.add(:items, "You don't have any items in your cart") unless @order.order_items.any?
+
+    if @order.errors.any?
+      render action: "show"
+      return
+    end
+
     params[:order][:status] = Order.status_types.second
 
     respond_to do |format|
       if @order.update_attributes(params[:order])
-        session[:order_id] = "" #reset session order
+        session[:order_id] = nil #reset session order
 
         format.html { redirect_to @order, notice: 'Your order was successfully placed.' }
         format.json { head :no_content }
@@ -30,19 +38,17 @@ class OrdersController < ApplicationController
     end
   end
 
-  def confirmation
-    authenticate_user!
-    @order = Order.find(params[:id])
-    sign_out current_user unless can? :manage, @order
-
-    @order = Order.find(params[:id])
-  end
-
   def index
-    @orders = Order.all
+    authenticate_user!
+
+    if current_user.has_role? :admin
+      @orders = Order.all
+    else
+      @orders = Order.where(user_id: current_user.id)
+    end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @orders }
     end
   end

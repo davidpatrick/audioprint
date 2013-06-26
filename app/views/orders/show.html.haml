@@ -3,11 +3,10 @@
 - if @order.status == 'Unsubmitted'
   = simple_form_for(@order, url: purchase_order_path(@order), :html => {:multipart => true}) do |f|
     - if @order.errors.any?
-      .alert-box.alert{"data-alert" => ""}
-        %a.close{href:'#'}x
-        %ul
-          - @order.errors.full_messages.each do |msg|
-            %li= msg
+      - @order.errors.full_messages.each do |msg|
+        .alert-box.alert{"data-alert" => ""}
+          %a.close{href:'#'}x
+          = msg
 
     %h1 Your Order
     %table.full-width

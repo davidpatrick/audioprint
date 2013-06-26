@@ -3,7 +3,6 @@ class Order < ActiveRecord::Base
   belongs_to :user, foreign_key: :user_id
   belongs_to :address
   has_many :order_items, dependent: :destroy
-  validates_presence_of :address_id
 
   def self.status_types
     ["Unsubmitted", "Confirmed", "Processed", "Shipped"]
