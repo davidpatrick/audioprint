@@ -39,12 +39,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def become_contributor
-    unless current_user.account_request == 3
-      UserMailer.request_account(current_user, 'Contributor').deliver if current_user.update_attribute(:account_request, 3)
-      redirect_to edit_user_registration_path, :notice => "Request has been sent."
-    else
-      redirect_to edit_user_registration_path, :notice => "You have already sent this request."
-    end
-  end
+  # def become_contributor
+  #   unless current_user.account_request == 3
+  #     UserMailer.request_account(current_user, 'Contributor').deliver if current_user.update_attribute(:account_request, 3)
+  #     redirect_to edit_user_registration_path, :notice => "Request has been sent."
+  #   else
+  #     redirect_to edit_user_registration_path, :notice => "You have already sent this request."
+  #   end
+  # end
 end

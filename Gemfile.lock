@@ -28,6 +28,7 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    addressable (2.3.4)
     airbrake (3.1.12)
       activesupport
       builder
@@ -62,6 +63,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    css_parser (1.3.4)
+      addressable
     debug_inspector (0.0.2)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
@@ -156,6 +159,11 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    roadie (2.3.4)
+      actionmailer (> 3.0.0, < 3.3.0)
+      css_parser
+      nokogiri (>= 1.4.4)
+      sprockets
     rolify (3.2.0)
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
@@ -230,6 +238,7 @@ DEPENDENCIES
   pry
   quiet_assets (>= 1.0.1)
   rails (= 3.2.11)
+  roadie
   rolify (>= 3.2.0)
   rspec-rails (>= 2.12.2)
   ruby-mp3info

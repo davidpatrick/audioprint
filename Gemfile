@@ -44,3 +44,4 @@ gem 'stringex', '>= 2.0.0'
 gem "ckeditor", '>= 4.0.0'
 gem 'zurb-foundation', '4.2.2'
 gem "font-awesome-rails"
+gem "roadie"

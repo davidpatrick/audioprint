@@ -12,4 +12,8 @@ class UserMailer < ActionMailer::Base
 
     mail to: "shilohkevin@gmail.com", cc: "batreyud@gmail.com", subject: "AudioPrint contributor request!"
   end
+
+  def process_order(user)
+
+  end
 end

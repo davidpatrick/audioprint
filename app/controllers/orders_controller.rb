@@ -12,12 +12,11 @@ class OrdersController < ApplicationController
 
   def process_order
     authorize_admin
-    redirect_to root_path unless current_user.has_role? :admin
 
     @order = Order.find(params[:id])
-    @order.status = Order.status_types.third
+    redirect_to @order, alert: "This order cannot be processed" unless @order.status == "Confirmed"
 
-    if @order.save
+    if @order.process(current_user)
       redirect_to orders_path, notice: 'This order has been processed.'
     else
       redirect_to orders_path, alert: 'There was an error processing this order.'
@@ -42,6 +41,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update_attributes(params[:order])
         session[:order_id] = nil #reset session order
+        OrderMailer.confirm(current_user, @order).deliver
 
         format.html { redirect_to @order, notice: 'Your order was successfully placed.' }
         format.json { head :no_content }
