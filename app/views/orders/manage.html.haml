@@ -15,14 +15,19 @@
       %td= number_to_currency(order.total)
       - if order.status == "Unsubmitted"
         %td
-          = link_to order, class: 'button alert tiny', :method => :delete, :data => { :confirm => 'Are you sure?' } do
+          = link_to order, class: 'button alert medium', :method => :delete, :data => { :confirm => 'Are you sure?' } do
             %i.icon-remove
             Remove
       - if order.status == "Confirmed"
         %td
-          = link_to process_order_order_path(order), method: :put, class: 'button tiny', :data => { :confirm => 'Are you sure?' } do
+          = link_to process_order_order_path(order), method: :put, class: 'button medium', :data => { :confirm => 'Are you sure?' } do
             %i.icon-plus
             Process
+      - if order.status == "Processed"
+        %td
+          = link_to ship_order_order_path(order), method: :put, class: 'success button medium', :data => { :confirm => 'Are you sure?' } do
+            %i.icon-plane
+            Ship
 .row.collapse
   .right
     Total of all orders:

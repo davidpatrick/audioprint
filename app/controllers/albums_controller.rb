@@ -2,9 +2,7 @@ class AlbumsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    authorize! :read, Album
     @albums = Album.all
-    @featured_albums = Album.first(4)
 
     respond_to do |format|
       format.html # index.html.erb

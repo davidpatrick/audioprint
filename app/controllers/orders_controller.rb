@@ -14,7 +14,6 @@ class OrdersController < ApplicationController
     authorize_admin
 
     @order = Order.find(params[:id])
-    redirect_to @order, alert: "This order cannot be processed" unless @order.status == "Confirmed"
 
     if @order.process(current_user)
       redirect_to orders_path, notice: 'This order has been processed.'
@@ -22,6 +21,24 @@ class OrdersController < ApplicationController
       redirect_to orders_path, alert: 'There was an error processing this order.'
     end
   end
+
+  def tracking_confirmation
+
+  end
+
+  def ship_order
+    authorize_admin
+
+    @order = Order.find(params[:id])
+    redirect_to @order, alert: "This order cannot be processed" unless @order.status == "Processed"
+
+    if @order.ship(current_user)
+      redirect_to orders_path, notice: 'This order has now been shipped!'
+    else
+      redirect_to orders_path, alert: 'There was an error with this order.'
+    end
+  end
+
 
   def purchase
     authenticate_user!

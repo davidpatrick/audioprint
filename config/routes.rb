@@ -34,6 +34,7 @@ Audioprint::Application.routes.draw do
     member do
       put :purchase
       put :process_order
+      post :ship_order
     end
     collection do
       get :view_cart

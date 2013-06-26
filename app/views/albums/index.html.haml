@@ -92,36 +92,15 @@
       / Thumbnails
       .large-8.columns
         .row
-          .large-4.small-6.columns
-            %img{:src => "http://placehold.it/1000x1000&text=Thumbnail"}/
-            .panel
-              %h5 Item Name
-              %h6.subheader $000.00
-          .large-4.small-6.columns
-            %img{:src => "http://placehold.it/500x500&text=Thumbnail"}/
-            .panel
-              %h5 Item Name
-              %h6.subheader $000.00
-          .large-4.small-6.columns
-            %img{:src => "http://placehold.it/500x500&text=Thumbnail"}/
-            .panel
-              %h5 Item Name
-              %h6.subheader $000.00
-          .large-4.small-6.columns
-            %img{:src => "http://placehold.it/500x500&text=Thumbnail"}/
-            .panel
-              %h5 Item Name
-              %h6.subheader $000.00
-          .large-4.small-6.columns
-            %img{:src => "http://placehold.it/500x500&text=Thumbnail"}/
-            .panel
-              %h5 Item Name
-              %h6.subheader $000.00
-          .large-4.small-6.columns
-            %img{:src => "http://placehold.it/500x500&text=Thumbnail"}/
-            .panel
-              %h5 Item Name
-              %h6.subheader $000.00
+          - @albums.each do |album|
+            =link_to album do
+              .large-4.small-6.columns
+                .div{style: "width: 146px; height: 146px;"}
+                  = image_tag album.cover_art.url(:large)
+                .panel
+                  %h5= album.title
+                  %h6.subheader= number_to_currency(album.price)
+
         / End Thumbnails
         / Managed By
         .row

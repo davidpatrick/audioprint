@@ -13,6 +13,7 @@ class Order < ActiveRecord::Base
   end
 
   def process(user)
+    return false unless @order.status == "Confirmed"
     if self.update_column(:status, "Processed")
       self.order_items.each do |item|
         product = item.product
@@ -21,6 +22,17 @@ class Order < ActiveRecord::Base
         product.save
       end
       OrderMailer.process_order(user, self).deliver
+      return true
+    else
+      return false
+    end
+  end
+
+
+  def ship(user)
+    return false unless @order.status == "Processed"
+    if self.update_column(:status, "Shipped")
+      OrderMailer.ship_order(user, self).deliver
       return true
     else
       return false
