@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :albums
   has_many :songs, :through => :albums
   has_many :orders
+  has_many :addresses
   has_attached_file :avatar, PAPERCLIP_AVATAR_OPTS
   after_create :send_account_request
 

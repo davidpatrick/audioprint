@@ -1,4 +1,7 @@
 Audioprint::Application.routes.draw do
+  resources :addresses
+
+
   resources :blog_posts, path: :blog
 
   match "/blog/:year", :to => "blog_posts#index", :constraints => { :year => /\d{4}/ }
@@ -28,6 +31,10 @@ Audioprint::Application.routes.draw do
   match 'songs/:id/download', :to => 'songs#download', :as => 'download_song'
 
   resources :orders do
+    member do
+      put :purchase
+      get :confirmation
+    end
     collection do
       get :view_cart
     end

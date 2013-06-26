@@ -1,0 +1,9 @@
+<% if @address.errors.any? %>
+  $("ul.form-errors").html('');
+  <% @address.errors.full_messages.each do |error| %>
+    $("ul.form-errors").append('<li><%= escape_javascript( error ) %></li>');
+  <% end %>
+  $("ul.form-errors").fadeIn();
+<% else %>
+  location.reload();
+<% end %>

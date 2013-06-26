@@ -10,6 +10,34 @@ class OrdersController < ApplicationController
     end
   end
 
+  def purchase
+    authenticate_user!
+    @order = Order.find(params[:id])
+    sign_out current_user unless can? :manage, @order
+
+    params[:order][:status] = Order.status_types.second
+
+    respond_to do |format|
+      if @order.update_attributes(params[:order])
+        session[:order_id] = "" #reset session order
+
+        format.html { redirect_to @order, notice: 'Your order was successfully placed.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def confirmation
+    authenticate_user!
+    @order = Order.find(params[:id])
+    sign_out current_user unless can? :manage, @order
+
+    @order = Order.find(params[:id])
+  end
+
   def index
     @orders = Order.all
 

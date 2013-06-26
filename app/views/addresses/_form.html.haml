@@ -1,0 +1,22 @@
+= simple_form_for(@address, :html => {:multipart => true}, remote: true) do |f|
+  %ul.form-errors.alert-box.alert.hidden
+
+  .field
+    = f.label :line1
+    = f.text_field :line1
+  .field
+    = f.label :line2
+    = f.text_field :line2
+  .field
+    = f.label :city
+    = f.text_field :city
+  .field
+    = f.label :state
+    = f.text_field :state
+  .field
+    = f.label :zip
+    = f.text_field :zip
+  .field
+    = f.hidden_field :user_id, value: current_user.id
+  .actions
+    = f.button :submit, class: 'button'
