@@ -2,7 +2,17 @@ class AlbumsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @albums = Album.all
+    if params[:category]
+      @albums = Album.where(category_id: params[:category])
+    else
+      @albums = Album.scoped
+    end
+
+    if params[:search]
+      @albums = @albums.where("title LIKE ? OR artist LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+    end
+
+    @featured_album = Album.last
 
     respond_to do |format|
       format.html # index.html.erb

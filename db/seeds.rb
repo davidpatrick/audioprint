@@ -33,13 +33,13 @@
   puts new_category.name if new_category.new_record?
 end
 
-[
-  "Artist",
-  "DJ (Mixtapes)",
-  "Comedian",
-  "Author",
-  "Producer"
-].each do |p_type|
-  new_type = ProfileType.find_or_create_by_name(p_type)
-  puts new_type.name if new_type.new_record?
-end
+# [
+#   "Artist",
+#   "DJ (Mixtapes)",
+#   "Comedian",
+#   "Author",
+#   "Producer"
+# ].each do |p_type|
+#   new_type = ProfileType.find_or_create_by_name(p_type)
+#   puts new_type.name if new_type.new_record?
+# end

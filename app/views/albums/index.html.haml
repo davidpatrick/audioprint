@@ -7,9 +7,7 @@
           %ul.title-area
             / Title Area
             %li.name
-              %h1
-                %a{:href => "#"}
-                  Albums
+              %h1= link_to 'Albums', albums_path
             %li.toggle-topbar.menu-icon
               %a{:href => "#"}
                 %span menu
@@ -20,74 +18,51 @@
               %li.has-dropdown
                 %a{:href => "#"} Categories
                 %ul.dropdown
-                  %li
-                    %label Section Name
-                  %li.has-dropdown
-                    %a{:href => "#"} Has Dropdown, Level 1
-                    %ul.dropdown
-                      %li
-                        %a{:href => "#"} Dropdown Options
-                      %li
-                        %a{:href => "#"} Dropdown Options
-                      %li
-                        %a{:href => "#"} Level 2
-                      %li
-                        %a{:href => "#"} Subdropdown Option
-                      %li
-                        %a{:href => "#"} Subdropdown Option
-                      %li
-                        %a{:href => "#"} Subdropdown Option
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li
-                    %a{:href => "#"} Dropdown Option
+                  - Category.all.each do |category|
+                    %li
+                      = link_to category.name, albums_path(category: category.id)
                   %li.divider
                   %li
-                    %label Section Name
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li.divider
-                  %li
-                    %a{:href => "#"} See all →
+                    = link_to 'View all →', albums_path
               %li.divider
-              %li.has-dropdown
-                %a{:href => "#"} Filter By
-                %ul.dropdown
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li
-                    %a{:href => "#"} Dropdown Option
-                  %li.divider
-                  %li
-                    %a{:href => "#"} See all →
-              %li.divider
+              / %li.has-dropdown
+              /   %a{:href => "#"} Filter By
+              /   %ul.dropdown
+              /     %li
+              /       %a{:href => "#"} Dropdown Option
+              /     %li
+              /       %a{:href => "#"} Dropdown Option
+              /     %li
+              /       %a{:href => "#"} Dropdown Option
+              /     %li.divider
+              /     %li
+              /       %a{:href => "#"} See all →
+              / %li.divider
               %li.has-form
-                %form
+                = form_tag 'albums', method: 'get' do
                   .row.collapse
-                    .small-8.columns
-                      %input{:type => "text"}/
-                    .small-4.columns
+                    .small-10.columns
+                      =text_field_tag :search, (params[:search] ? params[:search] : nil), id: 'albums-search', placeholder: "Search Albums"
+                    .small-2.columns
                       %a.button{:href => "#"}
                         %i.icon-search
         / End Top Bar
     / End Navigation
     .row
       / Side Bar
-      .large-4.small-12.columns
-        %img{:src => "http://placehold.it/500x500&text=Logo"}/
-        .hide-for-small.panel
-          %h3 Header
-          %h5.subheader
-            Risus ligula, aliquam nec fermentum vitae, sollicitudin eget urna. Donec dignissim nibh fermentum odio ornare sagittis.
+      .large-4.hide-for-small.columns
+        =link_to @featured_album do
+          = image_tag @featured_album.cover_art.url(:large)
+          .panel
+            %h3= @featured_album.title
+            %h4= @featured_album.artist
+            %h5.subheader
+              This week's featured album is #{@featured_album.title} by #{@featured_album.artist}
         %a{:href => "#"}
         .panel.callout.radius
-          %h6 99  items in your cart
+          %h6
+            %i.icon-shopping-cart
+            Add Featured Album to Cart
       / End Side Bar
       / Thumbnails
       .large-8.columns
@@ -95,40 +70,32 @@
           - @albums.each do |album|
             =link_to album do
               .large-4.small-6.columns
-                .div{style: "width: 146px; height: 146px;"}
-                  = image_tag album.cover_art.url(:large)
-                .panel
-                  %h5= album.title
-                  %h6.subheader= number_to_currency(album.price)
+                = image_tag album.cover_art.url(:medium)
+                %ul.pricing-table{style: "background-color: #f2f2f2; height: 70px;"}
+                  %li.title{style: "background-color: #f2f2f2; height: 68px;"}
+                    ="#{album.title} - #{album.artist}"
+                    %br
+                    %small
+                      =album.release_date.strftime("%B %d, %Y")
+
 
         / End Thumbnails
-        / Managed By
-        .row
-          .large-12.columns
-            .panel
-              .row
-                .large-2.small-6.columns
-                  %img{:src => "http://placehold.it/300x300&text=Site Owner"}/
-                .large-10.small-6.columns
-                  %strong This Site Is Managed By
-                  %hr/
-                  Risus ligula, aliquam nec fermentum vitae, sollicitudin eget urna. Donec dignissim nibh fermentum odio ornare sagittis
-          / End Managed By
+
     / Footer
     %footer.row
       .large-12.columns
         %hr/
         .row
           .large-6.columns
-            %p © Copyright no one at all. Go to town.
-          .large-6.columns
-            %ul.inline-list.right
-              %li
-                %a{:href => "#"} Link 1
-              %li
-                %a{:href => "#"} Link 2
-              %li
-                %a{:href => "#"} Link 3
-              %li
-                %a{:href => "#"} Link 4
+            %p © Copyright Audioprint 2013  .
+          / .large-6.columns
+          /   %ul.inline-list.right
+          /     %li
+          /       %a{:href => "#"} Link 1
+          /     %li
+          /       %a{:href => "#"} Link 2
+          /     %li
+          /       %a{:href => "#"} Link 3
+          /     %li
+          /       %a{:href => "#"} Link 4
     / End Footer
