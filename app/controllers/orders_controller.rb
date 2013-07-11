@@ -58,7 +58,7 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.update_attributes(params[:order])
         session[:order_id] = nil #reset session order
-        OrderMailer.confirm(current_user, @order).deliver
+        OrderMailer.confirm_order(current_user, @order).deliver
 
         format.html { redirect_to @order, notice: 'Your order was successfully placed.' }
         format.json { head :no_content }

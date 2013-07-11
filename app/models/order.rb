@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
   end
 
   def process(user)
-    return false unless @order.status == "Confirmed"
+    return false unless self.status == "Confirmed"
     if self.update_column(:status, "Processed")
       self.order_items.each do |item|
         product = item.product
