@@ -96,7 +96,7 @@ Audioprint::Application.configure do
     :processor       => [ :cropper ]
   }
   PAPERCLIP_IMAGE_OPTS = {
-    :styles => { :large => "400x400>", :medium => "300x300>", :thumb => "100x100>"  },
+    :styles => { :large => "400x400!", :medium => "300x300!", :thumb => "100x100!"  },
     :storage        => :s3,
     :s3_protocol => 'http',
     :s3_credentials => {
@@ -108,7 +108,7 @@ Audioprint::Application.configure do
     :processor       => [ :cropper ]
   }
   PAPERCLIP_AVATAR_OPTS = {
-    :styles => { :large => "400x400>", :medium => "300x300>", :small => "150x150>", :thumb => "100x100>" },
+    :styles => { :large => "400x400!", :medium => "300x300!", :small => "150x150!", :thumb => "100x100!" },
     :storage        => :s3,
     :s3_protocol => 'http',
     :s3_credentials => {
