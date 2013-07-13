@@ -2,8 +2,10 @@
 
 %h1
   = @blog_post.title
-%p
-  = @blog_post.post.html_safe
+  = image_tag @blog_post.blog_cover
+  = @blog_post.soundcloud_url.html_safe
+  .panel
+    = @blog_post.post.html_safe
 
 = link_to 'Edit', edit_blog_post_path(@blog_post)
 \|

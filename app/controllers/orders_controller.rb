@@ -90,7 +90,11 @@ class OrdersController < ApplicationController
 
 
   def show
-    @order = Order.find(params[:id])
+    unless current_user
+      load_order
+    else
+      @order = Order.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb

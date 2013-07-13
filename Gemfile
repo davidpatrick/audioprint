@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
+group :production do
+  gem 'pg'
+end
+
 gem 'rails', '3.2.11'
-gem 'sqlite3'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

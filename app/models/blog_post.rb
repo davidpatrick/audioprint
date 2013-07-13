@@ -1,5 +1,5 @@
 class BlogPost < ActiveRecord::Base
-  attr_accessible :external_links, :post, :title, :album_id, :blog_cover
+  attr_accessible :external_links, :post, :title, :soundcloud_url, :blog_cover
   acts_as_url :title, url_attribute: :slug
   validates_presence_of :post, :title
   belongs_to :album

@@ -1,91 +1,63 @@
-/ Nav Bar
-.row
-  .large-12.columns
-    .nav-bar.right
-      %ul.button-group
-        %li
-          %a.button{:href => "#"} Link 1
-        %li
-          %a.button{:href => "#"} Link 2
-        %li
-          %a.button{:href => "#"} Link 3
-        %li
-          %a.button{:href => "#"} Link 4
-    %h1
-      Blog
-      %small This is my blog. It's awesome.
-    %hr/
-/ End Nav
-/ Main Page Content and Sidebar
-.row
-  / Main Blog Content
-  .large-9.columns{:role => "content"}
-    %article
-      %h3
-        %a{:href => "#"} Blog Post Title
-      %h6
-        Written by
-        %a{:href => "#"} John Smith
-        on August 12, 2012.
-      .row
-        .large-6.columns
-          %p Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa.
-          %p Boudin aliqua adipisicing rump corned beef. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami.
-        .large-6.columns
-          %img{:src => "http://placehold.it/400x240&text=[img]"}/
-      %p Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami.
-      %p Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami.
-    %hr/
-    %article
-      %h3
-        %a{:href => "#"} Blog Post Title
-      %h6
-        Written by
-        %a{:href => "#"} John Smith
-        on August 12, 2012.
-      .row
-        .large-6.columns
-          %p Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa.
-          %p Boudin aliqua adipisicing rump corned beef. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami.
-        .large-6.columns
-          %img{:src => "http://placehold.it/400x240&text=[img]"}/
-      %p Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami.
-      %p Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow. Nulla corned beef sunt ball tip, qui bresaola enim jowl. Capicola short ribs minim salami nulla nostrud pastrami.
-  / End Main Content
-  / Sidebar
-  %aside.large-3.columns
-    %h5 Categories
-    %ul.side-nav
-      %li
-        %a{:href => "#"} News
-      %li
-        %a{:href => "#"} Code
-      %li
-        %a{:href => "#"} Design
-      %li
-        %a{:href => "#"} Fun
-      %li
-        %a{:href => "#"} Weasels
-    .panel
-      %h5 Featured
-      %p Pork drumstick turkey fugiat. Tri-tip elit turducken pork chop in. Swine short ribs meatball irure bacon nulla pork belly cupidatat meatloaf cow.
-      %a{:href => "#"} Read More →
-  / End Sidebar
-/ End Main Content and Sidebar
-/ Footer
-%footer.row
-  .large-12.columns
-    %hr/
+.small-12
+  .row
     .row
-      .large-6.columns
-        %p © Copyright no one at all. Go to town.
-      .large-6.columns
-        %ul.inline-list.right
-          %li
-            %a{:href => "#"} Link 1
-          %li
-            %a{:href => "#"} Link 2
-          %li
-            %a{:href => "#"} Link 3
-          %li
-            %a{:href => "#"} Link 4
+      .large-12.columns
+        #slider.small-centered.small-10.columns
+          %ul{ "data-orbit" => ""}
+            - @blog_posts.first(3).each do |blog|
+              %li
+                = image_tag blog.blog_cover(:large), style: "width:1000px;height:400px;"
+                .orbit-caption
+                  = sanitize blog.post
+    / Call to Action Panel
+    .row
+      .large-12.columns
+        .panel
+          %h4 Get in touch!
+          .row
+            .large-9.columns
+              %p Would you like to be featured in our blog?  Contact us and let us know.  Let us promote your new album to the masses.
+            .large-3.columns
+              %a.radius.button.right{:href => "#"} Contact Us
+    .row
+      .text-centered
+        %h4.title-bar
+          Audioprint Blog
+      .blog-entries
+        - @blog_posts.each_with_index do |blog, index|
+          .blog-post.large-6.columns
+            .panel-header
+              %h4= link_to truncate(blog.title, length: 120), blog
+              %p
+                Posted
+                = blog.created_at.strftime("%B %d, %Y")
+            .blog-content.panel
+              .blog-image
+                = image_tag blog.blog_cover.url(:medium), style: "width:100%;height:100%"
+              .blog-player
+                - if blog.soundcloud_url
+                  = blog.soundcloud_url.html_safe
+                - else
+                  .empty-player
+              .blog-text.panel
+                = sanitize blog.post
+          - if (index + 1).even?
+            .clear-row.left.full-width
+
+    / Footer
+    %footer.row
+      .large-12.columns
+        %hr/
+        .row
+          .large-6.columns
+            %p © Copyright Audioprint 2013.
+          .large-6.columns
+            %ul.inline-list.right
+              %li
+                %a{:href => "#"} Link 1
+              %li
+                %a{:href => "#"} Link 2
+              %li
+                %a{:href => "#"} Link 3
+              %li
+                %a{:href => "#"} Link 4

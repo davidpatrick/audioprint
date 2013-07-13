@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
   def index
-    @albums = Album.all
-    @featured_blogs = BlogPost.all
+    redirect_to blog_posts_path
+    return
+
+    @featured_blogs = BlogPost.all.reverse!
 
     respond_to do |format|
       format.html { render :layout => 'home' }

@@ -4,7 +4,8 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
     can :read, [Album, Song, BlogPost]
-    cannot :read, [Order, Address]
+    can :manage, Order, user_id: nil
+    can :manage, OrderItem, order: {user_id: nil}
 
     if user.has_role? :admin
       can :manage, :all
@@ -22,11 +23,11 @@ class Ability
       can :create, OrderItem
     end
 
-    if user.has_role? :contributor
-      can :create, [Album, Song]
-      can :manage, Album, :user_id => user.id
-      can :manage, Song, :album => { :user_id => user.id}
-    end
+    # if user.has_role? :contributor
+    #   can :create, [Album, Song]
+    #   can :manage, Album, :user_id => user.id
+    #   can :manage, Song, :album => { :user_id => user.id}
+    # end
 
 
     # Define abilities for the passed in user here. For example:

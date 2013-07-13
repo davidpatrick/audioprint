@@ -10,7 +10,7 @@
   - @orders.each do |order|
     %tr.text-centered
       %td= link_to order.id, order
-      %td= link_to order.user.name, order.user
+      %td= link_to order.user.name, order.user if order.user
       %td= order.status
       %td= number_to_currency(order.total)
       - if order.status == "Unsubmitted"
