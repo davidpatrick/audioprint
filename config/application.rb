@@ -13,6 +13,7 @@ module Audioprint
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+    config.assets.initialize_on_precompile = false
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.encoding = "utf-8"
 
