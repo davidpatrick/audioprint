@@ -74,6 +74,7 @@ Audioprint::Application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
 
+
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
@@ -110,6 +111,66 @@ Audioprint::Application.configure do
     },
     :path => '/:attachment/:id/:style/:basename.:extension'
   }
+
+
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: "gmail.com",
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   user_name: ENV["GMAIL_USERNAME"],
+  #   password: ENV["GMAIL_PASSWORD"]
+  # }
+  # PAPERCLIP_BLOG_OPTS = {
+  #   :styles => { :large => "784x496>", :medium => "517x327>", :thumb => "258x163>" },
+  #   :storage        => :s3,
+  #   :s3_protocol => 'http',
+  #   :s3_credentials => {
+  #     :bucket => 'audioprint_assets',
+  #     :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+  #     :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+  #   },
+  #   :path           => 'blogs/:id/:attachment/:style.:extension',
+  #   :processor       => [ :cropper ]
+  # }
+  # PAPERCLIP_IMAGE_OPTS = {
+  #   :styles => { :large => "400x400!", :medium => "300x300!", :thumb => "100x100!"  },
+  #   :storage        => :s3,
+  #   :s3_protocol => 'http',
+  #   :s3_credentials => {
+  #     :bucket => 'audioprint_cover_art',
+  #     :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+  #     :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+  #   },
+  #   :path           => 'albums/:id/:attachment/:style.:extension',
+  #   :processor       => [ :cropper ]
+  # }
+  # PAPERCLIP_AVATAR_OPTS = {
+  #   :styles => { :large => "400x400!", :medium => "300x300!", :small => "150x150!", :thumb => "100x100!" },
+  #   :storage        => :s3,
+  #   :s3_protocol => 'http',
+  #   :s3_credentials => {
+  #     :bucket => 'audioprint_assets',
+  #     :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+  #     :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+  #   },
+  #   :path           => 'users/:id/:attachment/:style.:extension',
+  #   :processor       => [ :cropper ]
+  # }
+  # PAPERCLIP_MP3_OPTS = {
+  #   :url => ':s3_domain_url',
+  #   :storage        => :s3,
+  #   :s3_permissions => :private,
+  #   :s3_protocol => 'http',
+  #   :s3_credentials => {
+  #     :bucket => 'audioprint_mp3s',
+  #     :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+  #     :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+  #   },
+  #   :path => '/:attachment/:id/:style/:basename.:extension'
+  # }
+
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
