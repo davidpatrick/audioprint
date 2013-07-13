@@ -80,44 +80,23 @@ Audioprint::Application.configure do
     domain: "gmail.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
+    user_name: 'audioprintweb@gmail.com',
+    password: 'ch33s3danish'
   }
   PAPERCLIP_BLOG_OPTS = {
-    :styles => { :large => "784x496>", :medium => "517x327>", :thumb => "258x163>" },
-    :storage        => :s3,
-    :s3_protocol => 'http',
-    :s3_credentials => {
-      :bucket => 'audioprint_assets',
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    },
-    :path           => 'blogs/:id/:attachment/:style.:extension',
-    :processor       => [ :cropper ]
+    :styles => { :large => "1150x292!", :medium => "575x146!" },
+    :url => "/assets/blogs/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/blogs/:id/:style/:basename.:extension"
   }
   PAPERCLIP_IMAGE_OPTS = {
-    :styles => { :large => "400x400!", :medium => "300x300!", :thumb => "100x100!"  },
-    :storage        => :s3,
-    :s3_protocol => 'http',
-    :s3_credentials => {
-      :bucket => 'audioprint_cover_art',
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    },
-    :path           => 'albums/:id/:attachment/:style.:extension',
-    :processor       => [ :cropper ]
+    :styles => { :large => "400x400!", :medium => "300x300!", :small => "200x200!", :thumb => "100x100!" },
+    :url => "/assets/albums/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/albums/:id/:style/:basename.:extension"
   }
   PAPERCLIP_AVATAR_OPTS = {
-    :styles => { :large => "400x400!", :medium => "300x300!", :small => "150x150!", :thumb => "100x100!" },
-    :storage        => :s3,
-    :s3_protocol => 'http',
-    :s3_credentials => {
-      :bucket => 'audioprint_assets',
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    },
-    :path           => 'users/:id/:attachment/:style.:extension',
-    :processor       => [ :cropper ]
+    :styles => { :large => "400x400>", :medium => "300x300>", :small => "150x150>", :thumb => "100x100>" },
+    :url => "/assets/avatars/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/avatars/:id/:style/:basename.:extension"
   }
   PAPERCLIP_MP3_OPTS = {
     :url => ':s3_domain_url',
@@ -125,12 +104,13 @@ Audioprint::Application.configure do
     :s3_permissions => :private,
     :s3_protocol => 'http',
     :s3_credentials => {
-      :bucket => 'audioprint_mp3s',
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+      :bucket => 'audioprint_development',
+      :access_key_id => 'AKIAIYEFQSJPIGAZ3OJA',
+      :secret_access_key => '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'
     },
     :path => '/:attachment/:id/:style/:basename.:extension'
   }
+
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
