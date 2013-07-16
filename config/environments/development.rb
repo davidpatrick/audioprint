@@ -40,7 +40,8 @@ Audioprint::Application.configure do
   PAPERCLIP_IMAGE_OPTS = {
     :styles => { :large => "400x400!", :medium => "300x300!", :small => "200x200!", :thumb => "100x100!" },
     :url => "/assets/albums/:id/:style/:basename.:extension",
-    :path => ":rails_root/public/assets/albums/:id/:style/:basename.:extension"
+    :path => ":rails_root/public/assets/albums/:id/:style/:basename.:extension",
+    :default_url => "/assets/missing-cover.png"
   }
   PAPERCLIP_AVATAR_OPTS = {
     :styles => { :large => "400x400>", :medium => "300x300>", :small => "150x150>", :thumb => "100x100>" },

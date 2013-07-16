@@ -33,6 +33,26 @@
   puts new_category.name if new_category.new_record?
 end
 
+require 'csv'
+csv_text = File.read('./db/seed_data/audioprint_album_import.csv')
+csv = CSV.parse(csv_text, :headers => true)
+csv.each do |row|
+  values = row.to_hash
+  values['catalog_id'] = values['catalog_id'].gsub('AP', '').to_i
+
+  begin
+    album = Album.find_or_initialize_by_catalog_id(values)
+    values = values.except(:quantity) if !album.new_record?
+
+    ap album
+
+    album.assign_attributes(values)
+    album.save
+  rescue Exception => e
+    Rails.logger.info "#{album.id} failed to import ERROR #{e}"
+  end
+end
+
 # [
 #   "Artist",
 #   "DJ (Mixtapes)",
@@ -43,3 +63,5 @@ end
 #   new_type = ProfileType.find_or_create_by_name(p_type)
 #   puts new_type.name if new_type.new_record?
 # end
+
+

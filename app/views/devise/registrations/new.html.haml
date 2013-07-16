@@ -6,7 +6,7 @@
   = f.input :email, :required => true
   = f.input :password, :required => true
   = f.input :password_confirmation, :required => true
-  = f.input :account_request, collection: [OpenStruct.new(id: 3, name: 'Contributor'), OpenStruct.new(id: 2, name: 'Vendor'), OpenStruct.new(id: 1, name: 'Basic')], include_blank: "Select Account Type", label: 'Account Type', label_method: :name, value_method: :id
+  / = f.input :account_request, collection: [OpenStruct.new(id: 3, name: 'Contributor'), OpenStruct.new(id: 2, name: 'Vendor'), OpenStruct.new(id: 1, name: 'Basic')], include_blank: "Select Account Type", label: 'Account Type', label_method: :name, value_method: :id
   = f.file_field :avatar, :label => 'Avatar', style: "height: 20px;line-height:0px;display:block;"
   %br
   = f.button :submit, 'Sign up', :class => 'btn-primary'

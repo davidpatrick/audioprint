@@ -6,6 +6,28 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def new
+    authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
+    @user = User.new
+
+    render :layout => 'product'
+  end
+
+  def create
+    authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
+    @user = User.new(params[:user])
+
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to users_path, notice: 'This user has been created! ' }
+        format.json { render json: @user, status: :created, location: @user }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def show
     if current_user && current_user.id.to_s == params[:id]
       authorize! :manage, @user, :message => 'You need to be an administrator to do that.'

@@ -45,8 +45,8 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     sign_out current_user unless can? :manage, @order
 
-    @order.errors.add(:address, "Whoops! You forgot to set an address!") unless params[:order][:address_id].present?
-    @order.errors.add(:items, "You don't have any items in your cart") unless @order.order_items.any?
+    @order.errors.add(:error, ": You forgot to set an address!") unless params[:order][:address_id].present?
+    @order.errors.add(:error, ": You don't have any items in your cart") unless @order.order_items.any?
 
     if @order.errors.any?
       render action: "show"

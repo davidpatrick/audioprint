@@ -76,7 +76,7 @@
                     ="#{album.title} - #{album.artist}"
                     %br
                     %small
-                      =album.release_date.strftime("%B %d, %Y")
+                      =album.release_date.strftime("%B %d, %Y") if album.release_date
 
 
         / End Thumbnails

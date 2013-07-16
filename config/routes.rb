@@ -18,6 +18,7 @@ Audioprint::Application.routes.draw do
   devise_for :users
   resources :users
   match 'become_contributor', :to => 'users#become_contributor'
+  match 'admin_create', :to => 'users#create'
 
   resources :albums do
     collection do

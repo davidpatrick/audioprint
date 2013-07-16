@@ -54,7 +54,7 @@
       .small-10.large-6
         .div Shipping To:
         .address
-          = f.input :address_id, collection: current_user.addresses.collect{|a| [a.to_s, a.id]}, include_blank: 'No Address on File', label: false
+          = f.association :address, collection: current_user.addresses, selected: current_user.addresses.last.id, include_blank: 'No Address on File', label: false
           = link_to 'Add new address', new_address_path, 'data-reveal-id' => 'address-modal', 'data-reveal-ajax' => 'true'
     .row.collapse
       .small-12.large-12
