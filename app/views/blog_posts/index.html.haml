@@ -7,18 +7,19 @@
             - @blog_posts.first(3).each do |blog|
               %li
                 = image_tag blog.blog_cover(:large), style: "width:1000px;height:400px;"
-                .orbit-caption
-                  = sanitize blog.post
-    / Call to Action Panel
-    .row
-      .large-12.columns
-        .panel
-          %h4 Get in touch!
-          .row
-            .large-9.columns
-              %p Would you like to be featured in our blog?  Contact us and let us know.  Let us promote your new album to the masses.
-            .large-3.columns
-              %a.radius.button.right{:href => "#"} Contact Us
+                .orbit-caption.text-centered
+                  %h3
+                    = link_to blog.title, blog
+    / / Call to Action Panel
+    / .row
+    /   .large-12.columns
+    /     .panel
+    /       %h4 Get in touch!
+    /       .row
+    /         .large-9.columns
+    /           %p Would you like to be featured in our blog?  Contact us and let us know.  Let us promote your new album to the masses.
+    /         .large-3.columns
+    /           %a.radius.button.right{:href => "#"} Contact Us
     .row
       .text-centered
         %h4.title-bar
@@ -40,7 +41,9 @@
                 - else
                   .empty-player
               .blog-text.panel
-                = sanitize blog.post
+                = sanitize truncate(blog.post.to_html, length:350)
+                - if blog.post.to_html.length > 350
+                  = link_to 'read more...', blog
           - if (index + 1).even?
             .clear-row.left.full-width
 
@@ -51,13 +54,13 @@
         .row
           .large-6.columns
             %p © Copyright Audioprint 2013.
-          .large-6.columns
-            %ul.inline-list.right
-              %li
-                %a{:href => "#"} Link 1
-              %li
-                %a{:href => "#"} Link 2
-              %li
-                %a{:href => "#"} Link 3
-              %li
-                %a{:href => "#"} Link 4
+          / .large-6.columns
+          /   %ul.inline-list.right
+          /     %li
+          /       %a{:href => "#"} Link 1
+          /     %li
+          /       %a{:href => "#"} Link 2
+          /     %li
+          /       %a{:href => "#"} Link 3
+          /     %li
+          /       %a{:href => "#"} Link 4

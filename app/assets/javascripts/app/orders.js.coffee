@@ -8,10 +8,9 @@ $(document).ready ->
       type: 'PUT'
       data: { add_quantity: true }
       dataType: 'json'
-      error: (jqXHR, textStatus, errorThrown) ->
-        alert textStatus
+      error: (jqXHR) ->
+        alert jqXHR.responseText
       success: (data, textStatus, jqXHR) ->
-        console.log data
         $("#item-#{data.id} .quantity span").html(data["quantity"])
         $("#item-#{data.id} .stock").html(data["stock"])
         $("#item-#{data.id} .subtotal").html(data["subtotal"])
@@ -28,7 +27,7 @@ $(document).ready ->
       data: { subtract_quantity: true }
       dataType: 'json'
       error: (jqXHR, textStatus, errorThrown) ->
-        alert textStatus
+        alert jqXHR.responseText
       success: (data, textStatus, jqXHR) ->
         if data["deleted"]
           $("#item-#{data.id}").fadeOut()

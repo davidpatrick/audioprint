@@ -6,12 +6,11 @@ class Album < ActiveRecord::Base
   has_many :order_items
   belongs_to :user
   belongs_to :category
-  delegate :name, :to => :category, :allow_nil => true, :prefix => true
+  delegate :name, :to => :category, :allow_nil => true, :prefix => true #album.category_name
 
-  has_attached_file :cover_art, PAPERCLIP_IMAGE_OPTS
+  has_attached_file :cover_art, PAPERCLIP_COVER_ART_OPTS
 
   validates_uniqueness_of :catalog_id
-  # validates_attachment_presence :cover_art
   validates_attachment_size :cover_art, :less_than => 2.megabytes
   validates_attachment_content_type :cover_art, :content_type => ['image/jpeg', 'image/png']
 

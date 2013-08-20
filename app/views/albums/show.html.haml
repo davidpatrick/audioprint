@@ -15,9 +15,14 @@
       %li.bullet-item
         =print_stock(@album.quantity)
       %li.cta-button
-        %a.button{href: add_album_to_cart_path(@album)}
-          Add to Cart
-          %i.icon-shopping-cart
+        - if @album.quantity > 0
+          %a.button{href: add_album_to_cart_path(@album)}
+            Add to Cart
+            %i.icon-shopping-cart
+        - else
+          %a.button.disabled
+            Add to Cart
+            %i.icon-shopping-cart
 .row
   .small-12
     %fieldset{style: "margin:5px;padding:5px;"}

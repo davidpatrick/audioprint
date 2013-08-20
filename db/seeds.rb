@@ -34,7 +34,8 @@
 end
 
 require 'csv'
-csv_text = File.read('./db/seed_data/audioprint_album_import.csv')
+require 'open-uri'
+csv_text = File.read('./db/seed_data/audioprint_album_import2.csv')
 csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
   values = row.to_hash
@@ -42,16 +43,38 @@ csv.each do |row|
 
   begin
     album = Album.find_or_initialize_by_catalog_id(values)
-    values = values.except(:quantity) if !album.new_record?
+    # If Album Exist don't update the quantity
+    if album.new_record?
+      values['quantity'] = 0 if values['quantity'].nil?
+    else
+      values = values.except(:quantity)
+    end
 
-    ap album
-
+    album.cover_art = open("http://www.takemepaperless.com/images/cover_art/AP#{album.catalog_id}.jpg")
     album.assign_attributes(values)
     album.save
   rescue Exception => e
     Rails.logger.info "#{album.id} failed to import ERROR #{e}"
   end
 end
+
+# csv_text = File.read('./db/seed_data/audioprint_album_qty.csv')
+# csv = CSV.parse(csv_text, :headers => true)
+# csv.each do |row|
+#   values = row.to_hash
+#   values['catalog_id'] = values['catalog_id'].gsub('AP', '').to_i
+
+#   album = Album.find_by_catalog_id(values['catalog_id'])
+
+#   if album
+#     begin
+#       album.update_column(:quantity, values['quantity'])
+#       album.save
+#     rescue Exception => e
+#       Rails.logger.info "#{album.id} failed to import ERROR #{e}"
+#     end
+#   end
+# end
 
 # [
 #   "Artist",
@@ -64,4 +87,12 @@ end
 #   puts new_type.name if new_type.new_record?
 # end
 
-
+# require 'open-uri'
+# Album.all.each do |album|
+#   begin
+#     album.cover_art = open("http://www.takemepaperless.com/images/cover_art/AP#{album.catalog_id}.jpg")
+#     album.save
+#   rescue Exception => e
+#     Rails.logger.info "#{album.id} failed to import ERROR #{e}"
+#   end
+# end

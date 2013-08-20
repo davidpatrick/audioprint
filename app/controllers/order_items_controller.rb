@@ -10,7 +10,7 @@ class OrderItemsController < ApplicationController
         format.html { redirect_to @order, notice: "The #{params[:type]} has been added to your cart." }
         format.json { render json: @order_item, status: :created, location: @order }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to @order, flash: {alert: @order_item.errors.full_messages.join("\n")} }
         format.json { render json: @order_item.errors, status: :unprocessable_entity }
       end
     end
@@ -31,7 +31,9 @@ class OrderItemsController < ApplicationController
     end
 
     respond_to do |format|
-      if @order_item.save
+      if params[:add_quantity] && print_stock(@order_item.product.quantity, @order_item.quantity) == "Insufficient Stock"
+        format.json { render json: 'There is not enough in stock.', status: :unprocessable_entity}
+      elsif @order_item.save
         format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
         format.json { render json: {id: @order_item.id, quantity: @order_item.quantity, stock: print_stock(@order_item.product.quantity, @order_item.quantity), subtotal: ActionController::Base.helpers.number_to_currency(@order_item.subtotal), total: ActionController::Base.helpers.number_to_currency(@order_item.order.total)}, status: 200 }
       else

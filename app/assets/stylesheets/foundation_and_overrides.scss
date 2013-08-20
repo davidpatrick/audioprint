@@ -46,7 +46,7 @@ $default-float: left;
 
 $primary-color: #0fcb53;
 $secondary-color: #e9e9e9;
-// $alert-color: #c60f13;
+$alert-color: #c60f13;
 // $success-color: #5da423;
 
 // Make sure border radius matches unless we want it different.
@@ -1470,4 +1470,9 @@ body {
   border-bottom: 1px solid #CCC;
   font-size: 20px;
   text-shadow: 1px 1px 0 #CCC;
+}
+
+
+.alert-box.error {
+  @include alert($alert-color);
 }

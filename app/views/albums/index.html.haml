@@ -50,33 +50,33 @@
     / End Navigation
     .row
       / Side Bar
-      .large-4.hide-for-small.columns
-        =link_to @featured_album do
-          = image_tag @featured_album.cover_art.url(:large)
-          .panel
-            %h3= @featured_album.title
-            %h4= @featured_album.artist
-            %h5.subheader
-              This week's featured album is #{@featured_album.title} by #{@featured_album.artist}
-        %a{:href => "#"}
-        .panel.callout.radius
-          %h6
-            %i.icon-shopping-cart
-            Add Featured Album to Cart
+      / .large-4.hide-for-small.columns
+      /   =link_to @featured_album do
+      /     = image_tag @featured_album.cover_art.url(:large)
+      /     .panel
+      /       %h3= @featured_album.title
+      /       %h4= @featured_album.artist
+      /       %h5.subheader
+      /         This week's featured album is #{@featured_album.title} by #{@featured_album.artist}
+      /   %a{:href => "#"}
+      /   .panel.callout.radius
+      /     %h6
+      /       %i.icon-shopping-cart
+      /       Add Featured Album to Cart
       / End Side Bar
       / Thumbnails
-      .large-8.columns
+      .large-12.columns
         .row
           - @albums.each do |album|
             =link_to album do
-              .large-4.small-6.columns
-                = image_tag album.cover_art.url(:medium)
-                %ul.pricing-table{style: "background-color: #f2f2f2; height: 70px;"}
-                  %li.title{style: "background-color: #f2f2f2; height: 68px;"}
-                    ="#{album.title} - #{album.artist}"
-                    %br
-                    %small
-                      =album.release_date.strftime("%B %d, %Y") if album.release_date
+              .large-2.small-6.columns
+                = image_tag album.cover_art.url(:thumb), style: "width:100%;"
+                %ul.pricing-table
+                  %li.title{style: "font-size:10px;padding:5px;margin:0px;height:20px;line-height:15px;overflow:hidden;"}
+                    = truncate album.title, length: 25
+                  %li.price{style: "font-size:10px;padding:5px;margin:0px;height:20px;line-height:15px;overflow:hidden;"}
+                    = truncate album.artist, length: 25
+                    = album.release_date.strftime("%B %d, %Y") if album.release_date
 
 
         / End Thumbnails

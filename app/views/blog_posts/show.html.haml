@@ -1,12 +1,19 @@
-%p#notice= notice
+.row
+  %p#notice= notice
 
-%h1
-  = @blog_post.title
-  = image_tag @blog_post.blog_cover
-  = @blog_post.soundcloud_url.html_safe
-  .panel
+  %h1.text-centered
+    = @blog_post.title
+  .text-centered
+    = image_tag @blog_post.blog_cover.url(:large)
+
+  = @blog_post.soundcloud_url.html_safe if @blog_post.soundcloud_url
+  .panel{ style: "background: #fff;"}
     = @blog_post.post.html_safe
 
-= link_to 'Edit', edit_blog_post_path(@blog_post)
-\|
-= link_to 'Back', blog_posts_path
+
+  - if current_user.has_role? :admin
+    = link_to 'Edit', edit_blog_post_path(@blog_post)
+    \|
+    = link_to 'Delete', @blog_post, method: :delete, data: { confirm: 'Are you sure you want to delete this blog post?' }
+    \|
+  = link_to 'Back', blog_posts_path

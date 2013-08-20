@@ -13,7 +13,10 @@ class UserMailer < ActionMailer::Base
     mail to: "shilohkevin@gmail.com", cc: "batreyud@gmail.com", subject: "AudioPrint contributor request!"
   end
 
-  def process_order(user)
+  def new_user(user)
+    @user = user
+    @greeting = "#{@user.email} has signed up for an account!"
 
+    mail to: "shilohkevin@gmail.com", cc: "batreyud@gmail.com", subject: "New AudioPrint User!"
   end
 end

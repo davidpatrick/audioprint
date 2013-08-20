@@ -14,23 +14,27 @@ class User < ActiveRecord::Base
   has_many :orders
   has_many :addresses
   has_attached_file :avatar, PAPERCLIP_AVATAR_OPTS
-  after_create :send_account_request
+  after_create :new_user
 
   def album_ids
     self.albums.collect(&:id)
   end
 
-  def send_account_request
-    return unless self.account_request
-    account_type = case self.account_request
-      when 3
-        'Contributor'
-      when 2
-        'Vendor'
-      when 1
-        'Basic'
-    end
-    UserMailer.request_account(self, account_type).deliver
+  def new_user
+    UserMailer.new_user(self).deliver
   end
+
+  # def send_account_request
+  #   return unless self.account_request
+  #   account_type = case self.account_request
+  #     when 3
+  #       'Contributor'
+  #     when 2
+  #       'Vendor'
+  #     when 1
+  #       'Basic'
+  #   end
+  #   UserMailer.request_account(self, account_type).deliver
+  # end
 
 end
