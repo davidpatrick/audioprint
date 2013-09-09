@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716161701) do
+ActiveRecord::Schema.define(:version => 20130716160821) do
 
   create_table "addresses", :force => true do |t|
     t.string   "line1"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20130716161701) do
   create_table "albums", :force => true do |t|
     t.string   "title"
     t.string   "artist"
-    t.integer  "release_date"
+    t.integer  "year"
     t.datetime "created_at",                                                            :null => false
     t.datetime "updated_at",                                                            :null => false
     t.string   "cover_art_file_name"
@@ -35,7 +35,9 @@ ActiveRecord::Schema.define(:version => 20130716161701) do
     t.integer  "cover_art_file_size"
     t.datetime "cover_art_updated_at"
     t.integer  "user_id"
+    t.date     "release_date"
     t.integer  "category_id"
+    t.integer  "album_type"
     t.integer  "catalog_id"
     t.integer  "quantity",                                             :default => 0,   :null => false
     t.decimal  "price",                  :precision => 7, :scale => 2, :default => 0.0, :null => false
@@ -76,13 +78,6 @@ ActiveRecord::Schema.define(:version => 20130716161701) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "address_id"
-  end
-
-  create_table "products", :force => true do |t|
-    t.string   "name"
-    t.decimal  "price"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "profile_types", :force => true do |t|

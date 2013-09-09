@@ -1,19 +1,13 @@
 source 'https://rubygems.org'
 
-group :production do
-  gem 'pg'
-end
 
+gem 'pg'
 gem 'rails', '3.2.11'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.6'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-end
-
-group :production do
-  gem 'pg'
 end
 
 group :development do
@@ -26,7 +20,8 @@ group :development do
   gem "meta_request"
   gem 'awesome_print'
   gem 'pry'
-  gem 'sqlite3'
+  # gem 'sqlite3'
+  gem 'pg'
   gem "rspec-rails", ">= 2.12.2"
   gem "factory_girl_rails", ">= 4.1.0"
 end

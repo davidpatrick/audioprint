@@ -10,11 +10,11 @@
   %section.top-bar-section
     %ul.left
       %li.divider
+      %li{class: "#{params[:controller] == 'blog_posts' ? 'active' : ''}"}
+        = link_to 'Home', blog_posts_path
+      %li.divider
       %li{class: "#{params[:controller] == 'albums' ? 'active' : ''}"}
         = link_to 'Albums', albums_path
-      %li.divider
-      %li{class: "#{params[:controller] == 'blog_posts' ? 'active' : ''}"}
-        = link_to 'Blog', blog_posts_path
       %li.divider
       - if current_user && current_user.has_role?(:admin)
         %li.has-dropdown
