@@ -40,7 +40,7 @@
         %li.has-dropdown.userdrop
           %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
             = current_user.name
-            = image_tag gravatar_url(current_user)
+            = image_tag avatar_url(current_user), width: 30, height: 30
           %ul.dropdown
             - if current_user.has_role? :admin
               / %li

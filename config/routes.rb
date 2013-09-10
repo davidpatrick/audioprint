@@ -7,7 +7,7 @@ Audioprint::Application.routes.draw do
   match "/blog/:year", :to => "blog_posts#index", :constraints => { :year => /\d{4}/ }
   match "/blog/:year/:month", :to => "blog_posts#index", :constraints => { :year => /\d{4}/, :month => /\d{1,2}/ }
   match "/blog/:year/:month/:slug", :to => "blog_posts#show", :via => :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
-  match "/blog/:year/:month/:slug", :to => "blog_posts#destroy", :post => :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
+  match "/blog/:year/:month/:slug/destroy", :to => "blog_posts#destroy", :via => :post, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
   match "/blog/:year/:month/:slug/edit", :to => "blog_posts#edit", :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
   match "/blog/:year/:month/:slug", :to => "blog_posts#update", :via => :put, :as => :update, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
 

@@ -2,10 +2,9 @@ class BlogPostsController < ApplicationController
   def index
     @blog_posts = BlogPost.all.reverse!
 
-    respond_to do |format|
-      format.html { render :layout => 'home' }
-      # format.json { render json: @album }
-    end
+    # respond_to do |format|
+    #   # format.json { render json: @album }
+    # end
   end
 
   def show

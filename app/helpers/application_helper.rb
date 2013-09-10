@@ -14,15 +14,10 @@ module ApplicationHelper
 
   def avatar_url(user)
     if user.avatar.present?
-      user.avatar(:medium)
+      user.avatar(:thumb)
     else
       gravatar_id = Digest::MD5.hexdigest(user.email)
-      "http://gravatar.com/avatar/#{gravatar_id}.png?s=200&d=mm"
+      "http://gravatar.com/avatar/#{gravatar_id}.png?s=30&d=mm"
     end
-  end
-
-  def gravatar_url(user)
-    gravatar_id = Digest::MD5.hexdigest(user.email)
-    "http://gravatar.com/avatar/#{gravatar_id}.png?s=30&d=mm"
   end
 end
