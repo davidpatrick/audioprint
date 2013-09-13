@@ -1436,6 +1436,7 @@ body {
 
     /* temp style */
     border-radius: 5px;
+    border: 1px solid black;
     margin-top: -10px;
     padding: 20px;
 }
@@ -1470,8 +1471,16 @@ body {
   font-size: 20px;
   text-shadow: 1px 1px 0 #CCC;
 }
-
-
 .alert-box.error {
   @include alert($alert-color);
+}
+ol.orbit-bullets {
+  top: -20px;
+  margin: 0px;
+  li {
+    background: $secondary-color;
+    &.active {
+      background: $primary-color;
+    }
+  }
 }

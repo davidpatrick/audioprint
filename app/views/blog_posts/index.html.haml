@@ -3,11 +3,11 @@
     .row.hide-for-small
       .large-12.columns
         #slider.small-centered.small-10.columns
-          %ul{ "data-orbit" => ""}
+          %ul{ "data-orbit" => "", "data-options" => "slide_number:false; caption_class:blog-caption;"}
             - @blog_posts.first(3).each do |blog|
               %li
                 = image_tag blog.blog_cover(:large), style: "width:1000px;height:400px;"
-                .orbit-caption.text-centered
+                .blog-caption
                   %h3
                     = link_to blog.title, blog
     / / Call to Action Panel
