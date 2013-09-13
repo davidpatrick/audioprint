@@ -44,7 +44,7 @@
                     .small-10.columns
                       =text_field_tag :search, (params[:search] ? params[:search] : nil), id: 'albums-search', placeholder: "Search Albums"
                     .small-2.columns
-                      %a.button{:href => "#"}
+                      %a.button{:href => "#", onclick: "$(this).closest('form').submit(); return false;"}
                         %i.icon-search
         / End Top Bar
     / End Navigation

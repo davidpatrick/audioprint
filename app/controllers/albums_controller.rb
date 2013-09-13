@@ -14,7 +14,7 @@ class AlbumsController < ApplicationController
       if catalog_id && is_a_number?(catalog_id)
         @albums = @albums.where(catalog_id: catalog_id)
       else
-        @albums = @albums.where("title || artist LIKE ?", "%#{params[:search]}%")
+        @albums = @albums.where("title || artist ILIKE ?", "%#{params[:search]}%")
       end
     end
 
