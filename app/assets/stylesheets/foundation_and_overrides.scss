@@ -784,7 +784,7 @@ $legend-bg: $secondary-color;
 // Left/right nav styles
 
 // $orbit-nav-bg-old: rgb(0,0,0);
-// $orbit-nav-bg: rgba(0,0,0,0.6);
+$orbit-nav-bg: transparent;
 
 // Timer styles
 
@@ -1207,7 +1207,7 @@ $topbar-bg: #000 !default;
 
 // Height and margin
 
-// $topbar-height: 45px;
+$topbar-height: 60px;
 // $topbar-margin-bottom: emCalc(30px);
 
 // Control Input height for top bar
@@ -1420,8 +1420,8 @@ body {
  padding: 10% 0 10% 0;
  color: #808080;
 }
-#brand{
- color: $primary-color;
+#brand img{
+ margin-top: -8px;
 }
 
 .content {
