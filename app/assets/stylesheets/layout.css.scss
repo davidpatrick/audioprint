@@ -5,7 +5,7 @@ label.right {
 	padding: 20px 20px 0;
   .panel-header {
     height: auto;
-    padding: 10px 2%;
+    padding-left: 5px;
     border: 1px solid #666;
     border-bottom: none;
     background: #000000;
@@ -26,25 +26,20 @@ label.right {
     }
   }
   .blog-content {
+    border-top: 0px;
     height: auto;
-    padding: 15px 1%;
-    padding-top: 0px;
-    border: 1px solid #666;
-    position: relative;
+    padding: 0px;
     overflow: hidden;
-    background: #666;
   }
   .blog-image{
     width: 100%;
-    height: 150px;
     float: left;
-    position: relative;
     overflow: hidden;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
+    -webkit-border-radius: 0px 0px 3px 3px;
+    -moz-border-radius: 0px 0px 3px 3px;
+    border-radius: 0px 0px 3px 3px;
+    -webkit-border-radius: 0px 0px 3px 3px;
+    -moz-border-radius: 0px 0px 3px 3px;
     -webkit-box-shadow: 0 0 25px #000;
     -moz-box-shadow: 0 0 25px #000;
     box-shadow: 0 0 25px #000;
@@ -64,12 +59,34 @@ label.right {
     }
   }
   .blog-text {
-    margin-top: -10px;
+    margin-top: -5px;
     padding-top: 20px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-box-shadow: 0 0 25px #000;
-    -moz-box-shadow: 0 0 25px #000;
-    box-shadow: 0 0 25px #000;
+    background: #f2f2f2;
+    border: 1px solid #ccc;
   }
+}
+
+
+#wraparound {
+  position: relative;
+  border: 1px solid #CCC;
+  border-radius: 2px 2px 0 0;
+  background: #F9F9F9;
+  color: #CCC;
+  box-shadow: 0 4px 4px #5c5c5c;
+}
+#wraparound:before,
+#wraparound:after {
+  content:" ";
+  border-top:10px solid #CCC;
+  position:absolute;
+  bottom:-10px;
+}
+#wraparound:before {
+  border-left:10px solid transparent;
+  left:0;
+}
+#wraparound:after {
+  border-right:10px solid transparent;
+  right:0;
 }
