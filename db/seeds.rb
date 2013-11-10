@@ -29,7 +29,7 @@
   "Instrumentals/Beats",
   "Radio Show (Interviews)"
 ].each do |category_name|
-  new_category = Category.find_or_create_by_name(category_name)
+  new_category = Category.find_or_create_by(name: category_name)
   puts new_category.name if new_category.new_record?
 end
 
@@ -42,7 +42,7 @@ csv.each do |row|
   values['catalog_id'] = values['catalog_id'].gsub('AP', '').to_i
 
   begin
-    album = Album.find_or_initialize_by_catalog_id(values)
+    album = Album.find_or_initialize_by(catalog_id: values)
     # If Album Exist don't update the quantity
     if album.new_record?
       values['quantity'] = 0 if values['quantity'].nil?

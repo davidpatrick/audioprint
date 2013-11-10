@@ -1,25 +1,18 @@
 Audioprint::Application.routes.draw do
   resources :addresses
 
-
   resources :blog_posts, path: :blog
+  match "/blog/:year", :to => "blog_posts#index", via: :get, :constraints => { :year => /\d{4}/ }
+  match "/blog/:year/:month", :to => "blog_posts#index", via: :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/ }
+  match "/blog/:year/:month/:slug", :to => "blog_posts#show", via: :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
+  match "/blog/:year/:month/:slug/destroy", :to => "blog_posts#destroy", via: :post, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
+  match "/blog/:year/:month/:slug/edit", :to => "blog_posts#edit", via: :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
+  match "/blog/:year/:month/:slug", :to => "blog_posts#update", via: :put, :as => :update, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
 
-  match "/blog/:year", :to => "blog_posts#index", :constraints => { :year => /\d{4}/ }
-  match "/blog/:year/:month", :to => "blog_posts#index", :constraints => { :year => /\d{4}/, :month => /\d{1,2}/ }
-  match "/blog/:year/:month/:slug", :to => "blog_posts#show", :via => :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
-  match "/blog/:year/:month/:slug/destroy", :to => "blog_posts#destroy", :via => :post, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
-  match "/blog/:year/:month/:slug/edit", :to => "blog_posts#edit", :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
-  match "/blog/:year/:month/:slug", :to => "blog_posts#update", :via => :put, :as => :update, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/, :slug => /[a-z0-9\-]+/ }
-
-  # authenticated :user do
-  #   root :to => 'home#index'
-  # end
   root :to => "home#index"
 
   devise_for :users
   resources :users
-  match 'become_contributor', :to => 'users#become_contributor'
-  match 'admin_create', :to => 'users#create'
 
   resources :albums do
     collection do
@@ -30,7 +23,7 @@ Audioprint::Application.routes.draw do
   end
 
   resources :songs
-  match 'songs/:id/download', :to => 'songs#download', :as => 'download_song'
+  match 'songs/:id/download', :to => 'songs#download', :as => 'download_song', via: :get
 
   resources :orders do
     member do
@@ -44,7 +37,10 @@ Audioprint::Application.routes.draw do
   end
 
   resources :order_items
-  match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album'
-  match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song'
+  match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album', via: :post
+  match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song', via: :post
+
   mount Ckeditor::Engine => "/ckeditor"
+  match 'become_contributor', :to => 'users#become_contributor', via: :post
+  match 'admin_create', :to => 'users#create', via: :post
 end

@@ -7,9 +7,10 @@ Audioprint::Application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-
+  config.perform_caching = true
+  # config.cache_store = :null_store
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -22,6 +23,25 @@ Audioprint::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
+
+  # Print deprecation notices to the Rails logger
+  config.active_support.deprecation = :log
+
+  # Only use best-standards-support built into browsers
+  config.action_dispatch.best_standards_support = :builtin
+
+  # Raise exception on mass assignment protection for Active Record models
+  config.active_record.mass_assignment_sanitizer = :strict
+
+  # Log the query plan for queries taking more than this (works
+  # with SQLite, MySQL, and PostgreSQL)
+  # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # Do not compress assets
+  config.assets.js_compressor = false
+
+  # Expands the lines which load the assets
+  config.assets.debug = true
 
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
@@ -49,34 +69,7 @@ Audioprint::Application.configure do
     :path => ":rails_root/public/assets/avatars/:id/:style/:basename.:extension"
   }
   PAPERCLIP_MP3_OPTS = {
-    :url => ':s3_domain_url',
-    :storage        => :s3,
-    :s3_permissions => :private,
-    :s3_protocol => 'http',
-    :s3_credentials => {
-      :bucket => 'audioprint_development',
-      :access_key_id => 'AKIAIYEFQSJPIGAZ3OJA',
-      :secret_access_key => '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'
-    },
-    :path => '/:attachment/:id/:style/:basename.:extension'
+    :url => "/assets/albums/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/albums/:id/:style/:basename.:extension",
   }
-
-  # Print deprecation notices to the Rails logger
-  config.active_support.deprecation = :log
-
-  # Only use best-standards-support built into browsers
-  config.action_dispatch.best_standards_support = :builtin
-
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
-
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  config.active_record.auto_explain_threshold_in_seconds = 0.5
-
-  # Do not compress assets
-  config.assets.compress = false
-
-  # Expands the lines which load the assets
-  config.assets.debug = true
 end

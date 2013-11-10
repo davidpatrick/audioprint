@@ -1,0 +1,1 @@
+Rails.cache.logger = Logger.new(Rails.root.join("log/cache-#{Rails.env}.log"))
