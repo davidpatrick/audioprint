@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131104002524) do
+ActiveRecord::Schema.define(version: 20131125025323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,15 +108,16 @@ ActiveRecord::Schema.define(version: 20131104002524) do
     t.integer  "length"
     t.integer  "size"
     t.integer  "album_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.string   "mp3_file_name"
     t.string   "mp3_content_type"
     t.integer  "mp3_file_size"
     t.datetime "mp3_updated_at"
     t.integer  "track"
     t.text     "metadata"
-    t.integer  "downloads",        default: 0, null: false
+    t.integer  "downloads",                                default: 0,   null: false
+    t.decimal  "price",            precision: 7, scale: 2, default: 0.0, null: false
   end
 
   create_table "users", force: true do |t|

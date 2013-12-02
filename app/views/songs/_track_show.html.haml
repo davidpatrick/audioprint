@@ -1,0 +1,15 @@
+- cache track do
+  - if @album.digital
+    %tr{id: "song-#{track.id}"}
+      %td.hide-for-small
+        = track.track
+      %td
+        = track.title
+      %td.hide-for-small
+        = track.display_length
+      - if @album.digital
+        %td.text-centered{style: "width:100px;"}
+          - if track.mp3.present?
+            %a.download-button.full-width{href: '#'}
+              %i.fa.fa-shopping-cart
+              = number_to_currency(track.price, :unit => "$")

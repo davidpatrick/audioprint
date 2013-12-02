@@ -1,7 +1,7 @@
 class Song < ActiveRecord::Base
   resourcify
-  attr_accessible :album_id, :artist, :length, :title, :size, :mp3, :track
-  belongs_to :album
+  attr_accessible :album_id, :artist, :length, :title, :size, :mp3, :track, :price
+  belongs_to :album, touch: true
   validates_presence_of :album_id, :title, :length
 
   serialize :metadata
@@ -11,15 +11,6 @@ class Song < ActiveRecord::Base
 
   # def audio?
   #   mp3_content_type =~ %r{^audio/(?:mp3|mpeg|mpeg3|mpg|x-mp3|x-mpeg|x-mpeg3|x-mpegaudio|x-mpg)$}
-  # end
-
-  # def display_name
-  #   @display_name ||= if audio? && metadata?
-  #     artist, title = metadata.values_at('artist', 'title')
-  #     title.present? ? [title, artist].compact.join(' - ').force_encoding('UTF-8') : mp3_file_name
-  #   else
-  #     mp3_file_name
-  #   end
   # end
 
   def extract_metadata
@@ -37,6 +28,10 @@ class Song < ActiveRecord::Base
       self.track = self.metadata["tracknum"]
       true
     end
+  end
+
+  def display_length
+    Time.at(self.length).utc.strftime("%M:%S") if self.length
   end
 
   def download_url

@@ -10,6 +10,6 @@
   $('form.edit_song').prepend('<div class="alert-box success" data-alert style="display:none;">Successfully Updated Song<a class="close" href="#">x</div>');
   $('form.edit_song .success.alert-box').fadeIn();
 
-  var updated_song = "<%= escape_javascript( render(:partial => 'albums/partials/album_track', :locals => {song: song}) ) %>"
-  $("tbody#tracks tr#song-<%=@song.id%>").html(updated_song);
+  var updated_song = "<%= escape_javascript( render(:partial => 'songs/track_edit', :locals => {track: song}) ) %>"
+  $("tbody#tracks tr#song-<%=@song.id%>").replaceWith(updated_song);
 <% end %>

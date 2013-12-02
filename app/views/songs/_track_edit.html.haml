@@ -1,0 +1,28 @@
+%tr{id: "song-#{track.id}"}
+  %td.handle
+    %i.fa.fa-sort
+  %td.text-centered.hide-for-small
+    = track.track
+  %td
+    = link_to track.title, track
+  %td.hide-for-small.hide-for-small
+    = Time.at(track.length).strftime("%M:%S") if track.length
+  - if (@album && @album.digital) || track.album.digital
+    %td.text-centered.hide-for-small
+      = number_to_human_size(track.mp3_file_size)
+    %td.text-centered
+      %span.download-button.full-width{href: '#'}
+        %i.fa.fa-shopping-cart
+        = number_to_currency(track.price, :unit => "$")
+  %td.text-centered
+    %a{href: '#', 'data-dropdown' => "settings-#{track.id}"}
+      %i.fa.fa-cogs
+    %ul.f-dropdown{id: "settings-#{track.id}", 'data-dropdown-content' => ''}
+      %li
+        %a.edit-song{href: edit_song_path(track)}
+          %i.fa.fa-pencil
+          Edit Song
+      %li
+        %a{href: song_path(track), class: 'delete-song', id: "#{track.id}"}
+          %i.fa.fa-trash-o
+          Delete Song

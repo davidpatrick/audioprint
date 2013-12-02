@@ -2,7 +2,7 @@ class OrderItemsController < ApplicationController
   before_filter :load_order, only: [:create]
 
   def create
-    @order_item =  @order.order_items.find_or_initialize_by_product_id_and_product_type(params[:id], params[:type].classify)
+    @order_item =  @order.order_items.find_or_initialize_by(product_id: params[:id], product_type: params[:type].classify)
     @order_item.quantity += 1
 
     respond_to do |format|

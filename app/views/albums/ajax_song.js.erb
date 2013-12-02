@@ -11,7 +11,7 @@
   $('form#new_song .success.alert-box').fadeIn();
   $('form#new_song .form-inputs input').val('');
 
-  var new_song = "<%= escape_javascript( render(:partial => 'albums/partials/album_track', :locals => {song: song}) ) %>"
+  var new_song = "<%= escape_javascript( render(:partial => 'songs/track', :locals => {song: song}) ) %>"
   $("tbody#tracks").append(new_song);
   $('.qq-upload-success').fadeOut();
 <% end %>

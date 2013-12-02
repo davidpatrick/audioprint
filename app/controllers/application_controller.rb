@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
     rescue ActiveRecord::RecordNotFound
       if current_user
-        @order = current_user.orders.find_or_create_by_status("Unsubmitted")
+        @order = current_user.orders.find_or_create_by(status: "Unsubmitted")
       else
         @order = Order.create(status: "Unsubmitted")
       end

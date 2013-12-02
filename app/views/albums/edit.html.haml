@@ -1,62 +1,65 @@
 .row
-  .small-8.columns.small-centered
-    %h3.text-centered="#{@album.artist} - #{@album.title}"
-    = image_tag @album.cover_art.url(:medium), style: "margin-left: auto; margin-right: auto; width: 100%;"
-.row.content
-  .small-12
-    = simple_form_for(@album, :html => {:multipart => true}) do |f|
-      = f.error_notification
+  = simple_form_for(@album, :html => {:multipart => true}) do |f|
+    .large-6.columns.text-centered
       .row
-        .large-6.columns
-          %fieldset
-            %legend Album Info
-            .row
-              .large-6.columns
-                = f.input :title
-              .large-6.columns
-                = f.input :artist
-            .row
-              .large-6.columns
-                = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
-              .large-6.columns
-                = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
-            .row
-              .small-12.columns
-                %label{style: "text-decoration:underline;"} Upload Cover Art
-                = f.file_field :cover_art
-        .large-6.columns
-          %fieldset
-            %legend Product Info
-            .row
-              .large-4.columns
-                = f.input :catalog_id
-              .large-4.columns
-                = f.input :price
-              .large-4.columns
-                = f.input :quantity
-        .large-6.columns
-          .form-actions
-            = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
+        = image_tag @album.cover_art.url(:large)
+      .row
+        .small-12.columns{style: "text-align:left; margin:15px;"}
+          %label{style: "text-decoration:underline;"} Upload Cover Art
+          = f.file_field :cover_art
+    .large-6.columns
+      = f.error_notification
+      %fieldset
+        %legend Album Info
+        .row
+          .large-6.columns
+            = f.input :title
+          .large-6.columns
+            = f.input :artist
+        .row
+          .large-6.columns
+            = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
+          .large-6.columns
+            = f.input :digital, collection: {'Physical' => false, 'Digital' => true}, label: :Medium, include_blank: false
+          .large-12.columns
+            = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
+      %fieldset
+        %legend Product Info
+        .row
+          .large-4.columns
+            = f.input :catalog_id
+          .large-4.columns
+            = f.input :price
+          .large-4.columns
+            = f.input :quantity unless @album.digital
+      .form-actions
+        = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
 
+.row
+  .small-12
     %fieldset{style: "margin:0px;padding:10px;"}
       %legend Track Listing
       %table.full-width
         %thead
           %tr
-            %th.hide-for-small Track
+            %th{style: "width:5px;"}
+            %th.hide-for-small{style: "width:5px;"} Track
             %th Title
             %th.hide-for-small Length
-            %th Digital
-            %th{style: "width:5%"}
+            - if @album.digital
+              %th.text-centered.hide-for-small{style: "width:65px;"} Size
+              %td.text-centered{style: "width:100px;"} Price
+            %th{style: "width:10px;"}
         %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
-          -@album.track_list.each_with_index do |song, index|
-            %tr{id: "song-#{song.id}"}
-              = render :partial => 'albums/partials/album_track', :locals => {song: song, edit_album: true}
-
-      .large-6.columns
-        %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
-      .large-6.columns
-        %a.button.small-12{href: "/songs/new/?album=#{@album.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true"} Add Song Manually
+          = render partial: "songs/track_edit", collection: @album.track_list, as: :track
+      - if @album.digital
+        .large-6.columns
+          %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
+        .large-6.columns
+          %a.button.small-12{href: "/songs/new/?album=#{@album.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true", style: "background-color: #1673c1;"} Add Song Manually
+      - else
+        .large-12.columns
+          %a.button.small-12{href: "/songs/new/?album=#{@album.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true", style: "background-color: #1673c1;"} Add Song
 
 .reveal-modal#song-modal
   %h3

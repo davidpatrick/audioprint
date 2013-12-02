@@ -1,4 +1,4 @@
-.user-profile.hidden-desktop{style: "text-align: center;"} 
+.user-profile.hidden-desktop{style: "text-align: center;"}
   %p
     = image_tag avatar_url(@user)
   %h2
@@ -11,10 +11,10 @@
     %small.visible-phone{style: "font-size: 12px;"}
       (start with selecting an album)
   %ul.albums.thumbnails
-    =render '/albums/partials/album_list'
+    =render '/albums/album_list'
 .user-column.span3{style: "width: 100%;"}
   .user-profile.visible-desktop
-    .thumbnail{style: "text-align: center;"}   
+    .thumbnail{style: "text-align: center;"}
       %p
         = image_tag avatar_url(@user)
       %h5

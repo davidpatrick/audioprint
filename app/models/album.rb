@@ -1,7 +1,7 @@
 class Album < ActiveRecord::Base
   resourcify
   validates_presence_of :title, :artist, :catalog_id, :price
-  attr_accessible :artist, :cover_art, :remote_cover_art_url, :title, :release_date, :category_id, :quantity, :price, :catalog_id
+  attr_accessible :artist, :cover_art, :title, :release_date, :quantity, :price, :catalog_id, :category_id, :digital
   has_many :songs, :dependent => :destroy
   has_many :order_items
   belongs_to :user

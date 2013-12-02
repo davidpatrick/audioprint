@@ -1,5 +1,6 @@
 class AlbumsController < ApplicationController
   load_and_authorize_resource
+  layout "product", only: [:show, :edit, :new]
 
   def index
     if params[:category]
@@ -19,34 +20,20 @@ class AlbumsController < ApplicationController
     end
 
     @featured_album = Album.last
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @albums }
-    end
   end
 
   def show
     @album = Album.find(params[:id])
-
-    respond_to do |format|
-      format.html { render :layout => 'product' }
-      format.json { render json: @album }
-    end
+    @album_decorator = AlbumDecorator.new(@album)
   end
 
   def edit
     @album = Album.find(params[:id])
-    render :layout => 'product'
+    @album_decorator = AlbumDecorator.new(@album)
   end
 
   def new
     @album = Album.new
-
-    respond_to do |format|
-      format.html { render :layout => 'product' }
-      format.json { render json: @album }
-    end
   end
 
   def create

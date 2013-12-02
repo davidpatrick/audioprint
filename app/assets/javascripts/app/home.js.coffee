@@ -3,15 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
   # $('.collapse').collapse()
-  $('#tracks').sortable
-    axis: 'y'
-    update: ->
-      $.post(
-        $(this).data('update-url') + '?album_id=' + $(this).data('album-id'),
-        $(this).sortable('serialize')
-      )
   $('.date_picker').fdatepicker({format: 'yyyy/mm/dd'})
-
 
 directToUrl = ->
   window.location = $(this).attr('href')
