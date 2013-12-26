@@ -1,0 +1,14 @@
+- if !params[:type] || params[:type] == ''
+  = render partial: 'addresses/form'
+
+/ .small-10.large-6.columns
+/   .div Shipping To:
+/   .address
+/     = collection_select :order, :address, current_user.addresses, :id, :to_s
+/     = link_to 'Add new address', new_address_path, 'data-reveal-id' => 'address-modal', 'data-reveal-ajax' => 'true'
+
+/ %div{style: "overflow:hidden;"}
+/   .small-12
+/     .right
+/       .button Continue Shopping
+/       .button Checkout

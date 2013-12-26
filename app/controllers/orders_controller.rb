@@ -40,25 +40,69 @@ class OrdersController < ApplicationController
   end
 
 
+  def checkout_address
+    authenticate_user!
+    @order = Order.find(params[:id])
+    sign_out current_user unless can? :manage, @order
+
+    @addresses = Address.where(user_id: current_user.id).order(updated_at: :desc)
+    @address =  @addresses.last
+    @address ||= Address.new()
+  end
+
+  def save_address
+    authenticate_user!
+
+    @order = Order.find(params[:id])
+    sign_out current_user unless can? :manage, @order
+
+    @address = Address.find_by_id(params[:preloaded_address]) if params[:preloaded_address].present?
+    @address ||= Address.new(params[:address])
+    @address.user_id = current_user.id if params[:save_it]
+
+    @order.address = @address
+
+    binding.pry
+    if @order.save
+      render json: {order: @order, address: @address}, status: :created
+    else
+      render json: {order: @order.errors, address: @address.errors}, status: :unprocessable_entity
+    end
+  end
+
+  def checkout
+    authenticate_user!
+    @order = Order.find(params[:id])
+    sign_out current_user unless can? :manage, @order
+
+    if !params[:type] || params[:type] == '' #address
+      @address = Address.where(user_id: current_user.id).order(updated_at: :desc).last
+      @address ||= Address.new()
+    elsif params[:type] == 'payment'
+      @checkout_url = checkout_payment_order_path(@order)
+      binding.pry
+    elsif params[:type] == 'payment'
+      @checkout_url = checkout_purchase_order_path(@order)
+    end
+
+    @order.errors.add(:error, ": You don't have any items in your cart") unless @order.order_items.any?
+    render action: "show" and return if @order.errors.any?
+  end
+
   def purchase
     authenticate_user!
     @order = Order.find(params[:id])
     sign_out current_user unless can? :manage, @order
 
     @order.errors.add(:error, ": You forgot to set an address!") unless params[:order][:address_id].present?
-    @order.errors.add(:error, ": You don't have any items in your cart") unless @order.order_items.any?
-
-    if @order.errors.any?
-      render action: "show"
-      return
-    end
+    render action: "show" and return if @order.errors.any?
 
     params[:order][:status] = Order.status_types.second
 
     respond_to do |format|
       if @order.update_attributes(params[:order])
         session[:order_id] = nil #reset session order
-        OrderMailer.confirm_order(current_user, @order).deliver
+        # OrderMailer.confirm_order(current_user, @order).deliver
 
         format.html { redirect_to @order, notice: 'Your order was successfully placed.' }
         format.json { head :no_content }

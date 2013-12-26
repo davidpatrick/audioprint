@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   attr_accessible :status, :user, :address_id
   belongs_to :user, foreign_key: :user_id
-  belongs_to :address
+  belongs_to :address, touch: true
   has_many :order_items, dependent: :destroy
 
   def self.status_types

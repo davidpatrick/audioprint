@@ -5,7 +5,7 @@
     .large-6.columns
       %ul.pricing-table
         %li.title
-          = @album_decorator.display
+          = "#{@album.title} - #{@album.artist}"
           %br
           %small
             = @album.release_date.strftime("%B %d, %Y") if @album.release_date
@@ -16,7 +16,14 @@
         %li.bullet-item
           = print_stock(@album.quantity)
         %li.cta-button
-          = @album_decorator.add_to_cart
+          - if @album.quantity > 0
+            = link_to add_album_to_cart_path(@album), class: 'button' do
+              Add to Cart
+              %i.fa.fa-shopping-cart
+          - else
+            %button.disabled
+              Out of Stock
+              %i.fa.fa-shopping-cart
 
 - cache @album.track_list do
   .row.track-listings

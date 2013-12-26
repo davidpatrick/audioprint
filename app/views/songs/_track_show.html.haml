@@ -10,6 +10,6 @@
       - if @album.digital
         %td.text-centered{style: "width:100px;"}
           - if track.mp3.present?
-            %a.download-button.full-width{href: '#'}
+            = link_to add_song_to_cart_path(track), class: 'download-button full-width' do
               %i.fa.fa-shopping-cart
               = number_to_currency(track.price, :unit => "$")

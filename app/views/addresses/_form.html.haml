@@ -1,6 +1,10 @@
-= simple_form_for(@address, :html => {:multipart => true}, remote: true) do |f|
+= simple_form_for @address, url: save_address_order_path(@order), :html => {:multipart => true, :id => 'address_form'}, remote: true do |f|
+  = hidden_field_tag :preloaded_address
   %ul.form-errors.alert-box.alert.hidden
 
+  %h2
+    %span.label 1
+    Shipping Address
   .field
     = f.label :line1
     = f.text_field :line1
@@ -18,5 +22,20 @@
     = f.text_field :zip
   .field
     = f.hidden_field :user_id, value: current_user.id
-  .actions
-    = f.button :submit, class: 'button'
+  .field
+    %span.left{style: "margin-right:5px;"}
+      = check_box_tag :save_it
+    %span.left
+      %label{for: :save_it} Save Address
+  .actions.right
+    = f.button :submit, 'Continue', class: 'button'
+
+%br
+%br
+
+%h2.subheader
+  %span.label 2
+  Billing
+%h2.subheader
+  %span.label 3
+  Review & Submit

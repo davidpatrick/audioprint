@@ -104,3 +104,31 @@ label.right {
   border-right:10px solid transparent;
   right:0;
 }
+
+
+.loader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+
+  .loader-indicator {
+    z-index: 100;
+    position: fixed;
+    left: 50%;
+    top: 30%;
+    width: 64px;
+    height: 64px;
+    background: url("/assets/ajax-bg-loader.gif") no-repeat;
+  }
+
+  .loader-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0.6;
+  }
+}

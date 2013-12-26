@@ -1,0 +1,46 @@
+/ = simple_form_for @order, url:  do |f|
+/   - if @order.errors.any?
+/     - @order.errors.full_messages.each do |msg|
+/       .alert-box.alert{"data-alert" => ""}
+/         %a.close{href:'#'}x
+/         = msg
+
+/ %h1 Your Order
+/ %table.full-width
+/   %tr
+/     %th Customer
+/     %td{colspan: 6}=  @order.user ? @order.user.name : "Not Logged In"
+/   %tr
+/     %th Status:
+/     %td{colspan: 6}= @order.status
+/   %tr
+/     %th Items:
+/     %td{colspan: 6}= @order.order_items.count
+/   %tr
+/     %th Items
+/     %th Title
+/     %th Quantity
+/     %th Stock
+/     %th Unit Price
+/     %th Subtotal
+
+/   = render partial: 'item', collection: @order.order_items
+
+/   %tr.text-centered
+/     %th{colspan: 4}
+/     %th Order Total
+/     %th#order-total= number_to_currency(@order.total)
+
+= render partial: 'addresses/form'
+/ .small-10.large-6.columns
+/   .div Shipping To:
+/   .address
+/     = f.association :address, collection: current_user.addresses, selected: current_user.addresses.any? ? current_user.addresses.last.id : nil, include_blank: 'No Address on File', label: false
+/     = link_to 'Add new address', new_address_path, 'data-reveal-id' => 'address-modal', 'data-reveal-ajax' => 'true'
+
+/ %div{style: "overflow:hidden;"}
+/   .small-12
+/     .right
+/       #continue.button Cancel
+/       %a{ href: payment_order_path(@order) }#checkout.button Continue Checkout
+

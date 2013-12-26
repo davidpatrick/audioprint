@@ -118,7 +118,7 @@ Audioprint::Application.configure do
     },
     :path           => ':attachment/:id/:style.:extension',
     :processor       => [ :cropper ],
-    :default_url => "/assets/missing-cover.png"
+    :default_url => "/assets/missing-cover_:style.png"
   }
   PAPERCLIP_MP3_OPTS = {
     :url => ':s3_domain_url',

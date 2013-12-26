@@ -1,6 +1,4 @@
 Audioprint::Application.routes.draw do
-  resources :addresses
-
   resources :blog_posts, path: :blog
   match "/blog/:year", :to => "blog_posts#index", via: :get, :constraints => { :year => /\d{4}/ }
   match "/blog/:year/:month", :to => "blog_posts#index", via: :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/ }
@@ -19,28 +17,35 @@ Audioprint::Application.routes.draw do
       post :sort_tracks
       get :ajax_uploaded_song
     end
+
     post :add_songs, :on => :member
   end
 
   resources :songs
+
   match 'songs/:id/download', :to => 'songs#download', :as => 'download_song', via: :get
 
   resources :orders do
     member do
-      put :purchase
+      get :checkout
+      patch :checkout_purchase, to: 'orders#purchase'
       put :process_order
+      patch :save_address
       post :ship_order
     end
+
     collection do
       get :view_cart
     end
   end
 
   resources :order_items
-  match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album', via: :post
-  match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song', via: :post
 
-  mount Ckeditor::Engine => "/ckeditor"
   match 'become_contributor', :to => 'users#become_contributor', via: :post
   match 'admin_create', :to => 'users#create', via: :post
+
+  match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album', via: :get
+  match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song', via: :get
+
+  mount Ckeditor::Engine => "/ckeditor"
 end

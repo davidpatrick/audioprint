@@ -1,16 +1,38 @@
-= form_for @order do |f|
+= simple_form_for @order, url: '/' do |f|
   - if @order.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@order.errors.count, "error")} prohibited this order from being saved:"
-      %ul
-        - @order.errors.full_messages.each do |msg|
-          %li= msg
+    - @order.errors.full_messages.each do |msg|
+      .alert-box.alert{"data-alert" => ""}
+        %a.close{href:'#'}x
+        = msg
 
-  .field
-    = f.label :user
-    = f.text_field :user
-  .field
-    = f.label :status
-    = f.text_field :status
-  .actions
-    = f.submit 'Save'
+  %h1 Your Order
+  %table.full-width
+    %tr
+      %th Customer
+      %td{colspan: 6}=  @order.user ? @order.user.name : "Not Logged In"
+    %tr
+      %th Status:
+      %td{colspan: 6}= @order.status
+    %tr
+      %th Items:
+      %td{colspan: 6}= @order.order_items.count
+    %tr
+      %th Items
+      %th Title
+      %th Quantity
+      %th Stock
+      %th Unit Price
+      %th Subtotal
+
+    = render partial: 'item', collection: @order.order_items
+
+    %tr.text-centered
+      %th{colspan: 4}
+      %th Order Total
+      %th#order-total= number_to_currency(@order.total)
+
+  %div{style: "overflow:hidden;"}
+    .small-12
+      .right
+        #continue.button Continue Shopping
+        %a#checkout.button{ href: checkout_order_path(@order) } Checkout
