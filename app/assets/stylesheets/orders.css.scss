@@ -1,3 +1,21 @@
 // Place all the styles related to the Orders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#address-dropdown {
+  background: url("down-arrow.png") no-repeat scroll 98% 12px #fff;
+  -webkit-appearance: none!important;
+  border: none;
+  box-shadow: none!important;
+  border: 1px solid #919191!important;
+  font-size: 1.1em!important;
+  font-weight: normal!important;
+  text-align: left!important;
+  padding: 8px 4% 8px 2%;
+  cursor: pointer!important;
+  cursor: pointer;
+}
+
+.checkout-section {
+  overflow: hidden;
+}

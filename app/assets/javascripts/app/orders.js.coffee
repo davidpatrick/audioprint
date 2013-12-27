@@ -52,26 +52,39 @@ $(document).ready ->
 
   $("body.checkout #address_form").on 'click', 'input[type=submit]', (e) ->
     e.preventDefault();
+    $('#address_form .error').remove()
     if $('.loader').length == 0
-      $('body').append(" \
-        <div class='loader'> \
-          <div class='loader-background'> \
-            <div class='loader-indicator'> \
-            </div> \
-          </div> \
-        </div> \
-      ")
+      $('body').append("<div class='loader'><div class='loader-background'><div class='loader-indicator'></div></div></div>")
       form = $('form#address_form')
       $.ajax form.attr('action'),
         type: 'POST'
         data: form.serialize()
         dataType: 'json'
         error: (jqXHR, textStatus, errorThrown) ->
-          console.log(jqXHR)
-          console.log(textStatus)
-          console.log(errorThrown)
+          data = jqXHR.responseJSON
+          if !$.isEmptyObject(data.address)
+            handleFormErrors 'address', data.address
+          # if !$.isEmptyObject(data.order)
+          #   handleFormErrors 'address', data.order
         success: (data, textStatus, jqXHR) ->
           console.log(data.address)
           console.log(data.order)
         complete: (data) ->
           $('.loader').remove()
+
+  $("body.checkout #address-dropdown").on 'change', (e) ->
+    selectedValue = this.value
+    dataObject = $.parseJSON($(this).find("option[value='#{selectedValue}']").attr('data'))
+
+    $('#preloaded_address').val selectedValue
+    populateForm 'address', dataObject
+
+populateForm = (name, data) ->
+  $.each data, (key, value) ->
+    $("[name='#{name}[#{key}]']").val value
+handleFormErrors = (name, data) ->
+  $.each data, (key, value) ->
+    string = value.toString()
+    target = $(".#{name}_#{key}")
+    target.addClass('field_with_errors')
+    target.append("<span class='error'>#{string}</span>")

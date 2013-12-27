@@ -62,8 +62,7 @@ class OrdersController < ApplicationController
 
     @order.address = @address
 
-    binding.pry
-    if @order.save
+    if @order.save && @address.save
       render json: {order: @order, address: @address}, status: :created
     else
       render json: {order: @order.errors, address: @address.errors}, status: :unprocessable_entity

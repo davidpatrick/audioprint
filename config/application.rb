@@ -10,26 +10,21 @@ module Audioprint
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+    config.assets.enabled = true
+    # Version of your assets, change this if you want to expire all your assets
+    config.assets.version = '1.0'
     config.assets.initialize_on_precompile = false
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
-    # Enable escaping HTML in JSON.
-    config.active_support.escape_html_entities_in_json = true
-    config.encoding = "utf-8"
-    # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_confirmation]
     # Enable escaping HTML in JSON.
     config.active_record.whitelist_attributes = true
+    config.active_support.escape_html_entities_in_json = true
 
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.secret_key_base = 'Audioprint Music'
+    config.force_ssl = false
   end
 end
 

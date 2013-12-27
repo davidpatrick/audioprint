@@ -1,6 +1,18 @@
-- if !params[:type] || params[:type] == ''
+#shipping.checkout-section.active
+  %h2
+    %span.label 1
+    Shipping Address
   = render partial: 'addresses/form'
 
+#billing.checkout-section
+  %h2.subheader
+    %span.label 2
+    Billing
+
+#review.checkout-section
+  %h2.subheader
+    %span.label 3
+    Review & Submit
 / .small-10.large-6.columns
 /   .div Shipping To:
 /   .address
