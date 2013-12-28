@@ -7,7 +7,7 @@
 .dropdown-selector
   = select "addressDropdown", nil, current_user.addresses.collect {|a| [ a.to_s, a.id , {data: a.to_json}] }, {include_blank: 'Select from your Address Book'}, id: 'address-dropdown'
 
-= simple_form_for @address, url: save_address_order_path(@order), :html => {:multipart => true, :id => 'address_form', class: 'full-width'}, remote: true do |f|
+= simple_form_for @address, url: save_address_order_path(@order), :html => {:multipart => true, :id => 'address-form', class: 'full-width'}, remote: true do |f|
   = hidden_field_tag :preloaded_address
   %ul.form-errors.alert-box.alert.hidden
   .field

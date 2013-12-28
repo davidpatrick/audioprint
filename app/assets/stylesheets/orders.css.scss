@@ -19,3 +19,40 @@
 .checkout-section {
   overflow: hidden;
 }
+
+.on {
+  .info-data {
+    display: none;
+  }
+  .edit {
+    display: none;
+  }
+  hr {
+    display: none;
+  }
+}
+
+.off {
+  .form-data {
+    display: none;
+  }
+  h2 {
+    line-height: 1.4;
+    color: #a5a5a5;
+    font-weight: 300;
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+  }
+  .label {
+    background-color: #a5a5a5;
+  }
+  hr {
+    margin: -5px 0 10px 0;
+  }
+}
+
+.edit {
+  position: absolute;
+  right: 5%;
+  top: 10%;
+}

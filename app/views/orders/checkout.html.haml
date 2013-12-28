@@ -1,18 +1,29 @@
-#shipping.checkout-section.active
+#shipping.checkout-section.on
   %h2
     %span.label 1
     Shipping Address
-  = render partial: 'addresses/form'
+  %hr
+  .edit
+    .button.secondary Edit
+  .form-data
+    = render partial: 'addresses/form'
+  .info-data
 
-#billing.checkout-section
-  %h2.subheader
+#billing.checkout-section.off
+  %h2
     %span.label 2
     Billing
-
-#review.checkout-section
-  %h2.subheader
+  %hr
+  .form-data
+    = render partial: 'billing_form'
+  .info-data
+#review.checkout-section.off
+  %h2
     %span.label 3
     Review & Submit
+  .form-data
+    = render partial: 'review_and_submit'
+  .info-data
 / .small-10.large-6.columns
 /   .div Shipping To:
 /   .address

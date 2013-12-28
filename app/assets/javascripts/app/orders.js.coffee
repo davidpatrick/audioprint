@@ -50,12 +50,12 @@ $(document).ready ->
         success: (data, textStatus, jqXHR) ->
           $("#item-#{data.id}").fadeOut()
 
-  $("body.checkout #address_form").on 'click', 'input[type=submit]', (e) ->
+  $("body.checkout #address-form").on 'click', 'input[type=submit]', (e) ->
     e.preventDefault();
-    $('#address_form .error').remove()
+    $('#address-form .error').remove()
     if $('.loader').length == 0
       $('body').append("<div class='loader'><div class='loader-background'><div class='loader-indicator'></div></div></div>")
-      form = $('form#address_form')
+      form = $('form#address-form')
       $.ajax form.attr('action'),
         type: 'POST'
         data: form.serialize()
@@ -67,15 +67,17 @@ $(document).ready ->
           # if !$.isEmptyObject(data.order)
           #   handleFormErrors 'address', data.order
         success: (data, textStatus, jqXHR) ->
-          console.log(data.address)
-          console.log(data.order)
+          $('#preloaded_address').val data.address.id
+          $('#shipping').toggleClass('on off')
+          $('#billing').toggleClass('off on')
+          #console.log(data.address)
+          #console.log(data.order)
         complete: (data) ->
           $('.loader').remove()
 
   $("body.checkout #address-dropdown").on 'change', (e) ->
     selectedValue = this.value
     dataObject = $.parseJSON($(this).find("option[value='#{selectedValue}']").attr('data'))
-
     $('#preloaded_address').val selectedValue
     populateForm 'address', dataObject
 
