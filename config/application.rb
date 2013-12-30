@@ -25,14 +25,6 @@ module Audioprint
     config.secret_key_base = 'Audioprint Music'
     config.force_ssl = false
 
-    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif,
-                                      "fontawesome-webfont.ttf",
-                                     "fontawesome-webfont.eot",
-                                     "fontawesome-webfont.svg",
-                                     "fontawesome-webfont.woff")
-
-
-
     config.assets.precompile << Proc.new do |path|
       if path =~ /\.(css|js)\z/
         full_path = Rails.application.assets.resolve(path).to_path
