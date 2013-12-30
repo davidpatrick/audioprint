@@ -16,6 +16,6 @@ class OrderItem < ActiveRecord::Base
 
 
   def subtotal
-    (quantity * product.try(:price)).to_f
+    (quantity * product.price).to_f if product
   end
 end
