@@ -2,10 +2,6 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'pg'
 
-group :production do
-  gem 'rails_12factor'
-end
-
 gem "rails", '~>4.0.0'
 gem 'dalli'
 gem 'simple_form', git: 'git://github.com/plataformatec/simple_form.git'
