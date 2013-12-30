@@ -44,7 +44,7 @@ class Order < ActiveRecord::Base
     end
 
     if status == "Confirmed"
-      # OrderMailer.confirm_order(customer, self).deliver
+      OrderMailer.confirm_order(customer, self).deliver
       return true
     else
       return false

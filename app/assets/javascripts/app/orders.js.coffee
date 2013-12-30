@@ -2,6 +2,16 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $(document).ready ->
+  $("body.orders").on 'click', '.ship-order', (e) ->
+    $(this).siblings('.confirmation-form').show()
+    $(this).siblings('.cancel-ship').show()
+    $(this).hide()
+
+  $("body.orders").on 'click', '.cancel-ship', (e) ->
+    $(this).siblings('.confirmation-form').hide()
+    $(this).siblings('.ship-order').show()
+    $(this).hide()
+
   $("body.orders").on "click", "a.add-quantity", (e) ->
     e.preventDefault();
     $.ajax $(this).attr('href'),
