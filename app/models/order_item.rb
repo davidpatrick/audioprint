@@ -6,7 +6,7 @@ class OrderItem < ActiveRecord::Base
   validate :validate_quantity, :if => Proc.new{|item| item.product_type == 'Album' }
 
   def validate_quantity
-    if quantity > product.quantity
+    if quantity > product.try(:quantity)
       errors.add(:quantity, 'not enough in stock')
       return false
     else
@@ -16,6 +16,6 @@ class OrderItem < ActiveRecord::Base
 
 
   def subtotal
-    (quantity * product.price).to_f
+    (quantity * product.try(:price)).to_f
   end
 end
