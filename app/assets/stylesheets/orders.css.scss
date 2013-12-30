@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.confirmation-form {
+  display: none;
+  margin: auto;
+}
 #address-dropdown {
   background: url("down-arrow.png") no-repeat scroll 98% 12px #fff;
   -webkit-appearance: none!important;

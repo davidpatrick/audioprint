@@ -17,17 +17,26 @@
         %td
           = link_to order, class: 'button alert medium', :method => :delete, :data => { :confirm => 'Are you sure?' } do
             %i.icon-remove
-            Remove
+            Remove Order
       - if order.status == "Confirmed"
         %td
           = link_to process_order_order_path(order), method: :put, class: 'button medium', :data => { :confirm => 'Are you sure?' } do
             %i.icon-plus
-            Process
+            Process Order
       - if order.status == "Processed"
         %td
-          = link_to ship_order_order_path(order), method: :put, class: 'success button medium', :data => { :confirm => 'Are you sure?' } do
-            %i.icon-plane
-            Ship
+          .ship-order.success.button.medium Ship Order
+          = simple_form_for order, url: ship_order_order_path(order), :html => {:multipart => true, :class => 'confirmation-form small-6'} do |f|
+            = f.input :shipping_confirmation, label: false
+            = f.button :submit, 'Save Confirmation', class: 'button', :data => { :confirm => 'Are you sure you want to submit?  This will notify the customer.' }
+          .cancel-ship.button.alert{style: "display:none;"} Cancel
+      - if order.status == "Shipped"
+        %td
+          .ship-order.success.button.medium Edit Confirmation
+          = simple_form_for order, url: ship_order_order_path(order), :html => {:multipart => true, :class => 'confirmation-form small-6'} do |f|
+            = f.input :shipping_confirmation, label: false
+            = f.button :submit, 'Save Confirmation', class: 'button', :data => { :confirm => 'Are you sure you want to save a new confirmation # ?' }
+          .cancel-ship.button.alert{style: "display:none;"} Cancel
 .row.collapse
   .right
     Total of all orders:

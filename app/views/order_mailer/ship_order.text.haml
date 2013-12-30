@@ -2,6 +2,9 @@
 \
 = @greeting
 \
+- if @order.shipping_confirmation
+  = "Your Shipping Confirmation is # #{@order.shipping_confirmation}"
+\
 \
 Order Details
 ="-------------"

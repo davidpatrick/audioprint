@@ -4,6 +4,14 @@ jQuery ->
   $("body.checkout .edit").on 'click', sections.editSection
   $("body.checkout #address-dropdown").on 'change', formHandler.addressDropdownSelect
   $("body.checkout #address-form").on 'click', 'input[type=submit]', formHandler.setAddress
+  $("body.orders").on 'click', '.ship-order', (e) ->
+    $(this).siblings('.confirmation-form').show()
+    $(this).siblings('.cancel-ship').show()
+    $(this).hide()
+    $("body.orders").on 'click', '.cancel-ship', (e) ->
+      $(this).siblings('.confirmation-form').hide()
+      $(this).siblings('.ship-order').show()
+      $(this).hide()
 
 checkout =
   setupForm: ->

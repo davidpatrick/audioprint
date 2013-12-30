@@ -70,7 +70,7 @@ class OrdersController < ApplicationController
 
     @order = Order.find(params[:id])
 
-    if @order.process(current_user)
+    if @order.process
       redirect_to orders_path, notice: 'This order has been processed.'
     else
       redirect_to orders_path, alert: 'There was an error processing this order.'
@@ -81,9 +81,16 @@ class OrdersController < ApplicationController
     authorize_admin
 
     @order = Order.find(params[:id])
-    redirect_to @order, alert: "This order cannot be processed" unless @order.status == "Processed"
 
-    if @order.ship(current_user)
+    unless @order.status == "Processed" || @order.status == "Shipped"
+      redirect_to @order, alert: "This order cannot be processed"
+    end
+
+    @order.update_attributes(params[:order])
+
+    if @order.status == "Shipped"
+      redirect_to orders_path, notice: "This order's confirmation # has been updated."
+    elsif @order.ship
       redirect_to orders_path, notice: 'This order has now been shipped!'
     else
       redirect_to orders_path, alert: 'There was an error with this order.'
@@ -96,17 +103,9 @@ class OrdersController < ApplicationController
 
     if current_user.has_role? :admin
       @orders = Order.all
+      render :template => "orders/manage"
     else
       @orders = Order.where(user_id: current_user.id)
-    end
-
-    respond_to do |format|
-      if current_user.has_role? :admin
-        format.html { render :template => "orders/manage" }
-      else
-        format.html
-      end
-      format.json { render json: @orders }
     end
   end
 

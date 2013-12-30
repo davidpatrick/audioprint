@@ -33,7 +33,7 @@ Audioprint::Application.routes.draw do
       post :review_and_submit
 
       put :process_order
-      post :ship_order
+      patch :ship_order
     end
 
     collection do

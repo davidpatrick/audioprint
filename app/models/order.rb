@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :status, :user, :address_id
+  attr_accessible :status, :user, :address_id, :shipping_confirmation
   belongs_to :user, foreign_key: :user_id
   belongs_to :address
   has_many :order_items, dependent: :destroy
@@ -51,14 +51,16 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def process(user)
+  def process
     return false unless self.status == "Confirmed"
     if self.update_column(:status, "Processed")
       self.order_items.each do |item|
-        item.product.update_column(:quantity, item.product.quantity - item.quantity)
+        unless item.product.digital
+          item.product.update_column(:quantity, item.product.quantity - item.quantity)
+        end
         # backorder = 0 - product.quantity if product.quantity < 0
       end
-      # OrderMailer.process_order(user, self).deliver
+      OrderMailer.process_order(user, self).deliver
       return true
     else
       return false
@@ -66,7 +68,7 @@ class Order < ActiveRecord::Base
   end
 
 
-  def ship(user)
+  def ship
     return false unless status == "Processed"
     if self.update_column(:status, "Shipped")
       OrderMailer.ship_order(user, self).deliver
