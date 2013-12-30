@@ -11,6 +11,7 @@ Audioprint::Application.routes.draw do
 
   devise_for :users
   resources :users
+  resources :addresses
 
   resources :albums do
     collection do

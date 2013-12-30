@@ -18,26 +18,25 @@
     %br
     = f.button :submit, 'Update', :class => 'button'
 
-%h2
-  Addresses on File
-.panel
-  - if current_user.addresses.any?
-    - current_user.addresses.each do |address|
-      .address
-        = address.to_s
-        = link_to address, class: 'button alert tiny', :method => :delete, :data => { :confirm => 'Are you sure?' } do
-          Remove
-          %i.icon-remove
-  -else
-    You don't have an address on file.  Please add one.
-  %br
-  = link_to 'Add new address', new_address_path, 'data-reveal-id' => 'address-modal', 'data-reveal-ajax' => 'true'
+/ %h2
+/   Addresses on File
+/ .panel
+/   - if current_user.addresses.any?
+/     - current_user.addresses.each do |address|
+/       .address
+/         = address.to_s
+/         = link_to address, class: 'button alert tiny', :method => :delete, :data => { :confirm => 'Are you sure?' } do
+/           Remove
+/           %i.icon-remove
+/   -else
+/     You don't have an address on file.  Please add one.
+/   %br
+/   = link_to 'Add new address', new_address_path, 'data-reveal-id' => 'address-modal', 'data-reveal-ajax' => 'true'
 
-.reveal-modal#address-modal
 
-  / -unless can? :create, Album
-  /   -if current_user.account_request && current_user.account_request == 3
-  /     = link_to 'Contributor Has Been Requested', become_contributor_path, :class => 'btn-success btn disabled'
-  /   -else
-  /     = link_to 'Request Contributor Account', become_contributor_path, :class => 'btn-success btn'
+/ -unless can? :create, Album
+/   -if current_user.account_request && current_user.account_request == 3
+/     = link_to 'Contributor Has Been Requested', become_contributor_path, :class => 'btn-success btn disabled'
+/   -else
+/     = link_to 'Request Contributor Account', become_contributor_path, :class => 'btn-success btn'
 

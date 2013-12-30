@@ -5,8 +5,9 @@ class AddressesController < ApplicationController
   # GET /addresses
   # GET /addresses.json
   def index
-    authorize! :read, Address
-    @addresses = Address.all
+    # authorize! :read, Address
+    # @addresses = Address.all
+    redirect_to '/'
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,12 +18,7 @@ class AddressesController < ApplicationController
   # GET /addresses/1
   # GET /addresses/1.json
   def show
-    @address = Address.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @address }
-    end
+    redirect_to '/'
   end
 
   # GET /addresses/new
@@ -65,7 +61,7 @@ class AddressesController < ApplicationController
     @address = Address.find(params[:id])
 
     respond_to do |format|
-      if @address.update_attributes(params[:address])
+      if can? :manage, @address && @address.update_attributes(params[:address])
         format.html { redirect_to @address, notice: 'Address was successfully updated.' }
         format.json { head :no_content }
       else
@@ -79,7 +75,10 @@ class AddressesController < ApplicationController
   # DELETE /addresses/1.json
   def destroy
     @address = Address.find(params[:id])
-    @address.destroy
+
+    if can? :manage, @address
+      @address.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to edit_user_registration_path }
