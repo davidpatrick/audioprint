@@ -34,7 +34,7 @@ class OrderItemsController < ApplicationController
     end
 
     respond_to do |format|
-      if params[:add_quantity] && @order_item.product_type == 'Album' && print_stock(@order_item.product, @order_item.quantity) == "Insufficient Stock"
+      if params[:add_quantity] && !stock_check(@order_item.product, @order_item.quantity)
         format.json { render json: 'There is not enough in stock.', status: :unprocessable_entity}
       elsif @order_item.save
         format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }

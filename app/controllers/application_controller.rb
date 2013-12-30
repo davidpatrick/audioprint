@@ -35,4 +35,20 @@ class ApplicationController < ActionController::Base
   def is_a_number?(s)
     s.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
   end
+
+  def stock_check(item, requested = nil)
+    if item.digital
+      true
+    elsif requested
+      if requested < item.quantity
+        true
+      else
+        false
+      end
+    elsif item.quantity > 0
+      true
+    else
+      false
+    end
+  end
 end
