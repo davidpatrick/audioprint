@@ -22,6 +22,7 @@ class SongsController < ApplicationController
   # GET /songs/1.json
   def show
     @song = Song.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @song
 
     respond_to do |format|
       format.html # show.html.erb
@@ -56,6 +57,7 @@ class SongsController < ApplicationController
     end
 
     @song = Song.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @song
 
     respond_to do |format|
       format.html { render :layout => false }
@@ -90,6 +92,8 @@ class SongsController < ApplicationController
   # PUT /songs/1.json
   def update
     @song = Song.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @song
+
     respond_to do |format|
       if @song.update_attributes(params[:song])
         format.html { redirect_to edit_album_path(@song.album), notice: 'Song was successfully updated.' }

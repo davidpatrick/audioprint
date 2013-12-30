@@ -13,9 +13,9 @@ gem 'haml'
 gem 'devise', '3.1.1'
 gem 'cancan'
 gem 'cancan_strong_parameters' # allows cancan to use rails4
-gem 'protected_attributes' # allows rails4 to use attr_accessible
+gem 'permanent_records', '3.1.6'
 
-gem 'protected_attributes'
+gem 'protected_attributes' # allows rails4 to use attr_accessible
 gem 'activeresource', github: 'rails/activeresource'
 gem 'actionpack-action_caching', github: 'rails/actionpack-action_caching'
 gem 'actionpack-page_caching', github: 'rails/actionpack-page_caching'

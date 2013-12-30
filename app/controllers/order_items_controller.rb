@@ -2,11 +2,11 @@ class OrderItemsController < ApplicationController
   before_filter :load_order, only: [:create]
 
   def create
-    @order_item =  @order.order_items.find_or_initialize_by(product_id: params[:id], product_type: params[:type].classify)
+    product = params[:type].classify.constantize.without_deleted.find_by_id(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless product
 
-    # if params[:type] == 'album'
+    @order_item =  @order.order_items.find_or_initialize_by(product_id: product.id, product_type: product.class.to_s)
     @order_item.quantity += 1
-    # end
 
     respond_to do |format|
       if @order_item.save

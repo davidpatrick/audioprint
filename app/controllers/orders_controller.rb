@@ -13,6 +13,7 @@ class OrdersController < ApplicationController
   def checkout
     authenticate_user!
     @order = Order.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @order
     sign_out current_user unless can? :manage, @order
 
     @address = Address.where(user_id: current_user.id).order(updated_at: :desc).last
@@ -111,11 +112,8 @@ class OrdersController < ApplicationController
 
 
   def show
-    unless current_user
-      load_order
-    else
-      @order = Order.find(params[:id])
-    end
+    @order = Order.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @order
 
     respond_to do |format|
       format.html # show.html.erb
@@ -134,6 +132,7 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @order
   end
 
   def create
@@ -152,6 +151,7 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @order
 
     respond_to do |format|
       if @order.update_attributes(params[:order])

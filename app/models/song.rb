@@ -3,12 +3,14 @@ class Song < ActiveRecord::Base
   attr_accessible :album_id, :artist, :length, :title, :size, :mp3, :track, :price, :catalog_id
   validates_presence_of :album_id, :title, :length
   belongs_to :album, touch: true
-  has_many :order_items, :dependent => :destroy
+  has_many :order_items
+  has_attached_file :mp3, PAPERCLIP_MP3_OPTS
 
   serialize :metadata
-  has_attached_file :mp3, PAPERCLIP_MP3_OPTS
   validates_attachment_size :mp3, :less_than => 20.megabytes
   validates_attachment_content_type :mp3, :content_type => [ 'application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3' ]
+
+  scope :without_deleted, -> { where(deleted_at: nil) }
 
   # def audio?
   #   mp3_content_type =~ %r{^audio/(?:mp3|mpeg|mpeg3|mpg|x-mp3|x-mpeg|x-mpeg3|x-mpegaudio|x-mpg)$}

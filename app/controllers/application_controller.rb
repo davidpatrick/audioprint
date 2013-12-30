@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
     raise CanCan::AccessDenied unless current_user.has_role? :admin
   end
 
+
   def load_order
     begin
       @order = Order.find(session[:order_id])

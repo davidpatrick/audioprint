@@ -4,9 +4,9 @@ class AlbumsController < ApplicationController
 
   def index
     if params[:category]
-      @albums = Album.where(category_id: params[:category])
+      @albums = Album.without_deleted.where(category_id: params[:category])
     else
-      @albums = Album.scoped
+      @albums = Album.without_deleted.scoped
     end
 
     if params[:search]
@@ -23,13 +23,13 @@ class AlbumsController < ApplicationController
   end
 
   def show
-    @album = Album.find(params[:id])
-    @album_decorator = AlbumDecorator.new(@album)
+    @album = Album.without_deleted.find_by_id(params[:id])
+    render :file => 'public/404.html', :layout => false unless @album
   end
 
   def edit
-    @album = Album.find(params[:id])
-    @album_decorator = AlbumDecorator.new(@album)
+    @album = Album.without_deleted.find_by_id(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @album
   end
 
   def new
