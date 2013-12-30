@@ -34,14 +34,14 @@ class OrderItemsController < ApplicationController
     end
 
     respond_to do |format|
-      if params[:add_quantity] && @order_item.product_type == 'Album' && print_stock(@order_item.product.quantity, @order_item.quantity) == "Insufficient Stock"
+      if params[:add_quantity] && @order_item.product_type == 'Album' && print_stock(@order_item.product, @order_item.quantity) == "Insufficient Stock"
         format.json { render json: 'There is not enough in stock.', status: :unprocessable_entity}
       elsif @order_item.save
         format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
         format.json { render json: {
           id: @order_item.id,
           quantity: @order_item.quantity,
-          stock: @order_item.product_type == 'Album' ? print_stock(@order_item.product.quantity, @order_item.quantity) : nil,
+          stock: @order_item.product_type == 'Album' ? print_stock(@order_item.product, @order_item.quantity) : nil,
           subtotal: ActionController::Base.helpers.number_to_currency(@order_item.subtotal),
           total: ActionController::Base.helpers.number_to_currency(@order_item.order.total)},
           status: 200

@@ -24,7 +24,7 @@
       %th Unit Price
       %th Subtotal
 
-    = render partial: 'item', collection: @order.order_items
+    = render partial: 'order_item', collection: @order.order_items
 
     %tr.text-centered
       %th{colspan: 4}

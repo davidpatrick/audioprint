@@ -1,0 +1,31 @@
+%tr.cart-row
+  %td.item-image.hide-for-small
+    = image_tag item.product.cover_art(:thumb)
+  %td.item-details
+    .name
+      = link_to item.product, item.product
+    %br
+    .stock
+      %span.title
+        Stock:
+      %span
+        = print_stock(item.product, item.quantity)
+    .attribute
+      %span.title
+        Price:
+      %span
+        = number_to_currency(item.product.price)
+    .sku
+      %span.title
+        Item:
+      %span
+        = item.product.display_catalog_id
+  %td.item-quantity-details
+    / .editdetails
+    /   Edit Item
+    %span.item-quantity
+      = "#{item.quantity}x"
+  %td.item-total
+    %span Subtotal:
+    %span.title
+      = number_to_currency(item.subtotal)

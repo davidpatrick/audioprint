@@ -1,3 +1,7 @@
+= content_for :head do
+  = javascript_include_tag "https://js.stripe.com/v2/"
+  = tag :meta, :name => "stripe-key", :content => Rails.configuration.stripe[:publishable_key]
+
 #shipping.checkout-section.on
   %h2
     %span.label 1
@@ -14,24 +18,15 @@
     %span.label 2
     Billing
   %hr
+  .edit{style: 'display:none;'}
+    .button.secondary Edit
   .form-data
-    = render partial: 'billing_form'
+    = render partial: 'checkout_billing'
   .info-data
 #review.checkout-section.off
   %h2
     %span.label 3
     Review & Submit
   .form-data
-    = render partial: 'review_and_submit'
+    = render partial: 'checkout_review'
   .info-data
-/ .small-10.large-6.columns
-/   .div Shipping To:
-/   .address
-/     = collection_select :order, :address, current_user.addresses, :id, :to_s
-/     = link_to 'Add new address', new_address_path, 'data-reveal-id' => 'address-modal', 'data-reveal-ajax' => 'true'
-
-/ %div{style: "overflow:hidden;"}
-/   .small-12
-/     .right
-/       .button Continue Shopping
-/       .button Checkout

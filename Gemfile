@@ -56,3 +56,4 @@ gem "ckeditor", '>= 4.0.0'
 gem 'zurb-foundation', '4.2.3'
 gem "font-awesome-rails"
 gem "roadie"
+gem "stripe"

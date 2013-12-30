@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_AVATAR_OPTS
   after_create :new_user
 
+  def to_s
+    self.name
+  end
+
   def album_ids
     self.albums.collect(&:id)
   end

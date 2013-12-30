@@ -3,7 +3,7 @@ class Album < ActiveRecord::Base
   validates_presence_of :title, :artist, :catalog_id, :price
   attr_accessible :artist, :cover_art, :title, :release_date, :quantity, :price, :catalog_id, :category_id, :digital
   has_many :songs, :dependent => :destroy
-  has_many :order_items
+  has_many :order_items, :dependent => :destroy
   belongs_to :user
   belongs_to :category
   delegate :name, :to => :category, :allow_nil => true, :prefix => true #album.category_name
@@ -20,5 +20,9 @@ class Album < ActiveRecord::Base
 
   def track_list
     self.songs.order('track')
+  end
+
+  def display_catalog_id
+    "AP##{catalog_id}"
   end
 end

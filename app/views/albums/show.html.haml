@@ -14,7 +14,7 @@
         %li.description
           Catalog ID #AP#{@album.catalog_id}
         %li.bullet-item
-          = print_stock(@album.quantity)
+          = print_stock(@album)
         %li.cta-button
           - if @album.quantity > 0
             = link_to add_album_to_cart_path(@album), class: 'button' do

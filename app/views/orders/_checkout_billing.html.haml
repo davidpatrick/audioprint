@@ -1,0 +1,14 @@
+= form_tag purchase_order_path(@order), id: "billing-form", class: '' do
+  %div#stripe_error.form-errors.alert-box.alert.hidden
+  .field
+    = label_tag :card_number, "Credit Card Number "
+    = text_field_tag :card_number, nil, name: nil
+  .field
+    = label_tag :card_code, "Security Code on Card (CVV)"
+    = text_field_tag :card_code, nil, name: nil
+  .field
+    = label_tag :card_month, "Card Expiration"
+    = select_month nil, {add_month_numbers_true: true}, {name: nil, id: "card_month"}
+    = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
+  .field
+    = submit_tag 'Submit Payment', class: 'button right'

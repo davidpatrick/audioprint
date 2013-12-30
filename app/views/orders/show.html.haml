@@ -30,7 +30,7 @@
         %td.hide-for-small= image_tag item.product.cover_art(:thumb)
         %td= link_to item.product.title, item.product
         %td= item.quantity
-        %td= print_stock(item.product.quantity, item.quantity)
+        %td= print_stock(item.product, item.quantity)
         %td= number_to_currency(item.product.price)
         %td= number_to_currency(item.subtotal)
 
@@ -39,6 +39,6 @@
       %h3 Order Total
       %strong{style: "font-size:14px;"}= number_to_currency(@order.total)
 
-  %br
-  .row.collapse
-    %a.button.right.alert.disabled{href:'#'}Cancel Order
+  / %br
+  / .row.collapse
+  /   %a.button.right.alert.disabled{href:'#'}Cancel Order

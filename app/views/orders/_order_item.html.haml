@@ -1,0 +1,50 @@
+- if order_item.product_type == 'Album'
+  %tr.text-centered{id: "item-#{order_item.id}"}
+    %td
+      = link_to order_item.product do
+        = image_tag order_item.product.cover_art(:thumb)
+        %span{style: "display:block; padding: 5px; font-size:14px;" }= order_item.product.title
+        %span{style: "color: gray; font-size:10px;"} (album)
+    %td
+      = link_to order_item.product
+    %td
+      %div.quantity
+        = order_item.quantity
+      %br
+      %div
+        = link_to '+', order_item_path(order_item), class: 'button tiny success add-quantity'
+        = link_to '-', order_item_path(order_item), class: 'button tiny alert subtract-quantity'
+      %div
+        = link_to order_item, class: 'delete-item button alert tiny' do
+          Remove
+    %td.stock
+      = print_stock(order_item.product, order_item.quantity)
+    %td.unit-price
+      = number_to_currency(order_item.product.price)
+    %td.subtotal
+      = number_to_currency(order_item.subtotal)
+- else
+  %tr.text-centered{id: "item-#{order_item.id}"}
+    %td
+      = link_to order_item.product.album do
+        = image_tag order_item.product.cover_art(:thumb)
+        %span{style: "display:block; padding: 5px; font-size:14px;" }= order_item.product.title
+        %span{style: "color: gray; font-size:10px;"} (song)
+    %td
+      = link_to order_item.product
+    %td
+      %div.quantity
+        = order_item.quantity
+      %br
+      %div
+        = link_to '+', order_item_path(order_item), class: 'button tiny success add-quantity'
+        = link_to '-', order_item_path(order_item), class: 'button tiny alert subtract-quantity'
+      %div
+        = link_to order_item, class: 'delete-item button alert tiny' do
+          Remove
+    %td.stock
+      Digital
+    %td.unit-price
+      = number_to_currency(order_item.product.price)
+    %td.subtotal
+      = number_to_currency(order_item.subtotal)

@@ -1,0 +1,24 @@
+= form_tag review_and_submit_order_path(@order), id: "review-form" do
+  %div#stripe_error.form-errors.alert-box.alert.hidden
+  = hidden_field_tag :stripe_card_token
+  .small-12.small-centered.columns
+    %table#review-cart-items
+      %tbody
+        = render partial: 'checkout_order_item', collection: @order.order_items, as: :item
+  .small-12.small-centered.columns
+    %table#review-cart-total
+      %tbody
+        %tr.order-subtotal
+          %td Subtotal:
+          %td= number_to_currency(@order.subtotal, :unit => "$")
+        %tr.order-shipping
+          %td Shipping:
+          %td= number_to_currency(@order.shipping_cost, :unit => "$")
+        %tr.order-sales-tax
+          %td Sales Tax:
+          %td= number_to_currency(@order.sales_tax, :unit => "$")
+        %tr.order-total
+          %td Order Total
+          %td= number_to_currency(@order.total, :unit => "$")
+    #submit-order.right
+      = submit_tag 'Submit Order', class: 'button'

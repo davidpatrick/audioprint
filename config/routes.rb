@@ -28,9 +28,11 @@ Audioprint::Application.routes.draw do
   resources :orders do
     member do
       get :checkout
-      patch :checkout_purchase, to: 'orders#purchase'
+      put :save_address
+      post :purchase
+      post :review_and_submit
+
       put :process_order
-      patch :save_address
       post :ship_order
     end
 
@@ -40,6 +42,7 @@ Audioprint::Application.routes.draw do
   end
 
   resources :order_items
+  resources :charges
 
   match 'become_contributor', :to => 'users#become_contributor', via: :post
   match 'admin_create', :to => 'users#create', via: :post
