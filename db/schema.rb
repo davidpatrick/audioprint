@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131230220922) do
+ActiveRecord::Schema.define(version: 20131231050702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20131230220922) do
     t.string   "title"
     t.string   "artist"
     t.integer  "year"
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
     t.string   "cover_art_file_name"
     t.string   "cover_art_content_type"
     t.integer  "cover_art_file_size"
@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(version: 20131230220922) do
     t.integer  "user_id"
     t.date     "release_date"
     t.integer  "category_id"
-    t.integer  "album_type"
     t.integer  "catalog_id"
-    t.integer  "quantity",                                       default: 0,     null: false
-    t.decimal  "price",                  precision: 7, scale: 2, default: 0.0,   null: false
-    t.boolean  "digital",                                        default: false, null: false
+    t.integer  "quantity",                                       default: 0,       null: false
+    t.decimal  "price",                  precision: 7, scale: 2, default: 0.0,     null: false
+    t.boolean  "digital",                                        default: false,   null: false
     t.datetime "deleted_at"
+    t.string   "type",                                           default: "Album"
   end
 
   create_table "blog_posts", force: true do |t|

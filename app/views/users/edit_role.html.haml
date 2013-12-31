@@ -1,0 +1,7 @@
+%h3.subheader Change Role
+
+= simple_form_for @user, :url => change_role_user_path(@user), :html => {:method => :put, :class => 'custom', remote: true } do |f|
+  = f.input :role_ids, :collection => Role.role_types, :as => :radio_buttons, :label => false
+  = f.submit "Change Role", :class => "button"
+
+%a.close-reveal-modal &#215;

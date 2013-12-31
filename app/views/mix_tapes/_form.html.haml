@@ -1,0 +1,19 @@
+= simple_form_for(@mix_tape, :html => {:multipart => true}) do |f|
+  -if @mix_tape.errors.messages[:cover_art]
+    .alert.alert-error Upload the Cover Art to finish
+  -else
+    = f.error_notification
+  .form-inputs
+    = f.input :title
+    = f.input :artist
+    = f.input :release_date, :as => :string, :input_html => { :class => 'date_picker' }
+    = f.input :category_id, collection: Category.all, include_blank: "Select a Category", label: :Category, label_method: :name, value_method: :id
+    = f.input :digital
+    = f.input :catalog_id
+    = f.input :price
+    = f.input :quantity
+    Cover Art:
+    = f.file_field :cover_art, style: "height: 20px;  line-height: 0px"
+
+  .form-actions{style: "max-width:125px;"}
+    = f.button :submit, style: "margin-left:auto;"

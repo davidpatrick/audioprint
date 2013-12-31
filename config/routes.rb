@@ -10,19 +10,27 @@ Audioprint::Application.routes.draw do
   root :to => "home#index"
 
   devise_for :users
-  resources :users
+  resources :users do
+    member do
+      get :edit_role
+      put :change_role
+    end
+  end
   resources :addresses
 
-  resources :albums do
+  resources :albums, :mix_tapes do
     collection do
       post :sort_tracks
-      get :ajax_uploaded_song
     end
 
     post :add_songs, :on => :member
   end
 
-  resources :songs
+  resources :songs do
+    member do
+      get :ajax_song
+    end
+  end
 
   match 'songs/:id/download', :to => 'songs#download', :as => 'download_song', via: :get
 

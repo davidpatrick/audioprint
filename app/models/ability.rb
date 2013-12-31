@@ -4,13 +4,19 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
     can :read, [Album, Song, BlogPost]
+    cannot :read, MixTape
     can :manage, Order, user_id: nil
     can :manage, OrderItem, order: {user_id: nil}
 
     if user.has_role? :admin
+      can :admin, :all
       can :manage, :all
       can :create, :all
       can :read, :all
+    end
+
+    if user.has_role? :vendor
+      can :read, MixTape
     end
 
     if user.persisted?

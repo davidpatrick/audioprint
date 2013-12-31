@@ -14,7 +14,7 @@ class Album < ActiveRecord::Base
   validates_attachment_size :cover_art, :less_than => 2.megabytes
   validates_attachment_content_type :cover_art, :content_type => ['image/jpeg', 'image/png']
 
-  # default_scope where(:deleted_at => nil)
+  scope :base, -> { where(type: 'Album') }
   scope :without_deleted, -> { where(deleted_at: nil) }
 
   def to_s

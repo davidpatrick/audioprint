@@ -25,6 +25,6 @@ jQuery ->
       if responseJSON["success"] == true
         if responseJSON["upload_type"] == "Song"
           $.ajax
-            url: "/albums/ajax_uploaded_song?song=#{responseJSON['id']}"
+            url: "/songs/#{responseJSON['id']}/ajax_song"
             success: (data, textStatus, jqXHR) ->
     $('#bootstrapped-fine-uploader').on 'error', ->

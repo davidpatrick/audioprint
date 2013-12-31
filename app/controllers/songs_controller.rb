@@ -31,14 +31,7 @@ class SongsController < ApplicationController
   end
 
   def new
-    if !params[:album] || request.referer.nil?
-      redirect_to root_path
-      return
-    elsif URI(request.referer).path != "/albums/#{params[:album]}/edit"
-      redirect_to root_path
-      return
-    end
-
+    redirect_to root_path and return if !params[:album] || request.referer.nil?
     @song = Song.new
 
     respond_to do |format|
@@ -78,11 +71,10 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       if @song.save
-        # format.json { render json: @song, status: :created, location: @song }
-        format.js { render :template => 'albums/ajax_song', :locals => { :song => @song } }
+        format.js { render :template => 'ajax_song', :locals => { :song => @song } }
         format.html { redirect_to @song.album, notice: 'Song was successfully created.' }
       else
-        format.js { render :template => 'albums/ajax_song', :locals => { :song => @song } }
+        format.js { render :template => 'ajax_song', :locals => { :song => @song } }
         format.html { render action: "new" }
       end
     end
@@ -118,6 +110,13 @@ class SongsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  def ajax_song
+    @song = Song.find(params[:id])
+    return false unless @song
+  end
+
 
   def download
     render :status => :forbidden, :text => "Nothing here." and return unless song = Song.find_by_id(params[:id])

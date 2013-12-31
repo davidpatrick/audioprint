@@ -2,19 +2,38 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
+    authorize! :admin, User, :message => 'You need to be an administrator to do that.'
     @users = User.all
   end
 
   def new
-    authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
+    authorize! :admin, User, :message => 'You need to be an administrator to do that.'
     @user = User.new
 
     render :layout => 'product'
   end
 
+  def edit_role
+    @user = User.find(params[:id])
+    authorize! :admin, @user, :message => 'You need to be an administrator to do that.'
+
+    render :layout => false
+  end
+
+  def change_role
+    @user = User.find(params[:id])
+    authorize! :admin, @user, :message => 'You need to be an administrator to do that.'
+
+    if Role.role_types.include? params[:user][:role_ids]
+      Role.role_types.each{ |role| @user.remove_role role}
+      @role = @user.add_role params[:user][:role_ids]
+    end
+
+    render :template => 'users/change_role.js.erb'
+  end
+
   def create
-    authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
+    authorize! :admin, User, :message => 'You need to be an administrator to do that.'
     @user = User.new(params[:user])
 
     respond_to do |format|
@@ -29,20 +48,17 @@ class UsersController < ApplicationController
   end
 
   def show
-    if current_user && current_user.id.to_s == params[:id]
-      authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
-    else
-      authorize! :manage, @user, :message => 'You need to be an administrator to do that.'
-    end
-
     @user = User.find(params[:id])
+    authorize! :admin, @user, :message => 'You need to be an administrator to do that.'
+
     @albums = @user.albums
     @songs = @user.songs.order('downloads DESC')
   end
 
   def update
-    authorize! :update, @user, :message => 'Not authorized as an administrator.'
     @user = User.find(params[:id])
+    authorize! :update, @user, :message => 'Not authorized as an administrator.'
+
     if @user.update_attributes(params[:user], :as => :admin)
       redirect_to users_path, :notice => "User updated."
     else
@@ -51,10 +67,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:id])
     authorize! :destroy, @user, :message => 'Not authorized as an administrator.'
-    user = User.find(params[:id])
-    unless user == current_user
-      user.destroy
+
+    unless @user == current_user
+      @user.destroy
       redirect_to users_path, :notice => "User deleted."
     else
       redirect_to users_path, :notice => "Can't delete yourself."

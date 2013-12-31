@@ -1,8 +1,8 @@
 .row
-  = simple_form_for(@album, :html => {:multipart => true}) do |f|
+  = simple_form_for(@mix_tape, :html => {:multipart => true}) do |f|
     .large-6.columns.text-centered
       .row
-        = image_tag @album.cover_art.url(:large)
+        = image_tag @mix_tape.cover_art.url(:large)
       .row
         .small-12.columns{style: "text-align:left; margin:15px;"}
           %label{style: "text-decoration:underline;"} Upload Cover Art
@@ -31,7 +31,7 @@
           .large-4.columns
             = f.input :price
           .large-4.columns
-            = f.input :quantity unless @album.digital
+            = f.input :quantity unless @mix_tape.digital
       .form-actions
         = f.button :submit, class: 'button', :style => "margin-left: auto; margin-right: auto; width: 100%;"
 
@@ -46,23 +46,24 @@
             %th.hide-for-small{style: "width:5px;"} Track
             %th Title
             %th.hide-for-small Length
-            - if @album.digital
+            - if @mix_tape.digital
               %th.text-centered.hide-for-small{style: "width:65px;"} Size
               %td.text-centered{style: "width:100px;"} Price
             %th{style: "width:10px;"}
-        %tbody#tracks{ data: {'update-url' => sort_tracks_albums_url, 'album-id' => @album.id} }
-          = render partial: "songs/track_edit", collection: @album.track_list, as: :track
-      - if @album.digital
+        %tbody#tracks{ data: {'update-url' => sort_tracks_mix_tapes_url, 'album-id' => @mix_tape.id} }
+          = render partial: "songs/track_edit", collection: @mix_tape.track_list, as: :track
+      - if @mix_tape.digital
         .large-6.columns
-          %div#bootstrapped-fine-uploader{'data-album-id' => @album.id}
+          %div#bootstrapped-fine-uploader{'data-album-id' => @mix_tape.id}
         .large-6.columns
-          %a.button.small-12{href: "/songs/new/?album=#{@album.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true", style: "background-color: #1673c1;"} Add Song Manually
+          %a.button.small-12{href: "/songs/new/?album=#{@mix_tape.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true", style: "background-color: #1673c1;"} Add Song Manually
       - else
         .large-12.columns
-          %a.button.small-12{href: "/songs/new/?album=#{@album.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true", style: "background-color: #1673c1;"} Add Song
+          %a.button.small-12{href: "/songs/new/?album=#{@mix_tape.id}", "data-reveal-id" => "song-modal", "data-reveal-ajax" => "true", style: "background-color: #1673c1;"} Add Song
 
 .reveal-modal#song-modal
-
-
-
-
+  %h3
+    Create New Song
+  %a#save-song.btn.btn-inverse{href: '#'}
+    Save Song
+  %a.close-reveal-modal &#215;

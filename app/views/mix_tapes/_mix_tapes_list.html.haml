@@ -1,0 +1,17 @@
+-unless @albums.empty?
+  -for album in @albums
+    %li.span3
+      .thumbnail.albums
+        =link_to album do
+          = image_tag album.cover_art.url(:medium)
+          %div.titles{style: "margin-top:auto"}
+            %h3
+              = link_to album.title, album
+            %h5
+              = link_to album.artist, album
+-else
+  .empty-album-list
+    %h3
+      There isn't anything here... 
+    %h3
+      = link_to 'Go Upload some music!', new_album_path, style: "color: #808080; text-decoration:none;"

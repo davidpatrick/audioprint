@@ -1,0 +1,4 @@
+$('.close-reveal-modal').click()
+<% if @role %>
+  $("#user-<%= escape_javascript(@user.id.to_s)%>").find('.role').html("<%= escape_javascript(@role.name.capitalize) %>")
+<% end %>

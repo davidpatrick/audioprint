@@ -4,9 +4,9 @@ class AlbumsController < ApplicationController
 
   def index
     if params[:category]
-      @albums = Album.without_deleted.where(category_id: params[:category])
+      @albums = Album.base.without_deleted.where(category_id: params[:category])
     else
-      @albums = Album.without_deleted.scoped
+      @albums = Album.base.without_deleted.scoped
     end
 
     if params[:search]
@@ -23,12 +23,12 @@ class AlbumsController < ApplicationController
   end
 
   def show
-    @album = Album.without_deleted.find_by_id(params[:id])
+    @album = Album.base.without_deleted.find_by_id(params[:id])
     render :file => 'public/404.html', :layout => false unless @album
   end
 
   def edit
-    @album = Album.without_deleted.find_by_id(params[:id])
+    @album = Album.base.without_deleted.find_by_id(params[:id])
     render :file => 'public/404.html', :layout => false and return unless @album
   end
 
@@ -113,18 +113,6 @@ class AlbumsController < ApplicationController
       render :text => '{"success":true, "id":' + new_song.id.to_s + ', "upload_type":"' + new_song.class.to_s + '"}'
     else
       render :text => '{"error":"failed to upload one or more songs"}'
-    end
-  end
-
-  def ajax_uploaded_song
-    ajax_song = Song.find(params[:song])
-
-    if ajax_song
-      respond_to do |format|
-        format.js { render :template => 'albums/ajax_song', :locals => { :song => ajax_song } }
-      end
-    else
-      return false
     end
   end
 end

@@ -1,0 +1,52 @@
+- cache @mix_tape do
+  .row.album-info
+    .large-6.columns.text-centered
+      = image_tag @mix_tape.cover_art.url(:large)
+    .large-6.columns
+      %ul.pricing-table
+        %li.title
+          = "#{@mix_tape.title} - #{@mix_tape.artist}"
+          %br
+          %small
+            = @mix_tape.release_date.strftime("%B %d, %Y") if @mix_tape.release_date
+        %li.price
+          = number_to_currency(@mix_tape.price, :unit => "$")
+        %li.description
+          Catalog ID #AP#{@mix_tape.catalog_id}
+        %li.bullet-item
+          = print_stock(@mix_tape)
+        %li.cta-button
+          - if @mix_tape.quantity > 0
+            = link_to add_album_to_cart_path(@mix_tape), class: 'button' do
+              Add to Cart
+              %i.fa.fa-shopping-cart
+          - else
+            %button.disabled
+              Out of Stock
+              %i.fa.fa-shopping-cart
+
+- cache @mix_tape.track_list do
+  .row.track-listings
+    .small-12
+      %fieldset{style: "margin:5px;padding:5px;"}
+        %legend Track Listing
+        %table.full-width
+          %thead
+            %tr
+              %th.hide-for-small Track
+              %th Title
+              %th.hide-for-small Length
+              - if @mix_tape.digital
+                %th.text-centered
+
+          %tbody#tracks
+            = render partial: "songs/track_show", collection: @mix_tape.track_list, as: :track, locals: { digital_track: @mix_tape.digital }
+
+- if can? :manage, @mix_tape
+  = link_to 'Edit', edit_mix_tape_path(@mix_tape)
+  \|
+  = link_to 'Delete', @mix_tape, method: :delete, data: { confirm: 'Are you sure you want to delete this album and all of it\'s songs?' }
+  \|
+  = link_to 'Back', mix_tapes_path
+- else
+  = link_to 'Back', mix_tapes_path
