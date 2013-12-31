@@ -41,9 +41,9 @@
                 - else
                   .empty-player
               .blog-text.panel
-                = sanitize truncate(blog.post.to_html, length:350).html_safe
+                = sanitize(blog.post.truncate(580))
                 - if blog.post.to_html.length > 350
-                  = link_to 'read more >', blog
+                  = link_to 'read more...', blog
           - if (index + 1).even?
             .clear-row.left.full-width
 
