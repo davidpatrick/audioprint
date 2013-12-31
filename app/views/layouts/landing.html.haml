@@ -7,7 +7,7 @@
     %title= content_for?(:title) ? yield(:title) : "Audioprint()"
     %meta{:content => content_for?(:description) ? yield(:description) : "Audioprint()", :name => "description"}
       = stylesheet_link_tag "application", :media => "all"
-      = javascript_include_tag "application"
+      = javascript_include_tag "application", "https://js.stripe.com/v2/"
       = csrf_meta_tags
       = yield(:head)
   %body.login-container{:class => "#{controller_name} #{action_name}"}
