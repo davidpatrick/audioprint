@@ -5,8 +5,8 @@ class Ability
     user ||= User.new # guest user (not logged in)
     can :read, [Album, Song, BlogPost]
     cannot :read, MixTape
-    can :manage, Order, user_id: nil
-    can :manage, OrderItem, order: {user_id: nil}
+    # can :manage, Order, user_id: nil
+    # can :manage, OrderItem, order: {user_id: nil}
 
     if user.has_role? :admin
       can :admin, :all
@@ -17,17 +17,21 @@ class Ability
 
     if user.has_role? :vendor
       can :read, MixTape
-    end
-
-    if user.persisted?
       can :create, Address
       can :destroy, Address, user_id: user.id
       can :manage, Order, user_id: user.id
       can :manage, OrderItem, order: {user_id: user.id}
-    else
-      can :create, Order
-      can :create, OrderItem
     end
+
+    # if user.persisted?
+    #   can :create, Address
+    #   can :destroy, Address, user_id: user.id
+    #   can :manage, Order, user_id: user.id
+    #   can :manage, OrderItem, order: {user_id: user.id}
+    # else
+    #   can :create, Order
+    #   can :create, OrderItem
+    # end
 
     # if user.has_role? :contributor
     #   can :create, [Album, Song]

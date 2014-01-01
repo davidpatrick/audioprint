@@ -37,11 +37,12 @@
               = link_to 'MixTape', new_mix_tape_path
         %li.divider
     %ul.right
-      %li.divider
-      %li
-        = link_to view_cart_orders_path do
-          View Cart
-          %i.icon-shopping-cart
+      - if can? :manage, Order
+        %li.divider
+        %li
+          = link_to view_cart_orders_path do
+            View Cart
+            %i.icon-shopping-cart
       %li.divider
       - if user_signed_in?
         %li.has-dropdown.userdrop

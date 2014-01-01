@@ -1,46 +1,47 @@
-- cache @album do
-  .row.album-info
-    .large-6.columns.text-centered
-      = image_tag @album.cover_art.url(:large)
-    .large-6.columns
-      %ul.pricing-table
-        %li.title
-          = "#{@album.title} - #{@album.artist}"
-          %br
-          %small
-            = @album.release_date.strftime("%B %d, %Y") if @album.release_date
-        %li.price
+/ - cache @album do
+.row.album-info
+  .large-6.columns.text-centered
+    = image_tag @album.cover_art.url(:large)
+  .large-6.columns
+    %ul.pricing-table
+      %li.title
+        = "#{@album.title} - #{@album.artist}"
+        %br
+        %small
+          = @album.release_date.strftime("%B %d, %Y") if @album.release_date
+      %li.price
+        - if can? :manage, Order
           = number_to_currency(@album.price, :unit => "$")
-        %li.description
-          Catalog ID #AP#{@album.catalog_id}
-        %li.bullet-item
-          = print_stock(@album)
-        %li.cta-button
-          - if @album.quantity > 0
-            = link_to add_album_to_cart_path(@album), class: 'button' do
-              Add to Cart
-              %i.fa.fa-shopping-cart
-          - else
-            %button.disabled
-              Out of Stock
-              %i.fa.fa-shopping-cart
+      %li.description
+        Catalog ID #AP#{@album.catalog_id}
+      %li.bullet-item
+        = print_stock(@album)
+      %li.cta-button
+        - if @album.quantity > 0
+          = link_to add_album_to_cart_path(@album), class: 'button' do
+            Add to Cart
+            %i.fa.fa-shopping-cart
+        - else
+          %button.disabled
+            Out of Stock
+            %i.fa.fa-shopping-cart
 
-- cache @album.track_list do
-  .row.track-listings
-    .small-12
-      %fieldset{style: "margin:5px;padding:5px;"}
-        %legend Track Listing
-        %table.full-width
-          %thead
-            %tr
-              %th.hide-for-small Track
-              %th Title
-              %th.hide-for-small Length
-              - if @album.digital
-                %th.text-centered
+/ # - cache @album.track_list do
+.row.track-listings
+  .small-12
+    %fieldset{style: "margin:5px;padding:5px;"}
+      %legend Track Listing
+      %table.full-width
+        %thead
+          %tr
+            %th.hide-for-small Track
+            %th Title
+            %th.hide-for-small Length
+            - if @album.digital
+              %th.text-centered
 
-          %tbody#tracks
-            = render partial: "songs/track_show", collection: @album.track_list, as: :track, locals: { digital_track: @album.digital }
+        %tbody#tracks
+          = render partial: "songs/track_show", collection: @album.track_list, as: :track, locals: { digital_track: @album.digital }
 
 - if can? :manage, @album
   = link_to 'Edit', edit_album_path(@album)
