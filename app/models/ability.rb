@@ -13,9 +13,8 @@ class Ability
       can :manage, :all
       can :create, :all
       can :read, :all
-    end
-
-    if user.has_role? :vendor
+      # can :create, [Album, Song, BlogPost]
+    elsif user.has_role? :vendor
       can :read, MixTape
       can :create, Address
       can :destroy, Address, user_id: user.id

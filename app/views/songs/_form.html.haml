@@ -1,4 +1,4 @@
-= simple_form_for(@song, :html => {:multipart => true}, remote: true) do |f|
+= simple_form_for(@song, :html => {:multipart => true}, remote: true, authenticity_token: true) do |f|
   %ul.form-errors.alert-box.alert.hidden
 
   .form-inputs

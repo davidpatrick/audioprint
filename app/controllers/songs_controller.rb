@@ -41,6 +41,9 @@ class SongsController < ApplicationController
   end
 
   def edit
+    @song = Song.find(params[:id])
+    render :file => 'public/404.html', :layout => false and return unless @song
+
     if request.referer.nil?
       redirect_to root_path
       return
@@ -48,9 +51,6 @@ class SongsController < ApplicationController
       redirect_to root_path
       return
     end
-
-    @song = Song.find(params[:id])
-    render :file => 'public/404.html', :layout => false and return unless @song
 
     respond_to do |format|
       format.html { render :layout => false }
@@ -71,10 +71,10 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       if @song.save
-        format.js { render :template => 'ajax_song', :locals => { :song => @song } }
+        format.js { render :template => 'songs/ajax_song' }
         format.html { redirect_to @song.album, notice: 'Song was successfully created.' }
       else
-        format.js { render :template => 'ajax_song', :locals => { :song => @song } }
+        format.js { render :template => 'songs/ajax_song' }
         format.html { render action: "new" }
       end
     end
