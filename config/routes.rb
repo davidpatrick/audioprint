@@ -1,4 +1,6 @@
 Audioprint::Application.routes.draw do
+  mount Ckeditor::Engine => "/ckeditor"
+
   resources :blog_posts, path: :blog
   match "/blog/:year", :to => "blog_posts#index", via: :get, :constraints => { :year => /\d{4}/ }
   match "/blog/:year/:month", :to => "blog_posts#index", via: :get, :constraints => { :year => /\d{4}/, :month => /\d{1,2}/ }
@@ -58,6 +60,4 @@ Audioprint::Application.routes.draw do
 
   match 'albums/:id/add_to_cart', to: 'order_items#create', as: 'add_album_to_cart', type: 'album', via: :get
   match 'songs/:id/add_to_cart', to: 'order_items#create', as: 'add_song_to_cart', type: 'song', via: :get
-
-  mount Ckeditor::Engine => "/ckeditor"
 end

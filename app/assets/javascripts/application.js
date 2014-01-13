@@ -30,8 +30,9 @@
 //= require jquery.ui.sortable
 //= require jquery.ui.effect
 //= require fineuploader.jquery
-//= require ckeditor/init
 //= require foundation-datepicker
 //= require_tree "./app"
+//= require ckeditor/override
+//= require ckeditor/init
 
 $(function(){ $(document).foundation(); });

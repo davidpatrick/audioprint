@@ -51,7 +51,7 @@ gem 'ruby-mp3info', :require => 'mp3info'
 gem 'fine-uploader-rails', '~> 3.2'
 gem "airbrake"
 gem 'stringex', '>= 2.0.0'
-gem "ckeditor", '>= 4.0.0'
+gem "ckeditor"
 gem 'zurb-foundation', '4.2.3'
 gem "font-awesome-rails"
 gem "roadie"
