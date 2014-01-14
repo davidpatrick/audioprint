@@ -1,18 +1,13 @@
 class BlogPostsController < ApplicationController
   def index
     @blog_posts = BlogPost.all.reverse!
-
-    # respond_to do |format|
-    #   # format.json { render json: @album }
-    # end
   end
 
   def show
     if params[:slug]
       @blog_post = BlogPost.find_by_slug(params[:slug])
     else
-      redirect_to blog_posts_path(year: params[:id])
-      return
+      redirect_to blog_posts_path(year: params[:id]) and return
     end
 
     respond_to do |format|
@@ -54,11 +49,9 @@ class BlogPostsController < ApplicationController
 
     respond_to do |format|
       if @blog_post.update_attributes(params[:blog_post])
-        format.html { redirect_to @blog_post, notice: 'Blog post was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to edit_blog_post_path(@blog_post), notice: 'Blog post was successfully updated.' }
       else
         format.html { render action: "edit" }
-        format.json { render json: @blog_post.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,7 +61,7 @@ class BlogPostsController < ApplicationController
     @blog_post.destroy
 
     respond_to do |format|
-      format.html { redirect_to blog_posts_url }
+      format.html { redirect_to @blog_post }
       format.json { head :no_content }
     end
   end
