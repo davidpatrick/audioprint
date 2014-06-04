@@ -5,6 +5,6 @@ class Role < ActiveRecord::Base
   scopify
 
   def self.role_types
-    @@role_types ||= ['admin', 'vendor', 'customer', 'basic']
+    @@role_types ||= ['admin', 'vendor', 'contributor', 'customer', 'basic']
   end
 end

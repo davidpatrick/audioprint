@@ -1,4 +1,6 @@
 class BlogPostsController < ApplicationController
+  load_and_authorize_resource
+  
   def index
     @blog_posts = BlogPost.all.reverse!
   end

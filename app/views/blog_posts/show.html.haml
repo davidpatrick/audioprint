@@ -14,6 +14,6 @@
   - if current_user && current_user.has_role?(:admin)
     = link_to 'Edit', edit_blog_post_path(@blog_post)
     \|
-    = link_to 'Delete', @blog_post, method: :delete, data: { confirm: 'Are you sure you want to delete this blog post?' }
+    = link_to 'Delete', blog_post_path(@blog_post), method: :delete, data: { confirm: 'Are you sure you want to delete this blog post?' }
     \|
   = link_to 'Back', blog_posts_path

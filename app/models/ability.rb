@@ -14,12 +14,18 @@ class Ability
       can :create, :all
       can :read, :all
       # can :create, [Album, Song, BlogPost]
-    elsif user.has_role? :vendor
+    elsif user.has_role?   :vendor
       can :read, MixTape
       can :create, Address
       can :destroy, Address, user_id: user.id
       can :manage, Order, user_id: user.id
       can :manage, OrderItem, order: {user_id: user.id}
+    end
+
+    if user.has_role? :contributor
+      can :create, [Album, Song]
+      can :manage, Album, :user_id => user.id
+      can :manage, Song, :album => { :user_id => user.id}
     end
 
     # if user.persisted?
@@ -30,12 +36,6 @@ class Ability
     # else
     #   can :create, Order
     #   can :create, OrderItem
-    # end
-
-    # if user.has_role? :contributor
-    #   can :create, [Album, Song]
-    #   can :manage, Album, :user_id => user.id
-    #   can :manage, Song, :album => { :user_id => user.id}
     # end
 
 
