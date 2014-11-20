@@ -49,8 +49,8 @@ Audioprint::Application.configure do
     domain: "gmail.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: 'audioprintweb@gmail.com',
-    password: 'ch33s3danish'
+    user_name: ENV["GMAIL_USERNAME"],
+    password: ENV["GMAIL_PASSWORD"]
   }
   PAPERCLIP_BLOG_OPTS = {
     :styles => { :large => "1000x600!", :medium => "500x300!", :small => "250x150!" },
